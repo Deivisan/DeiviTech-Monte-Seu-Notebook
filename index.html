@@ -40,7 +40,7 @@
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
             padding: 1.5rem;
             border: 1px solid var(--color-border-subtle);
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, opacity 0.5s ease-out;
+            transition: transform 0.3s, box-shadow 0.3s, opacity 0.5s;
             opacity: 0;
             transform: translateY(20px);
         }
@@ -56,7 +56,7 @@
             border: 1px solid var(--color-border-subtle);
             margin-bottom: 0.5rem;
             cursor: pointer;
-            transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+            transition: background-color 0.2s, border-color 0.2s;
         }
         .option-item:hover {
             background-color: #2A2A2A;
@@ -133,7 +133,7 @@
         .mode-toggle-btn {
             background-color: #333333;
             color: var(--color-text-light);
-            transition: background-color 0.2s ease-in-out;
+            transition: background-color 0.2s;
             border: 1px solid var(--color-border-subtle);
         }
         .mode-toggle-btn.active {
@@ -149,7 +149,6 @@
             color: var(--color-accent-red);
             font-weight: 500;
         }
-        /* Contato */
         .contact-section {
             background: linear-gradient(90deg, #2d3748 0%, #4a5568 100%);
             color: #fff;
@@ -241,10 +240,6 @@
                     <div id="casing-options" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
                 </section>
 
-                <!-- Outras seções do configurador (placa-mãe, CPU, RAM, etc.) -->
-                <!-- Para simplificação, você pode replicar a estrutura acima para cada componente, ou manter o JS dinâmico para gerar as opções. -->
-                <!-- ...demais seções do configurador... -->
-
                 <!-- Simulação de Troca -->
                 <section id="tradein-section" class="card">
                     <h2 class="text-2xl font-bold mb-6 text-blue-400">Simule o valor de troca do seu notebook usado</h2>
@@ -310,7 +305,7 @@
     </div>
 
     <script>
-        // Exemplo de componentes (adicione todos os componentes conforme seu projeto)
+        // Componentes de exemplo (adicione outros conforme seu projeto)
         const components = {
             casing: [
                 { id: 'padrao-preta', name: 'Carcaça Padrão (Preta)', price: 350, stock: 5, description: 'Simples, resistente e discreta.' },
@@ -415,7 +410,6 @@
             document.querySelectorAll('.card').forEach(section => observer.observe(section));
         }
 
-        // Troca
         document.addEventListener('DOMContentLoaded', () => {
             populateOptions();
             updateSummary();
@@ -426,16 +420,13 @@
                 currentMode = 'basic';
                 document.getElementById('basic-mode-btn').classList.add('active');
                 document.getElementById('advanced-mode-btn').classList.remove('active');
-                // Atualize opções se necessário
             };
             document.getElementById('advanced-mode-btn').onclick = () => {
                 currentMode = 'advanced';
                 document.getElementById('advanced-mode-btn').classList.add('active');
                 document.getElementById('basic-mode-btn').classList.remove('active');
-                // Atualize opções se necessário
             };
 
-            // Troca
             document.getElementById('tradein-form').onsubmit = function(e) {
                 e.preventDefault();
                 const year = parseInt(this.year.value);
@@ -443,23 +434,4 @@
                 let base = 800;
                 const age = (new Date()).getFullYear() - year;
                 if (age > 0) base -= age * 100;
-                if (condition === 'excelente') base *= 1.0;
-                else if (condition === 'boa') base *= 0.8;
-                else if (condition === 'regular') base *= 0.6;
-                else base *= 0.4;
-                tradeInCredit = Math.max(Math.round(base), 0);
-                document.getElementById('tradein-result').textContent = `Valor estimado de troca: ${formatPrice(tradeInCredit)}`;
-                updateSummary();
-                updateTotal();
-            };
-
-            // Modal
-            document.getElementById('finalize-btn').onclick = function() {
-                document.getElementById('order-modal').style.display = 'flex';
-            };
-            document.querySelector('.close-button').onclick = function() {
-                document.getElementById('order-modal').style.display = 'none';
-            };
-            window.onclick = function(event) {
-                if (event.target === document.getElementById('order-modal')) {
-                    document.getElementById('order-modal').style.display = 'none';
+                if (condition === 'excelente') base *=
