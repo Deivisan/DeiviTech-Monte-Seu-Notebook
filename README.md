@@ -3,7 +3,6 @@
 **Experimente o Configurador Online!**  
 Acesse o projeto diretamente no GitHub Pages e comece a montar seu notebook agora:  
 [https://deivisan.github.io/DeiviTech-Monte-Seu-Notebook/](https://deivisan.github.io/DeiviTech-Monte-Seu-Notebook/)
-;
 
 [https://deivisan.github.io/DeiviTech-Monte-Seu-Notebook/info-projeto.html](https://deivisan.github.io/DeiviTech-Monte-Seu-Notebook/info-projeto.html)
 
