@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeiviTech: Explorador Interativo do Projeto</title>
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: A single-page application with a fixed sidebar for navigation and a main content area that updates dynamically. The structure is organized into thematic sections: 'Sobre' (introduction), 'Funcionalidades' (feature showcase), 'Componentes' (interactive deep-dive with a chart), and 'Tecnologias' (tech stack). This non-linear, task-oriented structure was chosen to make the dense information from the README more digestible and engaging, allowing users to jump directly to topics of interest. The key interaction is the dynamic chart in the 'Componentes' section, which turns abstract data into a tangible visualization, enhancing user understanding. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Project Overview -> Goal: Inform/Engage -> Presentation: Hero section -> Interaction: CTA button -> Justification: Immediate context and call to action -> Method: HTML/Tailwind.
+        - Report Info: Feature List -> Goal: Organize/Inform -> Presentation: Grid of cards with icons -> Interaction: Hover effects -> Justification: More scannable and visually appealing than a list -> Method: HTML/Tailwind.
+        - Report Info: Component Details -> Goal: Educate/Explore -> Presentation: Selectable content area -> Interaction: User clicks a button to show details for a specific component -> Justification: Prevents information overload by showing one component at a time -> Method: JavaScript.
+        - Report Info: Component Performance (Implied) -> Goal: Compare/Visualize -> Presentation: Bar Chart -> Interaction: Chart dynamically updates based on the selected component -> Justification: Realizes the potential mentioned in the README, making performance data interactive and understandable -> Library: Chart.js (Canvas).
+        - Report Info: Tech Stack -> Goal: Inform -> Presentation: Logo/card wall -> Interaction: Hover effects -> Justification: Visually represents technologies used -> Method: HTML/Tailwind. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 384px;
+            }
+        }
+        .nav-link.active {
+            background-color: #e2e8f0;
+            color: #1e293b;
+            font-weight: 600;
+        }
+        .page-section {
+            display: none;
+        }
+        .page-section.active {
+            display: block;
+        }
+        .component-btn.active {
+            background-color: #3b82f6;
+            color: white;
+        }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <div class="flex min-h-screen">
+        <aside class="w-64 bg-white border-r border-slate-200 p-6 fixed h-full hidden lg:block">
+            <h1 class="text-2xl font-bold text-blue-600">DeiviTech</h1>
+            <p class="text-sm text-slate-500 mt-1">Explorador do Projeto</p>
+            <nav class="mt-10">
+                <ul class="space-y-2">
+                    <li><a href="#sobre" class="nav-link flex items-center gap-3 px-4 py-2 rounded-lg text-slate-600 hover:bg-slate-100 transition-colors duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg>
+                        Sobre o Projeto
+                    </a></li>
+                    <li><a href="#funcionalidades" class="nav-link flex items-center gap-3 px-4 py-2 rounded-lg text-slate-600 hover:bg-slate-100 transition-colors duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 0 2.12l-.15.1a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.1a2 2 0 0 1 0-2.12l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+                        Funcionalidades
+                    </a></li>
+                    <li><a href="#componentes" class="nav-link flex items-center gap-3 px-4 py-2 rounded-lg text-slate-600 hover:bg-slate-100 transition-colors duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+                        Componentes
+                    </a></li>
+                    <li><a href="#tecnologias" class="nav-link flex items-center gap-3 px-4 py-2 rounded-lg text-slate-600 hover:bg-slate-100 transition-colors duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                        Tecnologias
+                    </a></li>
+                </ul>
+            </nav>
+            <div class="absolute bottom-6 left-6 right-6">
+                <a href="https://deivisan.github.io/DeiviTech-Monte-Seu-Notebook/" target="_blank" class="w-full inline-block text-center bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200">
+                    Acessar o Projeto
+                </a>
+            </div>
+        </aside>
+        
+        <main class="lg:ml-64 flex-1 p-6 sm:p-8 md:p-12">
+            <div id="sobre" class="page-section max-w-4xl mx-auto">
+                <h2 class="text-3xl sm:text-4xl font-bold tracking-tight">Monte o notebook dos seus sonhos, de forma interativa e didática.</h2>
+                <p class="mt-6 text-lg text-slate-600">Este projeto é uma plataforma que permite a você montar um notebook personalizado, selecionando cada componente. Mais do que um simulador de preços, a DeiviTech oferece uma experiência educacional, mostrando como cada escolha impacta o desempenho e o custo final do seu equipamento. O objetivo é desmistificar essa jornada, oferecendo uma ferramenta intuitiva e poderosa.</p>
+                <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-xl border border-slate-200">
+                        <h3 class="font-semibold text-lg">Explore Componentes</h3>
+                        <p class="mt-2 text-slate-600">Conheça as peças que compõem um notebook e entenda suas funções de forma clara.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-slate-200">
+                        <h3 class="font-semibold text-lg">Visualize o Impacto</h3>
+                        <p class="mt-2 text-slate-600">Acompanhe em tempo real como suas escolhas afetam o preço e o desempenho do sistema.</p>
+                    </div>
+                     <div class="bg-white p-6 rounded-xl border border-slate-200">
+                        <h3 class="font-semibold text-lg">Garanta a Compatibilidade</h3>
+                        <p class="mt-2 text-slate-600">O sistema valida a compatibilidade entre os componentes, evitando configurações inviáveis.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="funcionalidades" class="page-section max-w-4xl mx-auto">
+                <h2 class="text-3xl sm:text-4xl font-bold tracking-tight">Funcionalidades Essenciais</h2>
+                <p class="mt-4 text-lg text-slate-600">Recursos avançados para uma montagem de notebook eficiente e agradável.</p>
+                <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 hover:shadow-lg hover:border-blue-500 transition-all duration-300">
+                        <h3 class="font-semibold">Configuração Modular</h3>
+                        <p class="mt-1 text-slate-600 text-sm">Navegue por seções dedicadas a cada componente.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 hover:shadow-lg hover:border-blue-500 transition-all duration-300">
+                        <h3 class="font-semibold">Preço em Tempo Real</h3>
+                        <p class="mt-1 text-slate-600 text-sm">Preço e desempenho atualizados instantaneamente.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 hover:shadow-lg hover:border-blue-500 transition-all duration-300">
+                        <h3 class="font-semibold">Modos Básico/Avançado</h3>
+                        <p class="mt-1 text-slate-600 text-sm">Visão simplificada ou detalhada para todos os níveis.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 hover:shadow-lg hover:border-blue-500 transition-all duration-300">
+                        <h3 class="font-semibold">Validação Inteligente</h3>
+                        <p class="mt-1 text-slate-600 text-sm">Sistema filtra e sinaliza peças incompatíveis.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 hover:shadow-lg hover:border-blue-500 transition-all duration-300">
+                        <h3 class="font-semibold">Estimativa de Troca</h3>
+                        <p class="mt-1 text-slate-600 text-sm">Calcule o valor do seu notebook usado para abater no novo.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 hover:shadow-lg hover:border-blue-500 transition-all duration-300">
+                        <h3 class="font-semibold">Animações de Scroll</h3>
+                        <p class="mt-1 text-slate-600 text-sm">Efeitos suaves para uma navegação fluida e moderna.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="componentes" class="page-section max-w-5xl mx-auto">
+                <h2 class="text-3xl sm:text-4xl font-bold tracking-tight">Conheça os Componentes</h2>
+                <p class="mt-4 text-lg text-slate-600">Entender cada peça é fundamental. Selecione um componente abaixo para ver seus detalhes e comparar seu desempenho relativo.</p>
+                <div class="mt-8 flex flex-wrap gap-2 justify-center">
+                    <button class="component-btn px-4 py-2 text-sm font-medium bg-white border border-slate-300 rounded-full hover:bg-slate-100 transition" data-component="cpu">Processador (CPU)</button>
+                    <button class="component-btn px-4 py-2 text-sm font-medium bg-white border border-slate-300 rounded-full hover:bg-slate-100 transition" data-component="gpu">Placa de Vídeo (GPU)</button>
+                    <button class="component-btn px-4 py-2 text-sm font-medium bg-white border border-slate-300 rounded-full hover:bg-slate-100 transition" data-component="ram">Memória RAM</button>
+                    <button class="component-btn px-4 py-2 text-sm font-medium bg-white border border-slate-300 rounded-full hover:bg-slate-100 transition" data-component="armazenamento">Armazenamento</button>
+                </div>
+                <div class="mt-10 bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h3 id="component-title" class="text-2xl font-bold"></h3>
+                        <p id="component-description" class="mt-4 text-slate-600"></p>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="componentChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="tecnologias" class="page-section max-w-4xl mx-auto">
+                <h2 class="text-3xl sm:text-4xl font-bold tracking-tight">Tecnologias Utilizadas</h2>
+                <p class="mt-4 text-lg text-slate-600">O projeto foi construído com uma base sólida de tecnologias web modernas.</p>
+                <div class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold">HTML5</h3>
+                        <p class="text-slate-500">Estrutura</p>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold">Tailwind CSS</h3>
+                        <p class="text-slate-500">Estilização</p>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold">JavaScript</h3>
+                        <p class="text-slate-500">Interatividade</p>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold">Chart.js</h3>
+                        <p class="text-slate-500">Visualização</p>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('.page-section');
+
+            function updateContent(hash) {
+                const targetHash = hash || window.location.hash || '#sobre';
+                
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                    if (`#${section.id}` === targetHash) {
+                        section.classList.add('active');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === targetHash) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetHash = e.currentTarget.getAttribute('href');
+                    history.pushState(null, null, targetHash);
+                    updateContent(targetHash);
+                });
+            });
+
+            window.addEventListener('popstate', () => updateContent());
+            updateContent();
+
+            const componentData = {
+                cpu: {
+                    title: 'Processador (CPU)',
+                    description: 'O "cérebro" do notebook, responsável por executar a maioria das operações. Mais núcleos e uma frequência maior significam mais velocidade para tarefas complexas e múltiplas.',
+                    chartData: {
+                        labels: ['Core i3', 'Core i5', 'Ryzen 5', 'Core i7', 'Ryzen 7', 'Core i9'],
+                        datasets: [{
+                            label: 'Desempenho Relativo',
+                            data: [35, 60, 65, 80, 85, 95],
+                            backgroundColor: 'rgba(59, 130, 246, 0.5)',
+                            borderColor: 'rgba(59, 130, 246, 1)',
+                            borderWidth: 1
+                        }]
+                    }
+                },
+                gpu: {
+                    title: 'Placa de Vídeo (GPU)',
+                    description: 'Responsável por processar e renderizar imagens, vídeos e gráficos 3D. Uma GPU dedicada é essencial para jogos, edição de vídeo e design gráfico.',
+                    chartData: {
+                        labels: ['Integrada', 'RTX 3050', 'RTX 4050', 'RTX 4060', 'RTX 4070', 'RTX 4080'],
+                        datasets: [{
+                            label: 'Desempenho Gráfico',
+                            data: [15, 45, 60, 75, 88, 97],
+                            backgroundColor: 'rgba(16, 185, 129, 0.5)',
+                            borderColor: 'rgba(16, 185, 129, 1)',
+                            borderWidth: 1
+                        }]
+                    }
+                },
+                ram: {
+                    title: 'Memória RAM',
+                    description: 'O "espaço de trabalho" temporário do notebook. Mais RAM permite que mais programas rodem simultaneamente sem lentidão. DDR5 é a tecnologia mais recente e rápida.',
+                    chartData: {
+                        labels: ['8GB DDR4', '16GB DDR4', '16GB DDR5', '32GB DDR5', '64GB DDR5'],
+                        datasets: [{
+                            label: 'Capacidade Multitarefa',
+                            data: [30, 55, 65, 85, 98],
+                            backgroundColor: 'rgba(139, 92, 246, 0.5)',
+                            borderColor: 'rgba(139, 92, 246, 1)',
+                            borderWidth: 1
+                        }]
+                    }
+                },
+                armazenamento: {
+                    title: 'Armazenamento',
+                    description: 'Onde seus arquivos e o sistema operacional são guardados. SSDs NVMe são a opção mais rápida, ideais para velocidade de carregamento de programas e do sistema.',
+                    chartData: {
+                        labels: ['HDD 7200rpm', 'SSD SATA', 'SSD NVMe Gen3', 'SSD NVMe Gen4', 'SSD NVMe Gen5'],
+                        datasets: [{
+                            label: 'Velocidade de Leitura/Escrita',
+                            data: [5, 30, 65, 85, 99],
+                            backgroundColor: 'rgba(239, 68, 68, 0.5)',
+                            borderColor: 'rgba(239, 68, 68, 1)',
+                            borderWidth: 1
+                        }]
+                    }
+                }
+            };
+            
+            const componentBtns = document.querySelectorAll('.component-btn');
+            const componentTitle = document.getElementById('component-title');
+            const componentDescription = document.getElementById('component-description');
+            const ctx = document.getElementById('componentChart').getContext('2d');
+            let componentChart;
+
+            function updateChart(data) {
+                if (componentChart) {
+                    componentChart.destroy();
+                }
+                componentChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: data,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        indexAxis: 'y',
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                max: 100,
+                                grid: {
+                                    color: 'rgba(203, 213, 225, 0.3)'
+                                }
+                            },
+                            y: {
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return `${context.dataset.label}: ${context.raw}%`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            function selectComponent(componentKey) {
+                const data = componentData[componentKey];
+                componentTitle.textContent = data.title;
+                componentDescription.textContent = data.description;
+                updateChart(data.chartData);
+
+                componentBtns.forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.dataset.component === componentKey) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+
+            componentBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    selectComponent(e.currentTarget.dataset.component);
+                });
+            });
+
+            selectComponent('cpu');
+        });
+    </script>
+</body>
+</html>
