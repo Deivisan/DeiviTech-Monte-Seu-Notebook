@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DeiviTech: Monte Seu Notebook Profissional</title>
+    <title>DeiviTech: Monte Seu Notebook Personalizado</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome para ícones -->
@@ -73,7 +73,7 @@
             box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
         }
         .option-item.disabled {
-            opacity: 0.6; /* Estado desabilitado mais visível */
+            opacity: 0.4; /* Estado desabilitado mais visível */
             cursor: not-allowed;
             background-color: #1A1A1A;
             border-color: #2A2A2A;
@@ -146,6 +146,9 @@
             color: #ffffff;
             box-shadow: 0 2px 8px rgba(0, 123, 255, 0.4);
         }
+        .summary-item-name {
+            color: var(--color-text-light); /* Cor para o nome do item no resumo */
+        }
         .summary-item-price {
             color: var(--color-primary-blue);
             font-weight: 500;
@@ -154,16 +157,53 @@
             color: var(--color-accent-red);
             font-weight: 500;
         }
+        .performance-bar-container {
+            width: 100%;
+            background-color: #333;
+            border-radius: 9999px; /* Full rounded */
+            height: 1.5rem; /* Increased height */
+            overflow: hidden;
+            margin-top: 1rem;
+            border: 1px solid var(--color-border-subtle);
+        }
+        .performance-bar {
+            height: 100%;
+            background: linear-gradient(to right, #007BFF, #28A745); /* Gradient from blue to green */
+            width: 0%;
+            border-radius: 9999px;
+            transition: width 0.5s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.875rem;
+        }
+        .incompatibility-tag {
+            background-color: var(--color-accent-red);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            margin-left: 0.5rem;
+            display: inline-block;
+        }
     </style>
 </head>
 <body class="bg-neutral-950">
     <main class="container mx-auto px-4 py-8 md:py-12">
         <header class="text-center mb-12">
             <h1 class="text-4xl md:text-5xl font-bold text-blue-500">DeiviTech: Monte Seu Notebook Personalizado</h1>
-            <p class="mt-4 text-lg text-gray-400">Escolha cada componente e veja o preço em tempo real!</p>
+            <p class="mt-4 text-lg text-gray-400">Escolha cada componente e veja o preço e o desempenho em tempo real!</p>
             <div class="mt-8 flex justify-center gap-4">
                 <button id="basic-mode-btn" class="mode-toggle-btn py-2 px-6 rounded-lg font-semibold active">Modo Básico</button>
                 <button id="advanced-mode-btn" class="mode-toggle-btn py-2 px-6 rounded-lg font-semibold">Modo Avançado</button>
+            </div>
+            <div class="mt-8 p-6 bg-gray-800 rounded-lg shadow-xl border border-blue-600">
+                <h2 class="text-2xl font-bold text-blue-400 mb-4">Bem-vindo à DeiviTech!</h2>
+                <p class="text-gray-300 text-md leading-relaxed">
+                    Aqui você tem o poder de criar o notebook dos seus sonhos. Selecione cada componente, desde a carcaça até a bateria, e veja como suas escolhas impactam o preço e o desempenho total do seu sistema. Nossa plataforma garante compatibilidade e oferece uma experiência de montagem intuitiva e visual. Comece a construir seu futuro tecnológico hoje mesmo!
+                </p>
             </div>
         </header>
 
@@ -329,6 +369,30 @@
                         <p id="file-evaluation-result" class="mt-4 text-center text-md text-red-300"></p>
                     </div>
                 </section>
+
+                <!-- Nova Seção: Sugerir Configuração -->
+                <section id="suggest-config-section" class="card">
+                    <h2 class="text-2xl font-bold mb-6 text-blue-400">13. Sugerir Configuração</h2>
+                    <p class="text-gray-300 mb-4">Escolha um perfil de uso para uma sugestão de configuração otimizada:</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <button class="suggest-config-btn option-item justify-center" data-profile="general-use">
+                            <span class="font-medium text-gray-200">Uso Geral</span>
+                            <p class="text-sm text-gray-400">Navegação, estudos, trabalho leve.</p>
+                        </button>
+                        <button class="suggest-config-btn option-item justify-center" data-profile="gaming">
+                            <span class="font-medium text-gray-200">Gaming</span>
+                            <p class="text-sm text-gray-400">Jogos modernos em alta performance.</p>
+                        </button>
+                        <button class="suggest-config-btn option-item justify-center" data-profile="professional-productivity">
+                            <span class="font-medium text-gray-200">Produtividade Profissional</span>
+                            <p class="text-sm text-gray-400">Edição de vídeo, design, programação.</p>
+                        </button>
+                        <button class="suggest-config-btn option-item justify-center" data-profile="ultrabook">
+                            <span class="font-medium text-gray-200">Ultrabook / Portabilidade</span>
+                            <p class="text-sm text-gray-400">Leveza e bateria de longa duração.</p>
+                        </button>
+                    </div>
+                </section>
             </div>
 
             <!-- Seção Resumo do Pedido -->
@@ -336,21 +400,14 @@
                 <div class="sticky-summary card p-6 bg-gray-800 border-blue-600">
                     <h2 class="text-2xl font-bold mb-4 text-blue-400">Resumo do Pedido</h2>
                     <div id="summary-details" class="text-gray-300 text-sm space-y-2 mb-6">
-                        <p><strong>Carcaça:</strong> <span id="summary-casing">N/A</span></p>
-                        <p><strong>Placa Mãe:</strong> <span id="summary-motherboard">N/A</span></p>
-                        <p><strong>CPU:</strong> <span id="summary-cpu">N/A</span></p>
-                        <p><strong>RAM:</strong> <span id="summary-ram">N/A</span></p>
-                        <p><strong>Armazenamento 1:</strong> <span id="summary-storage1">N/A</span></p>
-                        <p><strong>Armazenamento 2:</strong> <span id="summary-storage2">N/A</span></p>
-                        <p><strong>GPU:</strong> <span id="summary-gpu">N/A</span></p>
-                        <p><strong>Tela:</strong> <span id="summary-display">N/A</span></p>
-                        <p><strong>Teclado:</strong> <span id="summary-keyboard">N/A</span></p>
-                        <p><strong>Bateria:</strong> <span id="summary-battery">N/A</span></p>
-                        <p><strong>Periféricos:</strong> <span id="summary-peripherals">N/A</span></p>
-                        <p class="text-red-300"><strong>Crédito de Troca:</strong> <span id="summary-tradein-credit">R$ 0,00</span></p>
+                        <!-- Detalhes do resumo serão injetados aqui -->
                     </div>
                     <div class="border-t border-blue-600 pt-4 mt-4">
                         <p class="text-xl font-bold text-blue-400">Total: <span id="total-price-display">R$ 0,00</span></p>
+                        <h3 class="text-lg font-bold text-blue-400 mt-4">Desempenho Total do Sistema:</h3>
+                        <div class="performance-bar-container">
+                            <div id="performance-bar" class="performance-bar">0%</div>
+                        </div>
                     </div>
                     <button id="order-button" class="mt-6 w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200">
                         Finalizar Pedido
@@ -410,100 +467,100 @@
         // Dados dos componentes para diferentes partes do notebook
         const components = {
             casing: [
-                { id: 'standard-black', name: 'Carcaça Padrão (Preta)', price: 200, description_basic: 'Material durável e leve, acabamento fosco.', description_advanced: 'Carcaça de policarbonato de alta densidade com acabamento anodizado fosco, resistente a arranhões.', image: 'https://placehold.co/400x250/121212/e0e0e0?text=Notebook+Preto', stock: Math.floor(Math.random() * 10) + 5, basic_only: true, advanced_only: true },
-                { id: 'standard-silver', name: 'Carcaça Padrão (Prata)', price: 220, description_basic: 'Material durável e leve, acabamento prateado.', description_advanced: 'Carcaça de policarbonato com revestimento metálico prateado, oferece equilíbrio entre peso e durabilidade.', image: 'https://placehold.co/400x250/a0a0a0/121212?text=Notebook+Prata', stock: Math.floor(Math.random() * 10) + 5, basic_only: true, advanced_only: true },
-                { id: 'premium-aluminum', name: 'Carcaça Premium (Alumínio)', price: 500, description_basic: 'Acabamento sofisticado e maior resistência, design elegante.', description_advanced: 'Chassi unibody em liga de alumínio de grau aeroespacial, oferecendo rigidez estrutural superior e dissipação térmica aprimorada.', image: 'https://placehold.co/400x250/808080/121212?text=Notebook+Aluminio', stock: Math.floor(Math.random() * 10) + 5, basic_only: true, advanced_only: true },
-                { id: 'gaming-aggressive', name: 'Carcaça Gaming (Design Agressivo)', price: 650, description_basic: 'Estilo arrojado com ventilação otimizada e iluminação RGB.', description_advanced: 'Design angular em compósito de fibra de carbono e policarbonato, com zonas de ventilação agressivas e iluminação RGB personalizável (perfil ICC).', image: 'https://placehold.co/400x250/400000/e0e0e0?text=Notebook+Gaming', stock: Math.floor(Math.random() * 10) + 5, basic_only: false, advanced_only: true },
-                { id: 'ultrabook-slim', name: 'Carcaça Ultrabook (Fina)', price: 700, description_basic: 'Design ultrafino e leve, ideal para portabilidade.', description_advanced: 'Construção em liga de magnésio-alumínio, resultando em um perfil de 12mm e peso inferior a 1.2kg, otimizado para portabilidade extrema.', image: 'https://placehold.co/400x250/000040/e0e0e0?text=Notebook+Ultrafino', stock: Math.floor(Math.random() * 10) + 5, basic_only: false, advanced_only: true }
+                { id: 'standard-black', name: 'Carcaça Padrão (Preta)', price: 200, description_basic: 'Material durável e leve, acabamento fosco.', description_advanced: 'Carcaça de policarbonato de alta densidade com acabamento anodizado fosco, resistente a arranhões.', image: 'https://placehold.co/400x250/121212/e0e0e0?text=Notebook+Preto', stock: Math.floor(Math.random() * 10) + 5, basic_only: true, advanced_only: true, performance_score: 5 },
+                { id: 'standard-silver', name: 'Carcaça Padrão (Prata)', price: 220, description_basic: 'Material durável e leve, acabamento prateado.', description_advanced: 'Carcaça de policarbonato com revestimento metálico prateado, oferece equilíbrio entre peso e durabilidade.', image: 'https://placehold.co/400x250/a0a0a0/121212?text=Notebook+Prata', stock: Math.floor(Math.random() * 10) + 5, basic_only: true, advanced_only: true, performance_score: 6 },
+                { id: 'premium-aluminum', name: 'Carcaça Premium (Alumínio)', price: 500, description_basic: 'Acabamento sofisticado e maior resistência, design elegante.', description_advanced: 'Chassi unibody em liga de alumínio de grau aeroespacial, oferecendo rigidez estrutural superior e dissipação térmica aprimorada.', image: 'https://placehold.co/400x250/808080/121212?text=Notebook+Aluminio', stock: Math.floor(Math.random() * 10) + 5, basic_only: true, advanced_only: true, performance_score: 8 },
+                { id: 'gaming-aggressive', name: 'Carcaça Gaming (Design Agressivo)', price: 650, description_basic: 'Estilo arrojado com ventilação otimizada e iluminação RGB.', description_advanced: 'Design angular em compósito de fibra de carbono e policarbonato, com zonas de ventilação agressivas e iluminação RGB personalizável (perfil ICC).', image: 'https://placehold.co/400x250/400000/e0e0e0?text=Notebook+Gaming', stock: Math.floor(Math.random() * 10) + 5, basic_only: false, advanced_only: true, performance_score: 9 },
+                { id: 'ultrabook-slim', name: 'Carcaça Ultrabook (Fina)', price: 700, description_basic: 'Design ultrafino e leve, ideal para portabilidade.', description_advanced: 'Construção em liga de magnésio-alumínio, resultando em um perfil de 12mm e peso inferior a 1.2kg, otimizado para portabilidade extrema.', image: 'https://placehold.co/400x250/000040/e0e0e0?text=Notebook+Ultrafino', stock: Math.floor(Math.random() * 10) + 5, basic_only: false, advanced_only: true, performance_score: 7 }
             ],
             motherboard: [
-                { id: 'intel-h610', name: 'Intel H610 (Básico)', price: 300, description_basic: 'Chipset de entrada para CPUs Intel, essencial.', description_advanced: 'Chipset Intel H610, suporte a LGA1700, 2 slots DDR4 SO-DIMM (máx. 32GB), 1x M.2 PCIe Gen3, 2x SATA III, 1x PCIe x16 Gen4.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, cpu_socket: 'LGA1700', ram_type: 'DDR4', ram_slots: 2, nvme_slots: 1, sata_ports: 2, pcie_gen: 'Gen4' },
-                { id: 'intel-b760', name: 'Intel B760 (Intermediário)', price: 450, description_basic: 'Chipset balanceado para CPUs Intel, bom para uso geral.', description_advanced: 'Chipset Intel B760, suporte a LGA1700, 2 slots DDR4 SO-DIMM (máx. 64GB), 2x M.2 PCIe Gen4, 4x SATA III, 1x PCIe x16 Gen4.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, cpu_socket: 'LGA1700', ram_type: 'DDR4', ram_slots: 2, nvme_slots: 2, sata_ports: 4, pcie_gen: 'Gen4' },
-                { id: 'intel-z790', name: 'Intel Z790 (Avançado)', price: 800, description_basic: 'Chipset high-end para CPUs Intel, overclock e conectividade avançada.', description_advanced: 'Chipset Intel Z790, suporte a LGA1700, 4 slots DDR5 SO-DIMM (máx. 128GB), 3x M.2 PCIe Gen5, 4x SATA III, 1x PCIe x16 Gen5, Thunderbolt 4.', advanced_only: true, stock: Math.floor(Math.random() * 10) + 5, cpu_socket: 'LGA1700', ram_type: 'DDR5', ram_slots: 4, nvme_slots: 3, sata_ports: 4, pcie_gen: 'Gen5' },
-                { id: 'amd-a620', name: 'AMD A620 (Básico)', price: 280, description_basic: 'Chipset de entrada para CPUs AMD, essencial.', description_advanced: 'Chipset AMD A620, suporte a AM5, 2 slots DDR5 SO-DIMM (máx. 32GB), 1x M.2 PCIe Gen4, 2x SATA III, 1x PCIe x16 Gen4.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, cpu_socket: 'AM5', ram_type: 'DDR5', ram_slots: 2, nvme_slots: 1, sata_ports: 2, pcie_gen: 'Gen4' },
-                { id: 'amd-b650', name: 'AMD B650 (Intermediário)', price: 420, description_basic: 'Chipset balanceado para CPUs AMD, bom para uso geral.', description_advanced: 'Chipset AMD B650, suporte a AM5, 2 slots DDR5 SO-DIMM (máx. 64GB), 2x M.2 PCIe Gen4, 4x SATA III, 1x PCIe x16 Gen4.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, cpu_socket: 'AM5', ram_type: 'DDR5', ram_slots: 2, nvme_slots: 2, sata_ports: 4, pcie_gen: 'Gen4' },
-                { id: 'amd-x670e', name: 'AMD X670E (Avançado)', price: 750, description_basic: 'Chipset high-end para CPUs AMD, múltiplas GPUs e PCIe 5.0.', description_advanced: 'Chipset AMD X670E, suporte a AM5, 4 slots DDR5 SO-DIMM (máx. 128GB), 3x M.2 PCIe Gen5, 4x SATA III, 1x PCIe x16 Gen5, Wi-Fi 6E.', advanced_only: true, stock: Math.floor(Math.random() * 10) + 5, cpu_socket: 'AM5', ram_type: 'DDR5', ram_slots: 4, nvme_slots: 3, sata_ports: 4, pcie_gen: 'Gen5' },
-                { id: 'intel-z790-thunderbolt', name: 'Intel Z790 (Thunderbolt 4)', price: 950, description_basic: 'Chipset Z790 com portas Thunderbolt 4 para alta velocidade.', description_advanced: 'Chipset Intel Z790 com controladora Thunderbolt 4 integrada, oferecendo 40Gbps por porta, ideal para estações de trabalho móveis.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, cpu_socket: 'LGA1700', ram_type: 'DDR5', ram_slots: 4, nvme_slots: 3, sata_ports: 4, pcie_gen: 'Gen5' },
-                { id: 'amd-x670e-wifi6e', name: 'AMD X670E (Wi-Fi 6E)', price: 880, description_basic: 'Chipset X670E com suporte a Wi-Fi 6E para conectividade ultra-rápida.', description_advanced: 'Chipset AMD X670E com módulo Wi-Fi 6E e Bluetooth 5.3 integrados, garantindo conectividade sem fio de última geração.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, cpu_socket: 'AM5', ram_type: 'DDR5', ram_slots: 4, nvme_slots: 3, sata_ports: 4, pcie_gen: 'Gen5' }
+                { id: 'intel-h610', name: 'Intel H610 (Básico)', price: 300, description_basic: 'Chipset de entrada para CPUs Intel, essencial.', description_advanced: 'Chipset Intel H610, suporte a LGA1700, 2 slots DDR4 SO-DIMM (máx. 32GB), 1x M.2 PCIe Gen3, 2x SATA III, 1x PCIe x16 Gen4.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, cpu_socket: 'LGA1700', ram_type: 'DDR4', ram_slots: 2, nvme_slots: 1, sata_ports: 2, pcie_gen: 'Gen4', performance_score: 10 },
+                { id: 'intel-b760', name: 'Intel B760 (Intermediário)', price: 450, description_basic: 'Chipset balanceado para CPUs Intel, bom para uso geral.', description_advanced: 'Chipset Intel B760, suporte a LGA1700, 2 slots DDR4 SO-DIMM (máx. 64GB), 2x M.2 PCIe Gen4, 4x SATA III, 1x PCIe x16 Gen4.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, cpu_socket: 'LGA1700', ram_type: 'DDR4', ram_slots: 2, nvme_slots: 2, sata_ports: 4, pcie_gen: 'Gen4', performance_score: 20 },
+                { id: 'intel-z790', name: 'Intel Z790 (Avançado)', price: 800, description_basic: 'Chipset high-end para CPUs Intel, overclock e conectividade avançada.', description_advanced: 'Chipset Intel Z790, suporte a LGA1700, 4 slots DDR5 SO-DIMM (máx. 128GB), 3x M.2 PCIe Gen5, 4x SATA III, 1x PCIe x16 Gen5, Thunderbolt 4.', advanced_only: true, stock: Math.floor(Math.random() * 10) + 5, cpu_socket: 'LGA1700', ram_type: 'DDR5', ram_slots: 4, nvme_slots: 3, sata_ports: 4, pcie_gen: 'Gen5', performance_score: 40 },
+                { id: 'amd-a620', name: 'AMD A620 (Básico)', price: 280, description_basic: 'Chipset de entrada para CPUs AMD, essencial.', description_advanced: 'Chipset AMD A620, suporte a AM5, 2 slots DDR5 SO-DIMM (máx. 32GB), 1x M.2 PCIe Gen4, 2x SATA III, 1x PCIe x16 Gen4.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, cpu_socket: 'AM5', ram_type: 'DDR5', ram_slots: 2, nvme_slots: 1, sata_ports: 2, pcie_gen: 'Gen4', performance_score: 12 },
+                { id: 'amd-b650', name: 'AMD B650 (Intermediário)', price: 420, description_basic: 'Chipset balanceado para CPUs AMD, bom para uso geral.', description_advanced: 'Chipset AMD B650, suporte a AM5, 2 slots DDR5 SO-DIMM (máx. 64GB), 2x M.2 PCIe Gen4, 4x SATA III, 1x PCIe x16 Gen4.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, cpu_socket: 'AM5', ram_type: 'DDR5', ram_slots: 2, nvme_slots: 2, sata_ports: 4, pcie_gen: 'Gen4', performance_score: 22 },
+                { id: 'amd-x670e', name: 'AMD X670E (Avançado)', price: 750, description_basic: 'Chipset high-end para CPUs AMD, múltiplas GPUs e PCIe 5.0.', description_advanced: 'Chipset AMD X670E, suporte a AM5, 4 slots DDR5 SO-DIMM (máx. 128GB), 3x M.2 PCIe Gen5, 4x SATA III, 1x PCIe x16 Gen5, Wi-Fi 6E.', advanced_only: true, stock: Math.floor(Math.random() * 10) + 5, cpu_socket: 'AM5', ram_type: 'DDR5', ram_slots: 4, nvme_slots: 3, sata_ports: 4, pcie_gen: 'Gen5', performance_score: 42 },
+                { id: 'intel-z790-thunderbolt', name: 'Intel Z790 (Thunderbolt 4)', price: 950, description_basic: 'Chipset Z790 com portas Thunderbolt 4 para alta velocidade.', description_advanced: 'Chipset Intel Z790 com controladora Thunderbolt 4 integrada, oferecendo 40Gbps por porta, ideal para estações de trabalho móveis.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, cpu_socket: 'LGA1700', ram_type: 'DDR5', ram_slots: 4, nvme_slots: 3, sata_ports: 4, pcie_gen: 'Gen5', performance_score: 45 },
+                { id: 'amd-x670e-wifi6e', name: 'AMD X670E (Wi-Fi 6E)', price: 880, description_basic: 'Chipset X670E com suporte a Wi-Fi 6E para conectividade ultra-rápida.', description_advanced: 'Chipset AMD X670E com módulo Wi-Fi 6E e Bluetooth 5.3 integrados, garantindo conectividade sem fio de última geração.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, cpu_socket: 'AM5', ram_type: 'DDR5', ram_slots: 4, nvme_slots: 3, sata_ports: 4, pcie_gen: 'Gen5', performance_score: 47 }
             ],
             cpu: [
-                { id: 'i5-13600hx', name: 'Intel Core i5-13600HX', price: 1800, description_basic: 'Excelente para produtividade e jogos leves.', description_advanced: 'Processador Intel Core i5-13600HX (14 Cores, 20 Threads, até 4.8 GHz), ideal para multitarefas e gaming em 1080p.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, socket: 'LGA1700' },
-                { id: 'i7-13700hx', name: 'Intel Core i7-13700HX', price: 2500, description_basic: 'Alto desempenho para multitarefas e jogos.', description_advanced: 'Processador Intel Core i7-13700HX (16 Cores, 24 Threads, até 5.0 GHz), performance superior para aplicações exigentes e jogos em altas taxas de quadros.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, socket: 'LGA1700' },
-                { id: 'i9-13900hx', name: 'Intel Core i9-13900HX', price: 3500, description_basic: 'Potência máxima para tarefas exigentes e gaming extremo.', description_advanced: 'Processador Intel Core i9-13900HX (24 Cores, 32 Threads, até 5.4 GHz), o ápice da performance para gaming, edição de vídeo 4K e renderização 3D.', advanced_only: true, stock: Math.floor(Math.random() * 10) + 5, socket: 'LGA1700' },
-                { id: 'r7-7745hx', name: 'AMD Ryzen 7 7745HX', price: 2300, description_basic: 'Ótimo equilíbrio entre performance e eficiência.', description_advanced: 'Processador AMD Ryzen 7 7745HX (8 Cores, 16 Threads, até 5.1 GHz), arquitetura Zen 4, excelente para jogos e produtividade com eficiência energética.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, socket: 'AM5' },
-                { id: 'r9-7945hx', name: 'AMD Ryzen 9 7945HX', price: 3300, description_basic: 'Desempenho de ponta para criadores de conteúdo e gamers.', description_advanced: 'Processador AMD Ryzen 9 7945HX (16 Cores, 32 Threads, até 5.4 GHz), a solução AMD de ponta para cargas de trabalho intensas e gaming competitivo.', advanced_only: true, stock: Math.floor(Math.random() * 10) + 5, socket: 'AM5' },
-                { id: 'i5-14600hx', name: 'Intel Core i5-14600HX', price: 2000, description_basic: 'Geração mais recente do i5, melhor eficiência.', description_advanced: 'Processador Intel Core i5-14600HX (14 Cores, 20 Threads, até 5.0 GHz), otimizações de IA e eficiência aprimorada sobre a geração anterior.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, socket: 'LGA1700' },
-                { id: 'i7-14700hx', name: 'Intel Core i7-14700HX', price: 2800, description_basic: 'Geração mais recente do i7, com mais núcleos.', description_advanced: 'Processador Intel Core i7-14700HX (20 Cores, 28 Threads, até 5.5 GHz), aumento significativo de núcleos e threads para multitarefas extremas.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, socket: 'LGA1700' },
-                { id: 'i9-14900hx', name: 'Intel Core i9-14900HX', price: 4000, description_basic: 'O topo de linha Intel, para o máximo de performance.', description_advanced: 'Processador Intel Core i9-14900HX (24 Cores, 32 Threads, até 5.8 GHz), desempenho inigualável para qualquer cenário de uso.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, socket: 'LGA1700' },
-                { id: 'r7-8845hs', name: 'AMD Ryzen 7 8845HS', price: 2600, description_basic: 'Nova geração HS, otimizada para eficiência e IA.', description_advanced: 'Processador AMD Ryzen 7 8845HS (8 Cores, 16 Threads, até 5.1 GHz) com Ryzen AI, ideal para notebooks finos e leves com recursos de IA.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, socket: 'AM5' },
-                { id: 'r9-8945hs', name: 'AMD Ryzen 9 8945HS', price: 3800, description_basic: 'O topo de linha AMD HS, com gráficos integrados potentes.', description_advanced: 'Processador AMD Ryzen 9 8945HS (8 Cores, 16 Threads, até 5.2 GHz) com gráficos Radeon 780M, excelente para ultrabooks de alto desempenho.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, socket: 'AM5' }
+                { id: 'i5-13600hx', name: 'Intel Core i5-13600HX', price: 1800, description_basic: 'Excelente para produtividade e jogos leves.', description_advanced: 'Processador Intel Core i5-13600HX (14 Cores, 20 Threads, até 4.8 GHz), ideal para multitarefas e gaming em 1080p.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, socket: 'LGA1700', performance_score: 40 },
+                { id: 'i7-13700hx', name: 'Intel Core i7-13700HX', price: 2500, description_basic: 'Alto desempenho para multitarefas e jogos.', description_advanced: 'Processador Intel Core i7-13700HX (16 Cores, 24 Threads, até 5.0 GHz), performance superior para aplicações exigentes e jogos em altas taxas de quadros.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, socket: 'LGA1700', performance_score: 60 },
+                { id: 'i9-13900hx', name: 'Intel Core i9-13900HX', price: 3500, description_basic: 'Potência máxima para tarefas exigentes e gaming extremo.', description_advanced: 'Processador Intel Core i9-13900HX (24 Cores, 32 Threads, até 5.4 GHz), o ápice da performance para gaming, edição de vídeo 4K e renderização 3D.', advanced_only: true, stock: Math.floor(Math.random() * 10) + 5, socket: 'LGA1700', performance_score: 80 },
+                { id: 'r7-7745hx', name: 'AMD Ryzen 7 7745HX', price: 2300, description_basic: 'Ótimo equilíbrio entre performance e eficiência.', description_advanced: 'Processador AMD Ryzen 7 7745HX (8 Cores, 16 Threads, até 5.1 GHz), arquitetura Zen 4, excelente para jogos e produtividade com eficiência energética.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, socket: 'AM5', performance_score: 55 },
+                { id: 'r9-7945hx', name: 'AMD Ryzen 9 7945HX', price: 3300, description_basic: 'Desempenho de ponta para criadores de conteúdo e gamers.', description_advanced: 'Processador AMD Ryzen 9 7945HX (16 Cores, 32 Threads, até 5.4 GHz), a solução AMD de ponta para cargas de trabalho intensas e gaming competitivo.', advanced_only: true, stock: Math.floor(Math.random() * 10) + 5, socket: 'AM5', performance_score: 75 },
+                { id: 'i5-14600hx', name: 'Intel Core i5-14600HX', price: 2000, description_basic: 'Geração mais recente do i5, melhor eficiência.', description_advanced: 'Processador Intel Core i5-14600HX (14 Cores, 20 Threads, até 5.0 GHz), otimizações de IA e eficiência aprimorada sobre a geração anterior.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, socket: 'LGA1700', performance_score: 45 },
+                { id: 'i7-14700hx', name: 'Intel Core i7-14700HX', price: 2800, description_basic: 'Geração mais recente do i7, com mais núcleos.', description_advanced: 'Processador Intel Core i7-14700HX (20 Cores, 28 Threads, até 5.5 GHz), aumento significativo de núcleos e threads para multitarefas extremas.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, socket: 'LGA1700', performance_score: 65 },
+                { id: 'i9-14900hx', name: 'Intel Core i9-14900HX', price: 4000, description_basic: 'O topo de linha Intel, para o máximo de performance.', description_advanced: 'Processador Intel Core i9-14900HX (24 Cores, 32 Threads, até 5.8 GHz), desempenho inigualável para qualquer cenário de uso.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, socket: 'LGA1700', performance_score: 85 },
+                { id: 'r7-8845hs', name: 'AMD Ryzen 7 8845HS', price: 2600, description_basic: 'Nova geração HS, otimizada para eficiência e IA.', description_advanced: 'Processador AMD Ryzen 7 8845HS (8 Cores, 16 Threads, até 5.1 GHz) com Ryzen AI, ideal para notebooks finos e leves com recursos de IA.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, socket: 'AM5', performance_score: 60 },
+                { id: 'r9-8945hs', name: 'AMD Ryzen 9 8945HS', price: 3800, description_basic: 'O topo de linha AMD HS, com gráficos integrados potentes.', description_advanced: 'Processador AMD Ryzen 9 8945HS (8 Cores, 16 Threads, até 5.2 GHz) com gráficos Radeon 780M, excelente para ultrabooks de alto desempenho.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, socket: 'AM5', performance_score: 80 }
             ],
             ram: [
-                { id: 'ddr4-8gb-3200', name: 'DDR4 8GB (3200MHz)', price: 200, description_basic: 'Ideal para uso básico e navegação.', description_advanced: 'Módulo SO-DIMM DDR4 de 8GB, 3200MHz CL22, ideal para sistemas com chipset DDR4.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, type: 'DDR4' },
-                { id: 'ddr4-16gb-3200', name: 'DDR4 16GB (3200MHz)', price: 350, description_basic: 'Recomendado para multitarefas e jogos.', description_advanced: 'Módulo SO-DIMM DDR4 de 16GB, 3200MHz CL22, para maior capacidade em plataformas DDR4.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, type: 'DDR4' },
-                { id: 'ddr4-32gb-3200', name: 'DDR4 32GB (3200MHz)', price: 650, description_basic: 'Para profissionais e gamers exigentes.', description_advanced: 'Módulo SO-DIMM DDR4 de 32GB, 3200MHz CL22, máxima capacidade para notebooks DDR4.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, type: 'DDR4' },
-                { id: 'ddr5-8gb-4800', name: 'DDR5 8GB (4800MHz)', price: 250, description_basic: 'Ideal para uso básico e navegação.', description_advanced: 'Módulo SO-DIMM DDR5 de 8GB, 4800MHz CL40, para plataformas DDR5 de entrada.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, type: 'DDR5' },
-                { id: 'ddr5-16gb-4800', name: 'DDR5 16GB (4800MHz)', price: 450, description_basic: 'Recomendado para multitarefas e jogos.', description_advanced: 'Módulo SO-DIMM DDR5 de 16GB, 4800MHz CL40, padrão para notebooks modernos.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, type: 'DDR5' },
-                { id: 'ddr5-32gb-4800', name: 'DDR5 32GB (4800MHz)', price: 850, description_basic: 'Para profissionais e gamers exigentes.', description_advanced: 'Módulo SO-DIMM DDR5 de 32GB, 4800MHz CL40, alta capacidade para DDR5.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, type: 'DDR5' },
-                { id: 'ddr5-16gb-5200', name: 'DDR5 16GB (5200MHz)', price: 500, description_basic: 'Maior velocidade para desempenho aprimorado.', description_advanced: 'Módulo SO-DIMM DDR5 de 16GB, 5200MHz CL38, otimizado para CPUs de alto desempenho.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, type: 'DDR5' },
-                { id: 'ddr5-32gb-5200', name: 'DDR5 32GB (5200MHz)', price: 950, description_basic: 'Alta velocidade para cargas de trabalho pesadas.', description_advanced: 'Módulo SO-DIMM DDR5 de 32GB, 5200MHz CL38, para edição de vídeo e máquinas virtuais.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, type: 'DDR5' },
-                { id: 'ddr5-64gb-5200', name: 'DDR5 64GB (5200MHz)', price: 1800, description_basic: 'Máxima capacidade para virtualização e edição 4K.', description_advanced: 'Módulo SO-DIMM DDR5 de 64GB, 5200MHz CL38, capacidade extrema para as tarefas mais exigentes.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, type: 'DDR5' },
-                { id: 'ddr5-32gb-5600', name: 'DDR5 32GB (5600MHz)', price: 1050, description_basic: 'Velocidade extrema para o máximo de FPS.', description_advanced: 'Módulo SO-DIMM DDR5 de 32GB, 5600MHz CL36, o mais rápido para gaming competitivo e aplicações de baixa latência.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, type: 'DDR5' },
-                { id: 'ddr5-64gb-5600', name: 'DDR5 64GB (5600MHz)', price: 2000, description_basic: 'O ápice da performance em memória RAM.', description_advanced: 'Módulo SO-DIMM DDR5 de 64GB, 5600MHz CL36, a melhor performance e capacidade disponível para notebooks.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, type: 'DDR5' }
+                { id: 'ddr4-8gb-3200', name: 'DDR4 8GB (3200MHz)', price: 200, description_basic: 'Ideal para uso básico e navegação.', description_advanced: 'Módulo SO-DIMM DDR4 de 8GB, 3200MHz CL22, ideal para sistemas com chipset DDR4.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, type: 'DDR4', performance_score: 5 },
+                { id: 'ddr4-16gb-3200', name: 'DDR4 16GB (3200MHz)', price: 350, description_basic: 'Recomendado para multitarefas e jogos.', description_advanced: 'Módulo SO-DIMM DDR4 de 16GB, 3200MHz CL22, para maior capacidade em plataformas DDR4.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, type: 'DDR4', performance_score: 10 },
+                { id: 'ddr4-32gb-3200', name: 'DDR4 32GB (3200MHz)', price: 650, description_basic: 'Para profissionais e gamers exigentes.', description_advanced: 'Módulo SO-DIMM DDR4 de 32GB, 3200MHz CL22, máxima capacidade para notebooks DDR4.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, type: 'DDR4', performance_score: 15 },
+                { id: 'ddr5-8gb-4800', name: 'DDR5 8GB (4800MHz)', price: 250, description_basic: 'Ideal para uso básico e navegação.', description_advanced: 'Módulo SO-DIMM DDR5 de 8GB, 4800MHz CL40, para plataformas DDR5 de entrada.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, type: 'DDR5', performance_score: 7 },
+                { id: 'ddr5-16gb-4800', name: 'DDR5 16GB (4800MHz)', price: 450, description_basic: 'Recomendado para multitarefas e jogos.', description_advanced: 'Módulo SO-DIMM DDR5 de 16GB, 4800MHz CL40, padrão para notebooks modernos.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, type: 'DDR5', performance_score: 12 },
+                { id: 'ddr5-32gb-4800', name: 'DDR5 32GB (4800MHz)', price: 850, description_basic: 'Para profissionais e gamers exigentes.', description_advanced: 'Módulo SO-DIMM DDR5 de 32GB, 4800MHz CL40, alta capacidade para DDR5.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, type: 'DDR5', performance_score: 18 },
+                { id: 'ddr5-16gb-5200', name: 'DDR5 16GB (5200MHz)', price: 500, description_basic: 'Maior velocidade para desempenho aprimorado.', description_advanced: 'Módulo SO-DIMM DDR5 de 16GB, 5200MHz CL38, otimizado para CPUs de alto desempenho.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, type: 'DDR5', performance_score: 14 },
+                { id: 'ddr5-32gb-5200', name: 'DDR5 32GB (5200MHz)', price: 950, description_basic: 'Alta velocidade para cargas de trabalho pesadas.', description_advanced: 'Módulo SO-DIMM DDR5 de 32GB, 5200MHz CL38, para edição de vídeo e máquinas virtuais.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, type: 'DDR5', performance_score: 20 },
+                { id: 'ddr5-64gb-5200', name: 'DDR5 64GB (5200MHz)', price: 1800, description_basic: 'Máxima capacidade para virtualização e edição 4K.', description_advanced: 'Módulo SO-DIMM DDR5 de 64GB, 5200MHz CL38, capacidade extrema para as tarefas mais exigentes.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, type: 'DDR5', performance_score: 25 },
+                { id: 'ddr5-32gb-5600', name: 'DDR5 32GB (5600MHz)', price: 1050, description_basic: 'Velocidade extrema para o máximo de FPS.', description_advanced: 'Módulo SO-DIMM DDR5 de 32GB, 5600MHz CL36, o mais rápido para gaming competitivo e aplicações de baixa latência.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, type: 'DDR5', performance_score: 22 },
+                { id: 'ddr5-64gb-5600', name: 'DDR5 64GB (5600MHz)', price: 2000, description_basic: 'O ápice da performance em memória RAM.', description_advanced: 'Módulo SO-DIMM DDR5 de 64GB, 5600MHz CL36, a melhor performance e capacidade disponível para notebooks.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, type: 'DDR5', performance_score: 28 }
             ],
             storage: [ // Usado para armazenamento1 e armazenamento2
-                { id: 'nvme-512gb-gen4', name: 'SSD NVMe 512GB (PCIe Gen4)', price: 300, description_basic: 'Velocidade e espaço para o sistema e programas essenciais.', description_advanced: 'SSD NVMe PCIe Gen4 x4 de 512GB, velocidades de leitura/escrita sequenciais de até 7000/5000 MB/s.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, interface: 'NVMe', pcie_gen: 'Gen4' },
-                { id: 'nvme-1tb-gen4', name: 'SSD NVMe 1TB (PCIe Gen4)', price: 500, description_basic: 'Amplo espaço e alta velocidade para jogos e arquivos grandes.', description_advanced: 'SSD NVMe PCIe Gen4 x4 de 1TB, ideal para gamers e criadores de conteúdo com grandes bibliotecas.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, interface: 'NVMe', pcie_gen: 'Gen4' },
-                { id: 'nvme-2tb-gen4', name: 'SSD NVMe 2TB (PCIe Gen4)', price: 900, description_basic: 'Capacidade máxima e performance superior.', description_advanced: 'SSD NVMe PCIe Gen4 x4 de 2TB, oferece o máximo de espaço e velocidade para a maioria dos usuários exigentes.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, interface: 'NVMe', pcie_gen: 'Gen4' },
-                { id: 'nvme-512gb-gen5', name: 'SSD NVMe 512GB (PCIe Gen5)', price: 500, description_basic: 'Velocidade ultra-rápida para o futuro.', description_advanced: 'SSD NVMe PCIe Gen5 x4 de 512GB, velocidades de leitura/escrita sequenciais de até 10000/8000 MB/s, para o futuro do armazenamento.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, interface: 'NVMe', pcie_gen: 'Gen5' },
-                { id: 'nvme-1tb-gen5', name: 'SSD NVMe 1TB (PCIe Gen5)', price: 800, description_basic: 'O dobro da velocidade do Gen4 para os mais exigentes.', description_advanced: 'SSD NVMe PCIe Gen5 x4 de 1TB, o dobro da performance do Gen4, ideal para cargas de trabalho de dados massivas.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, interface: 'NVMe', pcie_gen: 'Gen5' },
-                { id: 'nvme-2tb-gen5', name: 'SSD NVMe 2TB (PCIe Gen5)', price: 1500, description_basic: 'Atingindo o limite de velocidade para SSDs.', description_advanced: 'SSD NVMe PCIe Gen5 x4 de 2TB, a solução de armazenamento mais rápida e espaçosa disponível atualmente.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, interface: 'NVMe', pcie_gen: 'Gen5' },
-                { id: 'sata-ssd-500gb', name: 'SSD SATA 500GB', price: 200, description_basic: 'Opção econômica para armazenamento rápido.', description_advanced: 'SSD de 2.5" SATA III de 500GB, velocidades de leitura/escrita sequenciais de até 550/500 MB/s, para notebooks com portas SATA.', advanced_only: true, stock: Math.floor(Math.random() * 10) + 5, interface: 'SATA' },
-                { id: 'sata-ssd-1tb', name: 'SSD SATA 1TB', price: 350, description_basic: 'Opção econômica com maior capacidade.', description_advanced: 'SSD de 2.5" SATA III de 1TB, oferece boa capacidade e velocidade para uso geral.', advanced_only: true, stock: Math.floor(Math.random() * 10) + 5, interface: 'SATA' },
-                { id: 'hdd-1tb', name: 'HDD 1TB (5400RPM)', price: 150, description_basic: 'Opção econômica para armazenamento de dados em massa.', description_advanced: 'Disco rígido de 2.5" SATA III de 1TB, 5400RPM, ideal para armazenamento de arquivos grandes e backups.', advanced_only: true, stock: Math.floor(Math.random() * 10) + 5, interface: 'SATA' },
-                { id: 'hdd-2tb', name: 'HDD 2TB (5400RPM)', price: 250, description_basic: 'Maior capacidade para arquivos grandes.', description_advanced: 'Disco rígido de 2.5" SATA III de 2TB, 5400RPM, para quem precisa de máxima capacidade de armazenamento.', advanced_only: true, stock: Math.floor(Math.random() * 10) + 5, interface: 'SATA' }
+                { id: 'nvme-512gb-gen4', name: 'SSD NVMe 512GB (PCIe Gen4)', price: 300, description_basic: 'Velocidade e espaço para o sistema e programas essenciais.', description_advanced: 'SSD NVMe PCIe Gen4 x4 de 512GB, velocidades de leitura/escrita sequenciais de até 7000/5000 MB/s.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, interface: 'NVMe', pcie_gen: 'Gen4', performance_score: 15 },
+                { id: 'nvme-1tb-gen4', name: 'SSD NVMe 1TB (PCIe Gen4)', price: 500, description_basic: 'Amplo espaço e alta velocidade para jogos e arquivos grandes.', description_advanced: 'SSD NVMe PCIe Gen4 x4 de 1TB, ideal para gamers e criadores de conteúdo com grandes bibliotecas.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, interface: 'NVMe', pcie_gen: 'Gen4', performance_score: 20 },
+                { id: 'nvme-2tb-gen4', name: 'SSD NVMe 2TB (PCIe Gen4)', price: 900, description_basic: 'Capacidade máxima e performance superior.', description_advanced: 'SSD NVMe PCIe Gen4 x4 de 2TB, oferece o máximo de espaço e velocidade para a maioria dos usuários exigentes.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, interface: 'NVMe', pcie_gen: 'Gen4', performance_score: 25 },
+                { id: 'nvme-512gb-gen5', name: 'SSD NVMe 512GB (PCIe Gen5)', price: 500, description_basic: 'Velocidade ultra-rápida para o futuro.', description_advanced: 'SSD NVMe PCIe Gen5 x4 de 512GB, velocidades de leitura/escrita sequenciais de até 10000/8000 MB/s, para o futuro do armazenamento.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, interface: 'NVMe', pcie_gen: 'Gen5', performance_score: 30 },
+                { id: 'nvme-1tb-gen5', name: 'SSD NVMe 1TB (PCIe Gen5)', price: 800, description_basic: 'O dobro da velocidade do Gen4 para os mais exigentes.', description_advanced: 'SSD NVMe PCIe Gen5 x4 de 1TB, o dobro da performance do Gen4, ideal para cargas de trabalho de dados massivas.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, interface: 'NVMe', pcie_gen: 'Gen5', performance_score: 35 },
+                { id: 'nvme-2tb-gen5', name: 'SSD NVMe 2TB (PCIe Gen5)', price: 1500, description_basic: 'Atingindo o limite de velocidade para SSDs.', description_advanced: 'SSD NVMe PCIe Gen5 x4 de 2TB, a solução de armazenamento mais rápida e espaçosa disponível atualmente.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, interface: 'NVMe', pcie_gen: 'Gen5', performance_score: 40 },
+                { id: 'sata-ssd-500gb', name: 'SSD SATA 500GB', price: 200, description_basic: 'Opção econômica para armazenamento rápido.', description_advanced: 'SSD de 2.5" SATA III de 500GB, velocidades de leitura/escrita sequenciais de até 550/500 MB/s, para notebooks com portas SATA.', advanced_only: true, stock: Math.floor(Math.random() * 10) + 5, interface: 'SATA', performance_score: 8 },
+                { id: 'sata-ssd-1tb', name: 'SSD SATA 1TB', price: 350, description_basic: 'Opção econômica com maior capacidade.', description_advanced: 'SSD de 2.5" SATA III de 1TB, oferece boa capacidade e velocidade para uso geral.', advanced_only: true, stock: Math.floor(Math.random() * 10) + 5, interface: 'SATA', performance_score: 12 },
+                { id: 'hdd-1tb', name: 'HDD 1TB (5400RPM)', price: 150, description_basic: 'Opção econômica para armazenamento de dados em massa.', description_advanced: 'Disco rígido de 2.5" SATA III de 1TB, 5400RPM, ideal para armazenamento de arquivos grandes e backups.', advanced_only: true, stock: Math.floor(Math.random() * 10) + 5, interface: 'SATA', performance_score: 3 },
+                { id: 'hdd-2tb', name: 'HDD 2TB (5400RPM)', price: 250, description_basic: 'Maior capacidade para arquivos grandes.', description_advanced: 'Disco rígido de 2.5" SATA III de 2TB, 5400RPM, para quem precisa de máxima capacidade de armazenamento.', advanced_only: true, stock: Math.floor(Math.random() * 10) + 5, interface: 'SATA', performance_score: 5 }
             ],
             gpu: [
-                { id: 'integrated', name: 'GPU Integrada (Intel Iris Xe / AMD Radeon)', price: 0, description_basic: 'Suficiente para tarefas diárias e multimídia.', description_advanced: 'Processador gráfico integrado (iGPU) da Intel (Iris Xe) ou AMD (Radeon Graphics), adequado para navegação, vídeo e jogos leves.', basic_only: true, stock: 999, pcie_gen: 'N/A' },
-                { id: 'rtx-4050', name: 'NVIDIA GeForce RTX 4050 (6GB)', price: 1500, description_basic: 'Bom desempenho para jogos em 1080p.', description_advanced: 'GPU dedicada NVIDIA GeForce RTX 4050 com 6GB GDDR6, ideal para jogos em 1080p e tarefas de criação de conteúdo.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, pcie_gen: 'Gen4' },
-                { id: 'rtx-4060', name: 'NVIDIA GeForce RTX 4060 (8GB)', price: 2500, description_basic: 'Excelente para jogos em 1080p e 1440p.', description_advanced: 'GPU dedicada NVIDIA GeForce RTX 4060 com 8GB GDDR6, oferece excelente performance para jogos em 1080p e 1440p, com suporte a DLSS 3.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, pcie_gen: 'Gen4' },
-                { id: 'rtx-4070', name: 'NVIDIA GeForce RTX 4070 (8GB)', price: 3500, description_basic: 'Performance de alto nível para jogos e criação de conteúdo.', description_advanced: 'GPU dedicada NVIDIA GeForce RTX 4070 com 8GB GDDR6, para jogos em 1440p com altas taxas de quadros e aceleração de IA.', advanced_only: true, stock: Math.floor(Math.random() * 10) + 5, pcie_gen: 'Gen4' },
-                { id: 'rtx-4080', name: 'NVIDIA GeForce RTX 4080 (12GB)', price: 5000, description_basic: 'Potência extrema para jogos em 4K e renderização.', description_advanced: 'GPU dedicada NVIDIA GeForce RTX 4080 com 12GB GDDR6, oferece performance de desktop em um formato móvel, ideal para entusiastas e profissionais.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, pcie_gen: 'Gen5' },
-                { id: 'rtx-4090', name: 'NVIDIA GeForce RTX 4090 (16GB)', price: 7000, description_basic: 'A GPU mais poderosa para notebooks, sem compromissos.', description_advanced: 'GPU dedicada NVIDIA GeForce RTX 4090 com 16GB GDDR6, a placa de vídeo mais potente para notebooks, sem compromissos de desempenho.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, pcie_gen: 'Gen5' },
-                { id: 'rx-7600s', name: 'AMD Radeon RX 7600S (8GB)', price: 2000, description_basic: 'Alternativa AMD competitiva para jogos.', description_advanced: 'GPU dedicada AMD Radeon RX 7600S com 8GB GDDR6, uma forte concorrente para jogos em 1080p e 1440p.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, pcie_gen: 'Gen4' },
-                { id: 'rx-7700s', name: 'AMD Radeon RX 7700S (12GB)', price: 3000, description_basic: 'GPU AMD de alto desempenho para gamers.', description_advanced: 'GPU dedicada AMD Radeon RX 7700S com 12GB GDDR6, performance otimizada para jogos e criação de conteúdo.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, pcie_gen: 'Gen4' },
-                { id: 'rx-7800s', name: 'AMD Radeon RX 7800S (16GB)', price: 4500, description_basic: 'O topo de linha AMD para notebooks.', description_advanced: 'GPU dedicada AMD Radeon RX 7800S com 16GB GDDR6, a solução gráfica mais avançada da AMD para notebooks de alta performance.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, pcie_gen: 'Gen5' }
+                { id: 'integrated', name: 'GPU Integrada (Intel Iris Xe / AMD Radeon)', price: 0, description_basic: 'Suficiente para tarefas diárias e multimídia.', description_advanced: 'Processador gráfico integrado (iGPU) da Intel (Iris Xe) ou AMD (Radeon Graphics), adequado para navegação, vídeo e jogos leves.', basic_only: true, stock: 999, pcie_gen: 'N/A', performance_score: 10 },
+                { id: 'rtx-4050', name: 'NVIDIA GeForce RTX 4050 (6GB)', price: 1500, description_basic: 'Bom desempenho para jogos em 1080p.', description_advanced: 'GPU dedicada NVIDIA GeForce RTX 4050 com 6GB GDDR6, ideal para jogos em 1080p e tarefas de criação de conteúdo.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, pcie_gen: 'Gen4', performance_score: 50 },
+                { id: 'rtx-4060', name: 'NVIDIA GeForce RTX 4060 (8GB)', price: 2500, description_basic: 'Excelente para jogos em 1080p e 1440p.', description_advanced: 'GPU dedicada NVIDIA GeForce RTX 4060 com 8GB GDDR6, oferece excelente performance para jogos em 1080p e 1440p, com suporte a DLSS 3.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, pcie_gen: 'Gen4', performance_score: 65 },
+                { id: 'rtx-4070', name: 'NVIDIA GeForce RTX 4070 (8GB)', price: 3500, description_basic: 'Performance de alto nível para jogos e criação de conteúdo.', description_advanced: 'GPU dedicada NVIDIA GeForce RTX 4070 com 8GB GDDR6, para jogos em 1440p com altas taxas de quadros e aceleração de IA.', advanced_only: true, stock: Math.floor(Math.random() * 10) + 5, pcie_gen: 'Gen4', performance_score: 75 },
+                { id: 'rtx-4080', name: 'NVIDIA GeForce RTX 4080 (12GB)', price: 5000, description_basic: 'Potência extrema para jogos em 4K e renderização.', description_advanced: 'GPU dedicada NVIDIA GeForce RTX 4080 com 12GB GDDR6, oferece performance de desktop em um formato móvel, ideal para entusiastas e profissionais.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, pcie_gen: 'Gen5', performance_score: 85 },
+                { id: 'rtx-4090', name: 'NVIDIA GeForce RTX 4090 (16GB)', price: 7000, description_basic: 'A GPU mais poderosa para notebooks, sem compromissos.', description_advanced: 'GPU dedicada NVIDIA GeForce RTX 4090 com 16GB GDDR6, a placa de vídeo mais potente para notebooks, sem compromissos de desempenho.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, pcie_gen: 'Gen5', performance_score: 95 },
+                { id: 'rx-7600s', name: 'AMD Radeon RX 7600S (8GB)', price: 2000, description_basic: 'Alternativa AMD competitiva para jogos.', description_advanced: 'GPU dedicada AMD Radeon RX 7600S com 8GB GDDR6, uma forte concorrente para jogos em 1080p e 1440p.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, pcie_gen: 'Gen4', performance_score: 55 },
+                { id: 'rx-7700s', name: 'AMD Radeon RX 7700S (12GB)', price: 3000, description_basic: 'GPU AMD de alto desempenho para gamers.', description_advanced: 'GPU dedicada AMD Radeon RX 7700S com 12GB GDDR6, performance otimizada para jogos e criação de conteúdo.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, pcie_gen: 'Gen4', performance_score: 70 },
+                { id: 'rx-7800s', name: 'AMD Radeon RX 7800S (16GB)', price: 4500, description_basic: 'O topo de linha AMD para notebooks.', description_advanced: 'GPU dedicada AMD Radeon RX 7800S com 16GB GDDR6, a solução gráfica mais avançada da AMD para notebooks de alta performance.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, pcie_gen: 'Gen5', performance_score: 80 }
             ],
             display: [
-                { id: '15.6-fhd-120hz', name: '15.6" IPS FHD (120Hz)', price: 400, description_basic: 'Qualidade de imagem nítida e fluidez para o dia a dia.', description_advanced: 'Tela IPS de 15.6 polegadas, resolução Full HD (1920x1080), taxa de atualização de 120Hz, 300 nits de brilho, 100% sRGB.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5 },
-                { id: '15.6-qhd-165hz', name: '15.6" IPS QHD (165Hz)', price: 700, description_basic: 'Resolução superior e alta taxa de atualização para jogos e trabalho.', description_advanced: 'Tela IPS de 15.6 polegadas, resolução QHD (2560x1440), taxa de atualização de 165Hz, 400 nits de brilho, 100% DCI-P3, G-Sync/FreeSync.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5 },
-                { id: '17.3-fhd-144hz', name: '17.3" IPS FHD (144Hz)', price: 600, description_basic: 'Tela maior com boa fluidez para imersão.', description_advanced: 'Tela IPS de 17.3 polegadas, resolução Full HD (1920x1080), taxa de atualização de 144Hz, 300 nits de brilho, 100% sRGB.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5 },
-                { id: '17.3-qhd-240hz', name: '17.3" IPS QHD (240Hz)', price: 1000, description_basic: 'Experiência visual definitiva com alta resolução e taxa de atualização.', description_advanced: 'Tela IPS de 17.3 polegadas, resolução QHD (2560x1440), taxa de atualização de 240Hz, 500 nits de brilho, 100% DCI-P3, G-Sync/FreeSync Ultimate.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1 },
-                { id: '16-oled-4k', name: '16" OLED 4K (60Hz)', price: 1500, description_basic: 'Cores vibrantes e pretos perfeitos para criadores de conteúdo.', description_advanced: 'Tela OLED de 16 polegadas, resolução 4K (3840x2400), taxa de atualização de 60Hz, 600 nits de brilho (pico), 100% DCI-P3, HDR True Black 500.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1 },
-                { id: '18-qhd-300hz', name: '18" IPS QHD (300Hz)', price: 1800, description_basic: 'Tela gigante com taxa de atualização insana para eSports.', description_advanced: 'Tela IPS de 18 polegadas, resolução QHD (2560x1440), taxa de atualização de 300Hz, 500 nits de brilho, 100% sRGB, ideal para eSports e imersão total.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1 },
-                { id: '14-oled-2.8k', name: '14" OLED 2.8K (90Hz)', price: 1200, description_basic: 'Compacta com qualidade OLED e alta resolução.', description_advanced: 'Tela OLED de 14 polegadas, resolução 2.8K (2880x1800), taxa de atualização de 90Hz, 400 nits de brilho, 100% DCI-P3, para ultrabooks premium.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1 }
+                { id: '15.6-fhd-120hz', name: '15.6" IPS FHD (120Hz)', price: 400, description_basic: 'Qualidade de imagem nítida e fluidez para o dia a dia.', description_advanced: 'Tela IPS de 15.6 polegadas, resolução Full HD (1920x1080), taxa de atualização de 120Hz, 300 nits de brilho, 100% sRGB.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, performance_score: 5 },
+                { id: '15.6-qhd-165hz', name: '15.6" IPS QHD (165Hz)', price: 700, description_basic: 'Resolução superior e alta taxa de atualização para jogos e trabalho.', description_advanced: 'Tela IPS de 15.6 polegadas, resolução QHD (2560x1440), taxa de atualização de 165Hz, 400 nits de brilho, 100% DCI-P3, G-Sync/FreeSync.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, performance_score: 10 },
+                { id: '17.3-fhd-144hz', name: '17.3" IPS FHD (144Hz)', price: 600, description_basic: 'Tela maior com boa fluidez para imersão.', description_advanced: 'Tela IPS de 17.3 polegadas, resolução Full HD (1920x1080), taxa de atualização de 144Hz, 300 nits de brilho, 100% sRGB.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, performance_score: 7 },
+                { id: '17.3-qhd-240hz', name: '17.3" IPS QHD (240Hz)', price: 1000, description_basic: 'Experiência visual definitiva com alta resolução e taxa de atualização.', description_advanced: 'Tela IPS de 17.3 polegadas, resolução QHD (2560x1440), taxa de atualização de 240Hz, 500 nits de brilho, 100% DCI-P3, G-Sync/FreeSync Ultimate.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, performance_score: 15 },
+                { id: '16-oled-4k', name: '16" OLED 4K (60Hz)', price: 1500, description_basic: 'Cores vibrantes e pretos perfeitos para criadores de conteúdo.', description_advanced: 'Tela OLED de 16 polegadas, resolução 4K (3840x2400), taxa de atualização de 60Hz, 600 nits de brilho (pico), 100% DCI-P3, HDR True Black 500.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, performance_score: 12 },
+                { id: '18-qhd-300hz', name: '18" IPS QHD (300Hz)', price: 1800, description_basic: 'Tela gigante com taxa de atualização insana para eSports.', description_advanced: 'Tela IPS de 18 polegadas, resolução QHD (2560x1440), taxa de atualização de 300Hz, 500 nits de brilho, 100% sRGB, ideal para eSports e imersão total.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, performance_score: 18 },
+                { id: '14-oled-2.8k', name: '14" OLED 2.8K (90Hz)', price: 1200, description_basic: 'Compacta com qualidade OLED e alta resolução.', description_advanced: 'Tela OLED de 14 polegadas, resolução 2.8K (2880x1800), taxa de atualização de 90Hz, 400 nits de brilho, 100% DCI-P3, para ultrabooks premium.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, performance_score: 10 }
             ],
             keyboard: [
-                { id: 'standard-backlit-us', name: 'Teclado Padrão (Retroiluminado, US)', price: 100, description_basic: 'Layout americano, conforto e visibilidade.', description_advanced: 'Teclado chiclet de membrana, layout US ANSI, retroiluminação branca de 3 níveis, curso de tecla de 1.5mm.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5 },
-                { id: 'standard-backlit-br', name: 'Teclado Padrão (Retroiluminado, BR ABNT2)', price: 120, description_basic: 'Layout brasileiro, conforto e visibilidade.', description_advanced: 'Teclado chiclet de membrana, layout BR ABNT2, retroiluminação branca de 3 níveis, curso de tecla de 1.5mm.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5 },
-                { id: 'mechanical-rgb-lowprofile', name: 'Teclado Mecânico (RGB, Low-Profile)', price: 300, description_basic: 'Switches de baixo perfil, resposta tátil e iluminação personalizável.', description_advanced: 'Teclado mecânico com switches de baixo perfil (ex: Kailh Choc V2), iluminação RGB por tecla, N-Key Rollover e anti-ghosting.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1 },
-                { id: 'optical-rgb', name: 'Teclado Óptico (RGB)', price: 350, description_basic: 'Switches ópticos para acionamento ultra-rápido.', description_advanced: 'Teclado óptico com switches de acionamento a laser, latência ultra-baixa, iluminação RGB por tecla e durabilidade superior.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1 },
-                { id: 'per-key-rgb', name: 'Teclado com RGB por Tecla', price: 200, description_basic: 'Iluminação RGB individual para cada tecla.', description_advanced: 'Teclado de membrana com iluminação RGB individualmente configurável por tecla, múltiplos efeitos de iluminação e software de personalização.', advanced_only: true, stock: Math.floor(Math.random() * 10) + 5 }
+                { id: 'standard-backlit-us', name: 'Teclado Padrão (Retroiluminado, US)', price: 100, description_basic: 'Layout americano, conforto e visibilidade.', description_advanced: 'Teclado chiclet de membrana, layout US ANSI, retroiluminação branca de 3 níveis, curso de tecla de 1.5mm.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, performance_score: 2 },
+                { id: 'standard-backlit-br', name: 'Teclado Padrão (Retroiluminado, BR ABNT2)', price: 120, description_basic: 'Layout brasileiro, conforto e visibilidade.', description_advanced: 'Teclado chiclet de membrana, layout BR ABNT2, retroiluminação branca de 3 níveis, curso de tecla de 1.5mm.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, performance_score: 2 },
+                { id: 'mechanical-rgb-lowprofile', name: 'Teclado Mecânico (RGB, Low-Profile)', price: 300, description_basic: 'Switches de baixo perfil, resposta tátil e iluminação personalizável.', description_advanced: 'Teclado mecânico com switches de baixo perfil (ex: Kailh Choc V2), iluminação RGB por tecla, N-Key Rollover e anti-ghosting.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, performance_score: 4 },
+                { id: 'optical-rgb', name: 'Teclado Óptico (RGB)', price: 350, description_basic: 'Switches ópticos para acionamento ultra-rápido.', description_advanced: 'Teclado óptico com switches de acionamento a laser, latência ultra-baixa, iluminação RGB por tecla e durabilidade superior.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, performance_score: 5 },
+                { id: 'per-key-rgb', name: 'Teclado com RGB por Tecla', price: 200, description_basic: 'Iluminação RGB individual para cada tecla.', description_advanced: 'Teclado de membrana com iluminação RGB individualmente configurável por tecla, múltiplos efeitos de iluminação e software de personalização.', advanced_only: true, stock: Math.floor(Math.random() * 10) + 5, performance_score: 3 }
             ],
             battery: [
-                { id: '50wh', name: 'Bateria 50Wh', price: 150, description_basic: 'Autonomia padrão para uso moderado.', description_advanced: 'Bateria de íon de lítio de 50Wh, autonomia estimada de 4-6 horas de uso misto.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5 },
-                { id: '70wh', name: 'Bateria 70Wh', price: 250, description_basic: 'Maior autonomia para longas sessões de trabalho.', description_advanced: 'Bateria de íon de lítio de 70Wh, autonomia estimada de 6-9 horas de uso misto, ideal para produtividade em trânsito.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5 },
-                { id: '90wh', name: 'Bateria 90Wh', price: 350, description_basic: 'Máxima autonomia para mobilidade estendida.', description_advanced: 'Bateria de íon de lítio de 90Wh, autonomia estimada de 9-12 horas de uso misto, para máxima liberdade sem tomada.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1 },
-                { id: '99wh', name: 'Bateria 99.9Wh (Máx. Permitido em Aviões)', price: 450, description_basic: 'A maior bateria possível para notebooks, ideal para viagens.', description_advanced: 'Bateria de íon de lítio de 99.9Wh, a maior capacidade permitida em voos comerciais, oferecendo autonomia estendida para viagens e longas jornadas.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1 }
+                { id: '50wh', name: 'Bateria 50Wh', price: 150, description_basic: 'Autonomia padrão para uso moderado.', description_advanced: 'Bateria de íon de lítio de 50Wh, autonomia estimada de 4-6 horas de uso misto.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, performance_score: 3 },
+                { id: '70wh', name: 'Bateria 70Wh', price: 250, description_basic: 'Maior autonomia para longas sessões de trabalho.', description_advanced: 'Bateria de íon de lítio de 70Wh, autonomia estimada de 6-9 horas de uso misto, ideal para produtividade em trânsito.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, performance_score: 5 },
+                { id: '90wh', name: 'Bateria 90Wh', price: 350, description_basic: 'Máxima autonomia para mobilidade estendida.', description_advanced: 'Bateria de íon de lítio de 90Wh, autonomia estimada de 9-12 horas de uso misto, para máxima liberdade sem tomada.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, performance_score: 7 },
+                { id: '99wh', name: 'Bateria 99.9Wh (Máx. Permitido em Aviões)', price: 450, description_basic: 'A maior bateria possível para notebooks, ideal para viagens.', description_advanced: 'Bateria de íon de lítio de 99.9Wh, a maior capacidade permitida em voos comerciais, oferecendo autonomia estendida para viagens e longas jornadas.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, performance_score: 8 }
             ],
             peripherals: [
-                { id: 'none-peripherals', name: 'Nenhum Periférico', price: 0, description_basic: 'Não adicionar periféricos.', description_advanced: 'Nenhum periférico adicional será incluído na sua encomenda.', basic_only: true, advanced_only: true, stock: 999 },
-                { id: 'gaming-mouse', name: 'Mouse Gamer RGB', price: 150, description_basic: 'Mouse de alta precisão com iluminação RGB.', description_advanced: 'Mouse óptico gamer com sensor de 16000 DPI, 7 botões programáveis, iluminação RGB personalizável e cabo paracord.', basic_only: true, advanced_only: true, stock: Math.floor(Math.random() * 10) + 5 },
-                { id: 'gaming-headset', name: 'Headset Gamer 7.1', price: 250, description_basic: 'Áudio imersivo para jogos e comunicação.', description_advanced: 'Headset gamer com som surround virtual 7.1, drivers de 50mm, microfone retrátil com cancelamento de ruído e almofadas de couro sintético.', basic_only: true, advanced_only: true, stock: Math.floor(Math.random() * 10) + 5 },
-                { id: 'external-monitor-fhd', name: 'Monitor Externo 24" FHD (144Hz)', price: 800, description_basic: 'Monitor adicional para produtividade ou jogos.', description_advanced: 'Monitor IPS de 24 polegadas, Full HD (1920x1080), 144Hz, 1ms MPRT, FreeSync Premium, ideal para setup de dois monitores.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1 },
-                { id: 'external-monitor-qhd', name: 'Monitor Externo 27" QHD (165Hz)', price: 1200, description_basic: 'Monitor de alta resolução para uma experiência visual superior.', description_advanced: 'Monitor IPS de 27 polegadas, QHD (2560x1440), 165Hz, 1ms GtG, G-Sync Compatible, HDR400, para imersão e alta fidelidade visual.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1 },
-                { id: 'webcam-fhd', name: 'Webcam Externa FHD', price: 100, description_basic: 'Qualidade de vídeo aprimorada para chamadas e streaming.', description_advanced: 'Webcam Full HD 1080p a 30fps, lente de vidro, correção automática de luz, microfone estéreo integrado, ideal para videoconferências e streaming.', advanced_only: true, stock: Math.floor(Math.random() * 10) + 5 },
-                { id: 'usb-c-hub', name: 'Hub USB-C Multiportas', price: 80, description_basic: 'Expanda a conectividade do seu notebook.', description_advanced: 'Hub USB-C 7 em 1: 2x USB 3.0, 1x HDMI 4K, 1x SD/MicroSD, 1x Ethernet Gigabit, 1x USB-C PD (100W), ideal para notebooks com poucas portas.', advanced_only: true, stock: Math.floor(Math.random() * 10) + 5 }
+                { id: 'none-peripherals', name: 'Nenhum Periférico', price: 0, description_basic: 'Não adicionar periféricos.', description_advanced: 'Nenhum periférico adicional será incluído na sua encomenda.', basic_only: true, advanced_only: true, stock: 999, performance_score: 0 },
+                { id: 'gaming-mouse', name: 'Mouse Gamer RGB', price: 150, description_basic: 'Mouse de alta precisão com iluminação RGB.', description_advanced: 'Mouse óptico gamer com sensor de 16000 DPI, 7 botões programáveis, iluminação RGB personalizável e cabo paracord.', basic_only: true, advanced_only: true, stock: Math.floor(Math.random() * 10) + 5, performance_score: 1 },
+                { id: 'gaming-headset', name: 'Headset Gamer 7.1', price: 250, description_basic: 'Áudio imersivo para jogos e comunicação.', description_advanced: 'Headset gamer com som surround virtual 7.1, drivers de 50mm, microfone retrátil com cancelamento de ruído e almofadas de couro sintético.', basic_only: true, advanced_only: true, stock: Math.floor(Math.random() * 10) + 5, performance_score: 2 },
+                { id: 'external-monitor-fhd', name: 'Monitor Externo 24" FHD (144Hz)', price: 800, description_basic: 'Monitor adicional para produtividade ou jogos.', description_advanced: 'Monitor IPS de 24 polegadas, Full HD (1920x1080), 144Hz, 1ms MPRT, FreeSync Premium, ideal para setup de dois monitores.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, performance_score: 5 },
+                { id: 'external-monitor-qhd', name: 'Monitor Externo 27" QHD (165Hz)', price: 1200, description_basic: 'Monitor de alta resolução para uma experiência visual superior.', description_advanced: 'Monitor IPS de 27 polegadas, QHD (2560x1440), 165Hz, 1ms GtG, G-Sync Compatible, HDR400, para imersão e alta fidelidade visual.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, performance_score: 8 },
+                { id: 'webcam-fhd', name: 'Webcam Externa FHD', price: 100, description_basic: 'Qualidade de vídeo aprimorada para chamadas e streaming.', description_advanced: 'Webcam Full HD 1080p a 30fps, lente de vidro, correção automática de luz, microfone estéreo integrado, ideal para videoconferências e streaming.', advanced_only: true, stock: Math.floor(Math.random() * 10) + 5, performance_score: 1 },
+                { id: 'usb-c-hub', name: 'Hub USB-C Multiportas', price: 80, description_basic: 'Expanda a conectividade do seu notebook.', description_advanced: 'Hub USB-C 7 em 1: 2x USB 3.0, 1x HDMI 4K, 1x SD/MicroSD, 1x Ethernet Gigabit, 1x USB-C PD (100W), ideal para notebooks com poucas portas.', advanced_only: true, stock: Math.floor(Math.random() * 10) + 5, performance_score: 1 }
             ]
         };
 
@@ -530,7 +587,7 @@
 
         // Função para obter o preço de um componente por categoria e ID
         function getComponentPrice(category, id) {
-            if (id === 'none' || id === 'none-peripherals') return 0;
+            if (id === 'none' || id === 'none-peripherals' || !id) return 0;
             const componentList = components[category];
             const component = componentList.find(c => c.id === id);
             return component ? component.price : 0;
@@ -538,7 +595,7 @@
 
         // Função para obter o estoque de um componente por categoria e ID
         function getComponentStock(category, id) {
-            if (id === 'none' || id === 'none-peripherals') return 999; // Estoque ilimitado para a opção "Nenhum"
+            if (id === 'none' || id === 'none-peripherals' || !id) return 999; // Estoque ilimitado para a opção "Nenhum"
             const componentList = components[category];
             const component = componentList.find(c => c.id === id);
             return component ? component.stock : 0;
@@ -548,6 +605,96 @@
         function getComponentDescription(item, mode) {
             return mode === 'basic' ? item.description_basic : item.description_advanced;
         }
+
+        // Função para calcular o desempenho total do sistema
+        function calculateOverallPerformance() {
+            let totalPerformance = 0;
+            
+            // Max possible performance should be a fixed value based on the highest possible configuration,
+            // not dynamically calculated from current available components, to keep the scale consistent.
+            // Let's estimate a reasonable max score based on the highest-tier components.
+            const maxPerformanceScores = {
+                cpu: 85, // i9-14900hx
+                gpu: 95, // RTX 4090
+                ram: 28 * 4, // DDR5 64GB 5600 x 4 modules
+                storage: 40 + 40 * 0.5, // NVMe 2TB Gen5 (primary) + NVMe 2TB Gen5 (secondary, reduced impact)
+                display: 18 // 18" QHD 300Hz
+            };
+
+            const weights = {
+                cpu: 0.30,
+                gpu: 0.40,
+                ram: 0.15,
+                storage: 0.10,
+                display: 0.05,
+                // casing, motherboard, keyboard, battery, peripherals have 0 weight
+            };
+
+            let maxPossiblePerformance = 0;
+            for (const category in maxPerformanceScores) {
+                if (weights[category]) {
+                    maxPossiblePerformance += maxPerformanceScores[category] * weights[category];
+                }
+            }
+            if (maxPossiblePerformance === 0) maxPossiblePerformance = 1; // Avoid division by zero
+
+
+            // Calculate the performance total for selected components
+            for (const category in selectedComponents) {
+                let item = null;
+                let score = 0;
+
+                // Determine the correct component list based on the category
+                const componentListKey = (category === 'storage1' || category === 'storage2') ? 'storage' : category;
+                const componentList = components[componentListKey];
+                
+                // Ensure the component list exists and is an array before proceeding
+                if (!componentList || !Array.isArray(componentList)) {
+                    continue; // Skip if component list is not valid
+                }
+
+                if (category === 'ram') {
+                    if (selectedComponents.ram.type) {
+                        item = componentList.find(c => c.id === selectedComponents.ram.type);
+                        if (item && typeof item.performance_score === 'number') {
+                            score = item.performance_score * selectedComponents.ram.quantity;
+                        }
+                    }
+                } else if (category === 'storage1') {
+                    if (selectedComponents.storage1.type) {
+                        item = componentList.find(c => c.id === selectedComponents.storage1.type);
+                        if (item && typeof item.performance_score === 'number') {
+                            score = item.performance_score;
+                        }
+                    }
+                } else if (category === 'storage2') {
+                    if (selectedComponents.storage2.type && selectedComponents.storage2.type !== 'none') {
+                        item = componentList.find(c => c.id === selectedComponents.storage2.type);
+                        if (item && typeof item.performance_score === 'number') {
+                            score = item.performance_score * 0.5; // Armazenamento secundário tem menos impacto
+                        }
+                    }
+                } else if (selectedComponents[category] && selectedComponents[category] !== 'none-peripherals') {
+                    item = componentList.find(c => c.id === selectedComponents[category]);
+                    if (item && typeof item.performance_score === 'number') {
+                        score = item.performance_score;
+                    }
+                }
+                
+                if (weights[category]) { // Ensure weight exists for the category
+                    totalPerformance += score * weights[category];
+                }
+            }
+
+            let percentage = (totalPerformance / maxPossiblePerformance) * 100;
+            if (isNaN(percentage) || percentage < 0) percentage = 0;
+            if (percentage > 100) percentage = 100;
+
+            const progressBar = document.getElementById('performance-bar');
+            progressBar.style.width = `${percentage.toFixed(0)}%`;
+            progressBar.textContent = `${percentage.toFixed(0)}%`;
+        }
+
 
         // Função para atualizar o preço total e o resumo
         function updateTotal() {
@@ -582,25 +729,81 @@
 
             document.getElementById('total-price-display').textContent = formatPrice(finalPrice);
             updateSummary();
+            calculateOverallPerformance(); // Atualiza a barra de desempenho
         }
 
         // Função para atualizar os detalhes do resumo exibidos no painel direito
         function updateSummary() {
             const summaryDetails = document.getElementById('summary-details');
-            summaryDetails.innerHTML = `
-                <p><strong>Carcaça:</strong> <span class="summary-item-name">${selectedComponents.casing ? components.casing.find(c => c.id === selectedComponents.casing).name : 'N/A'}</span></p>
-                <p><strong>Placa Mãe:</strong> <span class="summary-item-name">${selectedComponents.motherboard ? components.motherboard.find(c => c.id === selectedComponents.motherboard).name : 'N/A'}</span></p>
-                <p><strong>CPU:</strong> <span class="summary-item-name">${selectedComponents.cpu ? components.cpu.find(c => c.id === selectedComponents.cpu).name : 'N/A'}</span></p>
-                <p><strong>RAM:</strong> <span class="summary-item-name">${selectedComponents.ram.type ? `${selectedComponents.ram.quantity}x ${components.ram.find(c => c.id === selectedComponents.ram.type).name}` : 'N/A'}</span></p>
-                <p><strong>Armazenamento 1:</strong> <span class="summary-item-name">${selectedComponents.storage1.type ? components.storage.find(c => c.id === selectedComponents.storage1.type).name : 'N/A'}</span></p>
-                <p><strong>Armazenamento 2:</strong> <span class="summary-item-name">${selectedComponents.storage2.type === 'none' ? 'Nenhum' : (selectedComponents.storage2.type ? components.storage.find(c => c.id === selectedComponents.storage2.type).name : 'N/A')}</span></p>
-                <p><strong>GPU:</strong> <span class="summary-item-name">${selectedComponents.gpu ? components.gpu.find(c => c.id === selectedComponents.gpu).name : 'N/A'}</span></p>
-                <p><strong>Tela:</strong> <span class="summary-item-name">${selectedComponents.display ? components.display.find(c => c.id === selectedComponents.display).name : 'N/A'}</span></p>
-                <p><strong>Teclado:</strong> <span class="summary-item-name">${selectedComponents.keyboard ? components.keyboard.find(c => c.id === selectedComponents.keyboard).name : 'N/A'}</span></p>
-                <p><strong>Bateria:</strong> <span class="summary-item-name">${selectedComponents.battery ? components.battery.find(c => c.id === selectedComponents.battery).name : 'N/A'}</span></p>
-                <p><strong>Periféricos:</strong> <span class="summary-item-name">${selectedComponents.peripherals === 'none-peripherals' ? 'Nenhum' : (selectedComponents.peripherals ? components.peripherals.find(c => c.id === selectedComponents.peripherals).name : 'N/A')}</span></p>
-                <p class="text-red-300"><strong>Crédito de Troca:</strong> <span id="summary-tradein-credit" class="summary-tradein-price">${formatPrice(tradeInCredit)}</span></p>
-            `;
+            let summaryHtml = '';
+
+            for (const category in selectedComponents) {
+                let componentName = 'N/A';
+                let componentPrice = 0;
+                let itemFound = false;
+
+                if (category === 'ram') {
+                    if (selectedComponents.ram.type) {
+                        const ramType = components.ram.find(c => c.id === selectedComponents.ram.type);
+                        if (ramType) {
+                            componentName = `${selectedComponents.ram.quantity}x ${ramType.name}`;
+                            componentPrice = ramType.price * selectedComponents.ram.quantity;
+                            itemFound = true;
+                        }
+                    }
+                } else if (category === 'storage1') {
+                    if (selectedComponents.storage1.type) {
+                        const storageType = components.storage.find(c => c.id === selectedComponents.storage1.type);
+                        if (storageType) {
+                            componentName = storageType.name;
+                            componentPrice = storageType.price;
+                            itemFound = true;
+                        }
+                    }
+                } else if (category === 'storage2') {
+                    if (selectedComponents.storage2.type === 'none') {
+                        componentName = 'Nenhum';
+                        itemFound = true;
+                    } else if (selectedComponents.storage2.type) {
+                        const storageType = components.storage.find(c => c.id === selectedComponents.storage2.type);
+                        if (storageType) {
+                            componentName = storageType.name;
+                            componentPrice = storageType.price;
+                            itemFound = true;
+                        }
+                    }
+                } else if (category === 'peripherals') {
+                    if (selectedComponents.peripherals === 'none-peripherals') {
+                        componentName = 'Nenhum';
+                        itemFound = true;
+                    } else if (selectedComponents.peripherals) {
+                        const peripheral = components.peripherals.find(c => c.id === selectedComponents.peripherals);
+                        if (peripheral) {
+                            componentName = peripheral.name;
+                            componentPrice = peripheral.price;
+                            itemFound = true;
+                        }
+                    }
+                } else {
+                    if (selectedComponents[category]) {
+                        const componentData = components[category].find(c => c.id === selectedComponents[category]);
+                        if (componentData) {
+                            componentName = componentData.name;
+                            componentPrice = componentData.price;
+                            itemFound = true;
+                        }
+                    }
+                }
+                
+                if (itemFound) {
+                    summaryHtml += `<p><strong>${category.charAt(0).toUpperCase() + category.slice(1)}:</strong> <span class="summary-item-name">${componentName}</span> (<span class="summary-item-price">${formatPrice(componentPrice)}</span>)</p>`;
+                } else {
+                    summaryHtml += `<p><strong>${category.charAt(0).toUpperCase() + category.slice(1)}:</strong> <span class="summary-item-name">N/A</span></p>`;
+                }
+            }
+            summaryHtml += `<p class="text-red-300"><strong>Crédito de Troca:</strong> <span id="summary-tradein-credit" class="summary-tradein-price">${formatPrice(tradeInCredit)}</span></p>`;
+
+            summaryDetails.innerHTML = summaryHtml;
         }
 
         // Função para criar um elemento de opção para um componente
@@ -624,19 +827,64 @@
 
             const descriptionText = getComponentDescription(item, currentMode);
             const stockText = item.stock !== undefined && item.stock !== 999 ? ` (Estoque: ${item.stock})` : '';
-            const disabledClass = item.stock !== undefined && item.stock <= 0 ? 'disabled' : '';
+            let isDisabledByCompatibility = false;
 
-            if (disabledClass) {
-                container.classList.add(disabledClass);
+            // Adiciona tag de incompatibilidade se aplicável
+            let incompatibilityTag = '';
+            const selectedMb = selectedComponents.motherboard ? components.motherboard.find(mb => mb.id === selectedComponents.motherboard) : null;
+            const selectedCpu = selectedComponents.cpu ? components.cpu.find(cpu => cpu.id === selectedComponents.cpu) : null;
+
+            if (category === 'cpu' && selectedMb && item.socket !== selectedMb.cpu_socket) {
+                incompatibilityTag = '<span class="incompatibility-tag">Incompatível com MB</span>';
+                isDisabledByCompatibility = true;
+            } else if (category === 'motherboard' && selectedCpu && item.cpu_socket !== selectedCpu.socket) {
+                incompatibilityTag = '<span class="incompatibility-tag">Incompatível com CPU</span>';
+                isDisabledByCompatibility = true;
+            } else if (category === 'ram' && selectedMb && item.type !== selectedMb.ram_type) {
+                incompatibilityTag = '<span class="incompatibility-tag">Tipo RAM Incompatível com MB</span>';
+                isDisabledByCompatibility = true;
+            } else if (category === 'storage' && selectedMb) {
+                let currentNvmeCount = 0;
+                let currentSataCount = 0;
+                if (selectedComponents.storage1.type && selectedComponents.storage1.type !== 'none') {
+                    const s1 = components.storage.find(s => s.id === selectedComponents.storage1.type);
+                    if (s1 && s1.interface === 'NVMe') currentNvmeCount++;
+                    if (s1 && s1.interface === 'SATA') currentSataCount++;
+                }
+                if (selectedComponents.storage2.type && selectedComponents.storage2.type !== 'none') {
+                    const s2 = components.storage.find(s => s.id === selectedComponents.storage2.type);
+                    if (s2 && s2.interface === 'NVMe') currentNvmeCount++;
+                    if (s2 && s2.interface === 'SATA') currentSataCount++;
+                }
+
+                const isCurrentlySelected = (selectedComponents.storage1.type === item.id) || (selectedComponents.storage2.type === item.id);
+
+                if (item.interface === 'NVMe' && currentNvmeCount >= selectedMb.nvme_slots && !isCurrentlySelected) {
+                    incompatibilityTag = '<span class="incompatibility-tag">Slot NVMe Cheio/Incompatível</span>';
+                    isDisabledByCompatibility = true;
+                }
+                if (item.interface === 'SATA' && currentSataCount >= selectedMb.sata_ports && !isCurrentlySelected) {
+                    incompatibilityTag = '<span class="incompatibility-tag">Slot SATA Cheio/Incompatível</span>';
+                    isDisabledByCompatibility = true;
+                }
+            } else if (category === 'gpu' && item.id !== 'integrated' && selectedMb && item.pcie_gen !== selectedMb.pcie_gen) {
+                incompatibilityTag = '<span class="incompatibility-tag">PCIe Incompatível com MB</span>';
+                isDisabledByCompatibility = true;
+            }
+
+            // Se o item está desabilitado por compatibilidade ou por estoque zero
+            if (isDisabledByCompatibility || (item.stock !== undefined && item.stock <= 0)) {
+                container.classList.add('disabled');
                 container.style.pointerEvents = 'none'; // Desabilita eventos de clique
             }
+
 
             const content = document.createElement('div');
             content.className = 'option-content';
             content.innerHTML = `
-                <p class="font-medium ${disabledClass ? 'text-gray-500' : 'text-gray-200'}">${item.name} ${stockText}</p>
-                <p class="text-sm ${disabledClass ? 'text-gray-600' : 'text-gray-400'}">${descriptionText}</p>
-                <p class="text-sm ${disabledClass ? 'text-gray-500' : 'text-gray-300'} font-semibold">${formatPrice(item.price)}</p>
+                <p class="font-medium ${container.classList.contains('disabled') ? 'text-gray-500' : 'text-gray-200'}">${item.name} ${stockText} ${incompatibilityTag}</p>
+                <p class="text-sm ${container.classList.contains('disabled') ? 'text-gray-600' : 'text-gray-400'}">${descriptionText}</p>
+                <p class="text-sm ${container.classList.contains('disabled') ? 'text-gray-500' : 'text-gray-300'} font-semibold">${formatPrice(item.price)}</p>
             `;
             label.appendChild(content);
             container.appendChild(input);
@@ -687,81 +935,8 @@
                 }
                 
                 // Dispara a repopulação de opções dependentes para compatibilidade
-                if (category === 'motherboard' || category === 'cpu') {
-                    const newMb = category === 'motherboard' ? item : (selectedComponents.motherboard ? components.motherboard.find(mb => mb.id === selectedComponents.motherboard) : null);
-                    const newCpu = category === 'cpu' ? item : (selectedComponents.cpu ? components.cpu.find(cpu => cpu.id === selectedComponents.cpu) : null);
-
-                    // Verifica compatibilidade da CPU com a nova MB
-                    if (newMb && selectedComponents.cpu && (!newCpu || newCpu.socket !== newMb.cpu_socket)) {
-                        selectedComponents.cpu = null;
-                    }
-                    // Verifica compatibilidade da MB com a nova CPU
-                    if (newCpu && selectedComponents.motherboard && (!newMb || newMb.cpu_socket !== newCpu.socket)) {
-                        selectedComponents.motherboard = null;
-                    }
-
-                    // Reseta RAM, Armazenamento, GPU se ficarem incompatíveis
-                    if (newMb) {
-                        if (selectedComponents.ram.type && components.ram.find(r => r.id === selectedComponents.ram.type).type !== newMb.ram_type) {
-                            selectedComponents.ram.type = null;
-                            selectedComponents.ram.quantity = 1;
-                        }
-                        // Verifica slots NVMe/SATA
-                        let currentNvmeCount = 0;
-                        let currentSataCount = 0;
-                        if (selectedComponents.storage1.type && selectedComponents.storage1.type !== 'none') {
-                            const s1 = components.storage.find(s => s.id === selectedComponents.storage1.type);
-                            if (s1 && s1.interface === 'NVMe') currentNvmeCount++;
-                            if (s1 && s1.interface === 'SATA') currentSataCount++;
-                        }
-                        if (selectedComponents.storage2.type && selectedComponents.storage2.type !== 'none') {
-                            const s2 = components.storage.find(s => s.id === selectedComponents.storage2.type);
-                            if (s2 && s2.interface === 'NVMe') currentNvmeCount++;
-                            if (s2 && s2.interface === 'SATA') currentSataCount++;
-                        }
-
-                        if (currentNvmeCount > newMb.nvme_slots) {
-                            // Reseta um NVMe se exceder o limite, prioriza storage2
-                            if (selectedComponents.storage2.type && components.storage.find(s => s.id === selectedComponents.storage2.type)?.interface === 'NVMe') {
-                                selectedComponents.storage2.type = 'none';
-                            } else if (selectedComponents.storage1.type && components.storage.find(s => s.id === selectedComponents.storage1.type)?.interface === 'NVMe') {
-                                selectedComponents.storage1.type = null;
-                            }
-                        }
-                        if (currentSataCount > newMb.sata_ports) {
-                            // Reseta um SATA se exceder o limite, prioriza storage2
-                            if (selectedComponents.storage2.type && components.storage.find(s => s.id === selectedComponents.storage2.type)?.interface === 'SATA') {
-                                selectedComponents.storage2.type = 'none';
-                            } else if (selectedComponents.storage1.type && components.storage.find(s => s.id === selectedComponents.storage1.type)?.interface === 'SATA') {
-                                selectedComponents.storage1.type = null;
-                            }
-                        }
-
-                        if (selectedComponents.gpu && selectedComponents.gpu !== 'integrated') {
-                             const gpuItem = components.gpu.find(g => g.id === selectedComponents.gpu);
-                             if (gpuItem && gpuItem.pcie_gen !== 'N/A' && gpuItem.pcie_gen !== newMb.pcie_gen) {
-                                 selectedComponents.gpu = null; // GPU incompatível
-                             }
-                        }
-                    }
-
-                    populateOptions(); // Repopula tudo para aplicar novos filtros
-                } else if (category === 'ram') {
-                    const selectedMb = selectedComponents.motherboard ? components.motherboard.find(mb => mb.id === selectedComponents.motherboard) : null;
-                    document.getElementById('ram-max-modules').textContent = selectedMb ? selectedMb.ram_slots : 4;
-                    document.getElementById('ram-quantity-input').max = selectedMb ? selectedMb.ram_slots : 4;
-                    if (parseInt(document.getElementById('ram-quantity-input').value) > (selectedMb ? selectedMb.ram_slots : 4)) {
-                        document.getElementById('ram-quantity-input').value = (selectedMb ? selectedMb.ram_slots : 4);
-                        selectedComponents.ram.quantity = (selectedMb ? selectedMb.ram_slots : 4);
-                    }
-                } else if (category.startsWith('storage')) {
-                    // Repopula opções de armazenamento para refletir a disponibilidade de slots
-                    populateOptions();
-                } else if (category === 'gpu') {
-                    // Repopula opções de GPU se a placa-mãe mudar
-                    populateOptions();
-                }
-
+                handleCompatibilityChanges(category, item);
+                populateOptions(); // Repopula tudo para aplicar novos filtros e estados de desabilitado
                 updateTotal();
 
                 // Atualiza a imagem do notebook se a carcaça for selecionada
@@ -773,64 +948,95 @@
             return container;
         }
 
+        // Função para lidar com mudanças de compatibilidade após uma seleção
+        function handleCompatibilityChanges(category, selectedItem) {
+            const currentMb = selectedComponents.motherboard ? components.motherboard.find(mb => mb.id === selectedComponents.motherboard) : null;
+            const currentCpu = selectedComponents.cpu ? components.cpu.find(cpu => cpu.id === selectedComponents.cpu) : null;
+
+            // Lógica para CPU e Placa Mãe
+            if (category === 'motherboard') {
+                if (currentCpu && selectedItem.cpu_socket !== currentCpu.socket) {
+                    selectedComponents.cpu = null; // Reseta CPU se incompatível
+                }
+            } else if (category === 'cpu') {
+                if (currentMb && selectedItem.socket !== currentMb.cpu_socket) {
+                    selectedComponents.motherboard = null; // Reseta MB se incompatível
+                }
+            }
+
+            // Após a potencial mudança de MB/CPU, re-obtém a MB/CPU selecionada para as próximas checagens
+            const newMb = selectedComponents.motherboard ? components.motherboard.find(mb => mb.id === selectedComponents.motherboard) : null;
+            
+            // Lógica para RAM
+            if (newMb && selectedComponents.ram.type && components.ram.find(r => r.id === selectedComponents.ram.type).type !== newMb.ram_type) {
+                selectedComponents.ram.type = null;
+                selectedComponents.ram.quantity = 1;
+            }
+
+            // Lógica para Armazenamento
+            if (newMb) {
+                let nvmeSlotsUsed = 0;
+                let sataPortsUsed = 0;
+
+                const checkAndResetStorage = (storageKey) => {
+                    if (selectedComponents[storageKey].type && selectedComponents[storageKey].type !== 'none') {
+                        const sItem = components.storage.find(s => s.id === selectedComponents[storageKey].type);
+                        if (sItem) {
+                            if (sItem.interface === 'NVMe') nvmeSlotsUsed++;
+                            if (sItem.interface === 'SATA') sataPortsUsed++;
+
+                            let shouldReset = false;
+                            if (sItem.interface === 'NVMe' && nvmeSlotsUsed > newMb.nvme_slots) shouldReset = true;
+                            if (sItem.interface === 'SATA' && sataPortsUsed > newMb.sata_ports) shouldReset = true;
+
+                            if (shouldReset) {
+                                selectedComponents[storageKey].type = (storageKey === 'storage2' ? 'none' : null);
+                                // Decrementa o contador após resetar
+                                if (sItem.interface === 'NVMe') nvmeSlotsUsed--;
+                                if (sItem.interface === 'SATA') sataPortsUsed--;
+                            }
+                        }
+                    }
+                };
+
+                // Verifica e reseta storage2 primeiro, depois storage1 para priorizar o principal
+                checkAndResetStorage('storage2');
+                checkAndResetStorage('storage1');
+            }
+
+            // Lógica para GPU
+            if (newMb && selectedComponents.gpu && selectedComponents.gpu !== 'integrated') {
+                const gpuItem = components.gpu.find(g => g.id === selectedComponents.gpu);
+                if (gpuItem && gpuItem.pcie_gen !== 'N/A' && gpuItem.pcie_gen !== newMb.pcie_gen) {
+                    selectedComponents.gpu = null; // GPU incompatível
+                }
+            }
+        }
+
+
         // Função para filtrar opções com base no modo atual e compatibilidade
         function getFilteredOptions(category) {
             let filtered = components[category];
+            if (!filtered) return []; // Defensive: return empty array if category list doesn't exist
 
             const selectedMb = selectedComponents.motherboard ? components.motherboard.find(mb => mb.id === selectedComponents.motherboard) : null;
             const selectedCpu = selectedComponents.cpu ? components.cpu.find(cpu => cpu.id === selectedComponents.cpu) : null;
 
-            // Aplica o filtro de modo primeiro
             filtered = filtered.filter(item => {
-                const showInBasic = item.basic_only === true;
-                const showInAdvanced = item.advanced_only === true;
-                // Se o item não tem basic_only nem advanced_only definidos, ele aparece em ambos os modos
-                return (currentMode === 'basic' && (showInBasic || (!item.basic_only && !item.advanced_only))) ||
-                       (currentMode === 'advanced' && (showInAdvanced || showInBasic || (!item.basic_only && !item.advanced_only)));
+                const isBasicOnly = item.basic_only === true;
+                const isAdvancedOnly = item.advanced_only === true;
+                const isUniversal = item.basic_only === undefined && item.advanced_only === undefined;
+
+                if (currentMode === 'basic') {
+                    return isBasicOnly || isUniversal;
+                } else { // currentMode === 'advanced'
+                    return isAdvancedOnly || isBasicOnly || isUniversal; // Advanced mode shows all basic and advanced
+                }
             });
 
-            // Aplica filtros de compatibilidade
-            if (category === 'cpu' && selectedMb) {
-                filtered = filtered.filter(item => item.socket === selectedMb.cpu_socket);
-            } else if (category === 'motherboard' && selectedCpu) {
-                filtered = filtered.filter(item => item.cpu_socket === selectedCpu.socket);
-            } else if (category === 'ram' && selectedMb) {
-                filtered = filtered.filter(item => item.type === selectedMb.ram_type);
-            } else if (category === 'storage') { // Para armazenamento1 e armazenamento2
-                // Conta os drives NVMe/SATA atualmente selecionados
-                let currentNvmeCount = 0;
-                let currentSataCount = 0;
-                if (selectedComponents.storage1.type && selectedComponents.storage1.type !== 'none') {
-                    const s1 = components.storage.find(s => s.id === selectedComponents.storage1.type);
-                    if (s1 && s1.interface === 'NVMe') currentNvmeCount++;
-                    if (s1 && s1.interface === 'SATA') currentSataCount++;
-                }
-                if (selectedComponents.storage2.type && selectedComponents.storage2.type !== 'none') {
-                    const s2 = components.storage.find(s => s.id === selectedComponents.storage2.type);
-                    if (s2 && s2.interface === 'NVMe') currentNvmeCount++;
-                    if (s2 && s2.interface === 'SATA') currentSataCount++;
-                }
-
-                filtered = filtered.filter(item => {
-                    if (!selectedMb) return true; // Nenhuma placa-mãe selecionada, sem limites
-                    // Permite a seleção se este for o item atualmente selecionado OU se houver espaço
-                    if (item.interface === 'NVMe' && currentNvmeCount >= selectedMb.nvme_slots) {
-                        return selectedComponents.storage1.type === item.id || selectedComponents.storage2.type === item.id;
-                    }
-                    if (item.interface === 'SATA' && currentSataCount >= selectedMb.sata_ports) {
-                        return selectedComponents.storage1.type === item.id || selectedComponents.storage2.type === item.id;
-                    }
-                    return true;
-                });
-            } else if (category === 'gpu') {
-                filtered = filtered.filter(item => {
-                    if (item.id === 'integrated') return true; // Sempre permite GPU integrada
-                    if (!selectedMb) return true; // Nenhuma placa-mãe selecionada, permite todas as GPUs dedicadas
-                    // Verifica compatibilidade da geração PCIe
-                    return item.pcie_gen === selectedMb.pcie_gen || item.pcie_gen === 'N/A'; // N/A para integrada é sempre compatível
-                });
-            }
-
+            // The compatibility filtering logic is primarily handled in createOptionElement
+            // by adding 'disabled' class and 'incompatibility-tag'.
+            // Here, we just return the filtered list based on mode.
             return filtered;
         }
 
@@ -854,11 +1060,21 @@
             const ramTypeSelect = document.getElementById('ram-type-select');
             ramTypeSelect.innerHTML = '<option value="">Selecione o tipo de RAM...</option>';
             const ramOptions = getFilteredOptions('ram');
+            const selectedMbForRam = selectedComponents.motherboard ? components.motherboard.find(mb => mb.id === selectedComponents.motherboard) : null;
+
             ramOptions.forEach(item => {
                 const option = document.createElement('option');
                 option.value = item.id;
                 option.textContent = `${item.name} - ${formatPrice(item.price)} (Estoque: ${item.stock})`;
-                if (item.stock <= 0) option.disabled = true;
+                
+                let isDisabled = false;
+                if (item.stock <= 0) isDisabled = true;
+                if (selectedMbForRam && item.type !== selectedMbForRam.ram_type) {
+                    isDisabled = true;
+                    option.textContent += ' (Incompatível com MB)';
+                }
+
+                if (isDisabled) option.disabled = true;
                 ramTypeSelect.appendChild(option);
             });
 
@@ -891,7 +1107,7 @@
                 if (category === 'ram') {
                     selectedId = selectedComponents.ram.type;
                     const ramItem = components.ram.find(r => r.id === selectedId);
-                    if (selectedId && (!ramItem || !getFilteredOptions('ram').some(opt => opt.id === selectedId) || ramItem.stock <= 0)) {
+                    if (selectedId && (!ramItem || ramItem.stock <= 0 || (selectedMbForRam && ramItem.type !== selectedMbForRam.ram_type))) {
                         selectedComponents.ram.type = null;
                         ramTypeSelect.value = '';
                     } else if (selectedId) {
@@ -901,30 +1117,45 @@
                     selectedId = selectedComponents[category].type;
                     if (selectedId && selectedId !== 'none') {
                         const storageItem = components.storage.find(s => s.id === selectedId);
-                        if (!storageItem || !getFilteredOptions('storage').some(opt => opt.id === selectedId) || storageItem.stock <= 0) {
+                        const isCompatible = getFilteredOptions('storage').some(opt => opt.id === selectedId);
+                        if (!storageItem || !isCompatible || storageItem.stock <= 0) {
                             selectedComponents[category].type = (category === 'storage2' ? 'none' : null);
                         }
                     }
                     const el = document.getElementById(`${category}-options`).querySelector(`[data-id="${selectedComponents[category].type}"]`);
-                    if (el) el.classList.add('selected');
+                    if (el) {
+                        el.classList.add('selected');
+                        const input = el.querySelector('input[type="radio"]');
+                        if (input) input.checked = true;
+                    }
                 } else if (category === 'peripherals') {
                     selectedId = selectedComponents.peripherals;
                     if (selectedId && selectedId !== 'none-peripherals') {
                         const peripheralItem = components.peripherals.find(p => p.id === selectedId);
-                        if (!peripheralItem || !getFilteredOptions('peripherals').some(opt => opt.id === selectedId) || peripheralItem.stock <= 0) {
+                        const isCompatible = getFilteredOptions('peripherals').some(opt => opt.id === selectedId);
+                        if (!peripheralItem || !isCompatible || peripheralItem.stock <= 0) {
                             selectedComponents.peripherals = 'none-peripherals';
                         }
                     }
                     const el = document.getElementById(`${category}-options`).querySelector(`[data-id="${selectedComponents.peripherals}"]`);
-                    if (el) el.classList.add('selected');
+                    if (el) {
+                        el.classList.add('selected');
+                        const input = el.querySelector('input[type="radio"]');
+                        if (input) input.checked = true;
+                    }
                 }
                 else {
                     const item = components[category].find(c => c.id === selectedId);
-                    if (selectedId && (!item || !getFilteredOptions(category).some(opt => opt.id === selectedId) || item.stock <= 0)) {
+                    const isCompatible = getFilteredOptions(category).some(opt => opt.id === selectedId);
+                    if (selectedId && (!item || !isCompatible || item.stock <= 0)) {
                         selectedComponents[category] = null;
                     }
                     const el = document.getElementById(`${category}-options`).querySelector(`[data-id="${selectedComponents[category]}"]`);
-                    if (el) el.classList.add('selected');
+                    if (el) {
+                        el.classList.add('selected');
+                        const input = el.querySelector('input[type="radio"]');
+                        if (input) input.checked = true;
+                    }
                 }
             }
 
@@ -1018,12 +1249,12 @@
             }
 
             // Atualiza a quantidade máxima de RAM com base na placa-mãe
-            const selectedMb = selectedComponents.motherboard ? components.motherboard.find(mb => mb.id === selectedComponents.motherboard) : null;
-            document.getElementById('ram-max-modules').textContent = selectedMb ? selectedMb.ram_slots : 4;
-            document.getElementById('ram-quantity-input').max = selectedMb ? selectedMb.ram_slots : 4;
-            if (parseInt(document.getElementById('ram-quantity-input').value) > (selectedMb ? selectedMb.ram_slots : 4)) {
-                document.getElementById('ram-quantity-input').value = (selectedMb ? selectedMb.ram_slots : 4);
-                selectedComponents.ram.quantity = (selectedMb ? selectedMb.ram_slots : 4);
+            const selectedMbForRamQuantity = selectedComponents.motherboard ? components.motherboard.find(mb => mb.id === selectedComponents.motherboard) : null;
+            document.getElementById('ram-max-modules').textContent = selectedMbForRamQuantity ? selectedMbForRamQuantity.ram_slots : 4;
+            document.getElementById('ram-quantity-input').max = selectedMbForRamQuantity ? selectedMbForRamQuantity.ram_slots : 4;
+            if (parseInt(document.getElementById('ram-quantity-input').value) > (selectedMbForRamQuantity ? selectedMbForRamQuantity.ram_slots : 4)) {
+                document.getElementById('ram-quantity-input').value = (selectedMbForRamQuantity ? selectedMbForRamQuantity.ram_slots : 4);
+                selectedComponents.ram.quantity = (selectedMbForRamQuantity ? selectedMbForRamQuantity.ram_slots : 4);
             }
 
             updateTotal();
@@ -1127,6 +1358,15 @@
                 reader.readAsText(file);
             });
 
+            // Lógica para sugestão de configuração
+            document.querySelectorAll('.suggest-config-btn').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const profile = event.currentTarget.dataset.profile;
+                    suggestConfiguration(profile);
+                });
+            });
+
+
             // Botão de pedido e modal
             const orderButton = document.getElementById('order-button');
             const orderModal = document.getElementById('order-modal');
@@ -1158,44 +1398,62 @@
                 for (const key in selectedComponents) {
                     let componentDisplay = '';
                     let componentPrice = 0;
+                    let itemFound = false;
 
                     if (key === 'ram') {
                         if (selectedComponents.ram.type) {
                             const ramType = components.ram.find(c => c.id === selectedComponents.ram.type);
-                            componentDisplay = `${selectedComponents.ram.quantity}x ${ramType.name}`;
-                            componentPrice = ramType.price * selectedComponents.ram.quantity;
+                            if (ramType) {
+                                componentDisplay = `${selectedComponents.ram.quantity}x ${ramType.name}`;
+                                componentPrice = ramType.price * selectedComponents.ram.quantity;
+                                itemFound = true;
+                            }
                         }
                     } else if (key === 'storage1') {
                         if (selectedComponents.storage1.type) {
                             const storageType = components.storage.find(c => c.id === selectedComponents.storage1.type);
-                            componentDisplay = storageType.name;
-                            componentPrice = storageType.price;
+                            if (storageType) {
+                                componentDisplay = storageType.name;
+                                componentPrice = storageType.price;
+                                itemFound = true;
+                            }
                         }
                     } else if (key === 'storage2') {
                         if (selectedComponents.storage2.type === 'none') {
                             componentDisplay = 'Nenhum';
+                            itemFound = true;
                         } else if (selectedComponents.storage2.type) {
                             const storageType = components.storage.find(c => c.id === selectedComponents.storage2.type);
-                            componentDisplay = storageType.name;
-                            componentPrice = storageType.price;
+                            if (storageType) {
+                                componentDisplay = storageType.name;
+                                componentPrice = storageType.price;
+                                itemFound = true;
+                            }
                         }
                     } else if (key === 'peripherals') {
                         if (selectedComponents.peripherals === 'none-peripherals') {
                             componentDisplay = 'Nenhum';
+                            itemFound = true;
                         } else if (selectedComponents.peripherals) {
                             const peripheral = components.peripherals.find(c => c.id === selectedComponents.peripherals);
-                            componentDisplay = peripheral.name;
-                            componentPrice = peripheral.price;
+                            if (peripheral) {
+                                componentDisplay = peripheral.name;
+                                componentPrice = peripheral.price;
+                                itemFound = true;
+                            }
                         }
                     } else {
                         if (selectedComponents[key]) {
                             const componentData = components[key].find(c => c.id === selectedComponents[key]);
-                            componentDisplay = componentData.name;
-                            componentPrice = componentData.price;
+                            if (componentData) {
+                                componentDisplay = componentData.name;
+                                componentPrice = componentData.price;
+                                itemFound = true;
+                            }
                         }
                     }
                     
-                    if (componentDisplay) {
+                    if (itemFound) {
                         modalSummaryHtml += `<p><strong>${key.charAt(0).toUpperCase() + key.slice(1)}:</strong> ${componentDisplay} (${formatPrice(componentPrice)})</p>`;
                     }
                 }
@@ -1216,6 +1474,108 @@
                 }
             });
         }
+
+        // Função para sugerir configurações
+        function suggestConfiguration(profile) {
+            let suggestedConfig = {};
+
+            // Limpa seleções atuais para evitar conflitos
+            selectedComponents = {
+                casing: null,
+                motherboard: null,
+                cpu: null,
+                ram: { type: null, quantity: 1 },
+                storage1: { type: null },
+                storage2: { type: 'none' },
+                gpu: null,
+                display: null,
+                keyboard: null,
+                battery: null,
+                peripherals: 'none-peripherals'
+            };
+
+            switch (profile) {
+                case 'general-use':
+                    suggestedConfig = {
+                        casing: 'standard-black',
+                        motherboard: 'intel-h610',
+                        cpu: 'i5-13600hx',
+                        ram: { type: 'ddr4-8gb-3200', quantity: 2 },
+                        storage1: { type: 'nvme-512gb-gen4' },
+                        storage2: { type: 'none' },
+                        gpu: 'integrated',
+                        display: '15.6-fhd-120hz',
+                        keyboard: 'standard-backlit-br',
+                        battery: '50wh',
+                        peripherals: 'none-peripherals'
+                    };
+                    break;
+                case 'gaming':
+                    suggestedConfig = {
+                        casing: 'gaming-aggressive',
+                        motherboard: 'amd-x670e',
+                        cpu: 'r9-7945hx',
+                        ram: { type: 'ddr5-32gb-5600', quantity: 2 },
+                        storage1: { type: 'nvme-2tb-gen5' },
+                        storage2: { type: 'none' },
+                        gpu: 'rtx-4090',
+                        display: '17.3-qhd-240hz',
+                        keyboard: 'mechanical-rgb-lowprofile',
+                        battery: '90wh',
+                        peripherals: 'gaming-headset'
+                    };
+                    break;
+                case 'professional-productivity':
+                    suggestedConfig = {
+                        casing: 'premium-aluminum',
+                        motherboard: 'intel-z790-thunderbolt',
+                        cpu: 'i9-14900hx',
+                        ram: { type: 'ddr5-64gb-5200', quantity: 2 },
+                        storage1: { type: 'nvme-2tb-gen5' },
+                        storage2: { type: 'nvme-1tb-gen5' }, // Segundo NVMe
+                        gpu: 'rtx-4080',
+                        display: '16-oled-4k',
+                        keyboard: 'per-key-rgb',
+                        battery: '99wh',
+                        peripherals: 'usb-c-hub'
+                    };
+                    break;
+                case 'ultrabook':
+                    suggestedConfig = {
+                        casing: 'ultrabook-slim',
+                        motherboard: 'amd-x670e-wifi6e', // Placa-mãe mais compacta e eficiente
+                        cpu: 'r7-8845hs',
+                        ram: { type: 'ddr5-16gb-4800', quantity: 1 }, // Um módulo para ultrabook
+                        storage1: { type: 'nvme-1tb-gen4' },
+                        storage2: { type: 'none' },
+                        gpu: 'integrated', // Ultrabooks geralmente usam GPU integrada
+                        display: '14-oled-2.8k',
+                        keyboard: 'standard-backlit-us',
+                        battery: '99wh',
+                        peripherals: 'none-peripherals'
+                    };
+                    break;
+                default:
+                    console.warn("Perfil de configuração desconhecido.");
+                    return;
+            }
+
+            // Aplica a configuração sugerida
+            for (const key in suggestedConfig) {
+                if (key === 'ram' || key === 'storage1' || key === 'storage2') {
+                    selectedComponents[key] = { ...suggestedConfig[key] };
+                } else {
+                    selectedComponents[key] = suggestedConfig[key];
+                }
+            }
+
+            // Atualiza a UI
+            populateOptions();
+            updateTotal();
+            // Rola para o topo para o usuário ver a imagem e o resumo atualizados
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
 
         // Intersection Observer para animações de rolagem (para os cartões aparecerem gradualmente)
         const observer = new IntersectionObserver((entries) => {
