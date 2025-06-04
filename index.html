@@ -381,6 +381,7 @@
             return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
         }
 
+        // Define all available components and their properties
         const components = {
             casing: [
                 { id: 'standard-black', name: 'Carcaça Padrão (Preta)', price: 200, description_basic: 'Material durável e leve, acabamento fosco.', description_advanced: 'Carcaça de policarbonato de alta densidade com acabamento anodizado fosco, resistente a arranhões.', image: 'https://placehold.co/400x250/121212/e0e0e0?text=Notebook+Preto', stock: Math.floor(Math.random() * 10) + 5 },
@@ -480,43 +481,49 @@
             ]
         };
 
+        // Initialize selected components with default values
         let selectedComponents = {
-            casing: null,
-            motherboard: null,
-            cpu: null,
-            ram: { type: null, quantity: 1 },
-            storage1: { type: null },
-            storage2: { type: 'none' },
-            gpu: null,
-            display: null,
-            keyboard: null,
-            battery: null,
-            peripherals: 'none-peripherals'
+            casing: 'standard-black', // Default casing
+            motherboard: 'intel-h610', // Default motherboard (compatible with default CPU and RAM)
+            cpu: 'i5-13600hx', // Default CPU (compatible with default motherboard)
+            ram: { type: 'ddr4-8gb-3200', quantity: 1 }, // Default RAM (compatible with default motherboard)
+            storage1: { type: 'nvme-512gb-gen4' }, // Default primary storage
+            storage2: { type: 'none' }, // No secondary storage by default
+            gpu: 'integrated', // Default integrated GPU
+            display: '15.6-fhd-120hz', // Default display
+            keyboard: 'standard-backlit-us', // Default keyboard
+            battery: '50wh', // Default battery
+            peripherals: 'none-peripherals' // No peripherals by default
         };
 
         let tradeInCredit = 0;
         let currentMode = 'basic'; // 'basic' or 'advanced'
 
+        // Formats a number as a Brazilian Real currency string
         const formatPrice = (price) => `R$ ${price.toFixed(2).replace('.', ',')}`;
 
+        // Gets the price of a component by category and ID
         function getComponentPrice(category, id) {
-            if (id === 'none') return 0;
+            if (id === 'none' || id === 'none-peripherals') return 0;
             const componentList = components[category];
             const component = componentList.find(c => c.id === id);
             return component ? component.price : 0;
         }
 
+        // Gets the stock of a component by category and ID
         function getComponentStock(category, id) {
-            if (id === 'none') return 999; // Unlimited stock for "None" option
+            if (id === 'none' || id === 'none-peripherals') return 999; // Unlimited stock for "None" option
             const componentList = components[category];
             const component = componentList.find(c => c.id === id);
             return component ? component.stock : 0;
         }
 
+        // Gets the description of a component based on the current mode
         function getComponentDescription(item, mode) {
             return mode === 'basic' ? item.description_basic : item.description_advanced;
         }
 
+        // Updates the total price and the summary section
         function updateTotal() {
             let totalPrice = 0;
 
@@ -551,8 +558,8 @@
             updateSummary();
         }
 
+        // Updates the detailed summary in the sidebar
         function updateSummary() {
-            // Update summary details
             const summaryDetails = document.getElementById('summary-details');
             summaryDetails.innerHTML = `
                 <p><strong>Carcaça:</strong> <span class="summary-item-name">${selectedComponents.casing ? components.casing.find(c => c.id === selectedComponents.casing).name : 'N/A'}</span></p>
@@ -570,6 +577,7 @@
             `;
         }
 
+        // Creates an HTML element for a component option
         function createOptionElement(item, category, isRadio = true) {
             const container = document.createElement('div');
             container.className = 'option-item';
@@ -578,11 +586,11 @@
             container.dataset.category = category;
 
             const input = document.createElement('input');
-            input.type = isRadio ? 'radio' : 'hidden';
+            input.type = isRadio ? 'radio' : 'hidden'; // Use radio for most, hidden for non-selectable like RAM type in select
             input.id = `${category}-${item.id}`;
             input.name = category;
             input.value = item.id;
-            input.className = 'hidden';
+            input.className = 'hidden'; // Hide the actual radio button
 
             const label = document.createElement('label');
             label.htmlFor = `${category}-${item.id}`;
@@ -594,7 +602,7 @@
 
             if (disabledClass) {
                 container.classList.add(disabledClass);
-                container.style.pointerEvents = 'none';
+                container.style.pointerEvents = 'none'; // Prevent clicks on disabled items
             }
 
             const content = document.createElement('div');
@@ -608,40 +616,48 @@
             container.appendChild(input);
             container.appendChild(label);
 
+            // Add click listener to the container to handle selection
             container.addEventListener('click', () => {
-                if (container.classList.contains('disabled')) return;
+                if (container.classList.contains('disabled')) return; // Do nothing if disabled
 
                 const parent = container.parentNode;
-                parent.querySelectorAll('.option-item').forEach(el => el.classList.remove('selected'));
-                container.classList.add('selected');
-                input.checked = true;
-                
+                parent.querySelectorAll('.option-item').forEach(el => el.classList.remove('selected')); // Deselect others
+                container.classList.add('selected'); // Select this one
+                input.checked = true; // Mark the hidden radio button as checked
+
                 // Logic to handle stock decrement/increment and selection update
                 if (item.stock !== undefined && item.stock !== 999) {
                     if (category === 'ram') {
+                        // If a RAM type was previously selected, return its stock
                         if (selectedComponents.ram.type) {
                             const prevRamType = components.ram.find(r => r.id === selectedComponents.ram.type);
                             if (prevRamType && prevRamType.stock !== 999) prevRamType.stock += selectedComponents.ram.quantity;
                         }
                         selectedComponents.ram.type = item.id;
+                        // Decrement stock for the newly selected RAM type
                         if (item.stock !== 999) item.stock -= selectedComponents.ram.quantity;
                     } else if (category.startsWith('storage')) {
+                        // If a storage was previously selected, return its stock
                         const prevStorageId = selectedComponents[category].type;
                         if (prevStorageId && prevStorageId !== 'none') {
                             const prevStorageItem = components.storage.find(s => s.id === prevStorageId);
                             if (prevStorageItem && prevStorageItem.stock !== 999) prevStorageItem.stock++;
                         }
                         selectedComponents[category].type = item.id;
+                        // Decrement stock for the newly selected storage
                         if (item.stock !== 999 && item.id !== 'none') item.stock--;
                     } else if (category === 'peripherals') {
+                        // If a peripheral was previously selected, return its stock
                         const prevPeripheralId = selectedComponents.peripherals;
                         if (prevPeripheralId && prevPeripheralId !== 'none-peripherals') {
                             const prevPeripheralItem = components.peripherals.find(p => p.id === prevPeripheralId);
                             if (prevPeripheralItem && prevPeripheralItem.stock !== 999) prevPeripheralItem.stock++;
                         }
                         selectedComponents.peripherals = item.id;
+                        // Decrement stock for the newly selected peripheral
                         if (item.stock !== 999 && item.id !== 'none-peripherals') item.stock--;
                     } else {
+                        // For other categories, return stock of previous item and decrement for new
                         if (selectedComponents[category]) {
                             const prevItem = components[category].find(c => c.id === selectedComponents[category]);
                             if (prevItem && prevItem.stock !== 999) prevItem.stock++;
@@ -653,26 +669,26 @@
                 
                 // Trigger re-population of dependent options for compatibility
                 if (category === 'motherboard' || category === 'cpu') {
-                    // Reset dependent selections if they become incompatible
                     const newMb = category === 'motherboard' ? item : (selectedComponents.motherboard ? components.motherboard.find(mb => mb.id === selectedComponents.motherboard) : null);
                     const newCpu = category === 'cpu' ? item : (selectedComponents.cpu ? components.cpu.find(cpu => cpu.id === selectedComponents.cpu) : null);
 
                     // Check CPU compatibility with new MB
                     if (newMb && selectedComponents.cpu && (!newCpu || newCpu.socket !== newMb.cpu_socket)) {
-                        selectedComponents.cpu = null;
+                        selectedComponents.cpu = null; // Reset CPU if incompatible
                     }
                     // Check MB compatibility with new CPU
                     if (newCpu && selectedComponents.motherboard && (!newMb || newMb.cpu_socket !== newCpu.socket)) {
-                        selectedComponents.motherboard = null;
+                        selectedComponents.motherboard = null; // Reset MB if incompatible
                     }
 
                     // Reset RAM, Storage, GPU if they become incompatible
                     if (newMb) {
+                        // Check RAM type compatibility
                         if (selectedComponents.ram.type && components.ram.find(r => r.id === selectedComponents.ram.type).type !== newMb.ram_type) {
                             selectedComponents.ram.type = null;
                             selectedComponents.ram.quantity = 1;
                         }
-                        // Check NVMe/SATA slots
+                        // Check NVMe/SATA slots and reset if over limit
                         let currentNvmeCount = 0;
                         let currentSataCount = 0;
                         if (selectedComponents.storage1.type && selectedComponents.storage1.type !== 'none') {
@@ -687,7 +703,7 @@
                         }
 
                         if (currentNvmeCount > newMb.nvme_slots) {
-                            // Reset one NVMe if over limit, prioritize storage2
+                            // If too many NVMe, prioritize resetting storage2
                             if (selectedComponents.storage2.type && components.storage.find(s => s.id === selectedComponents.storage2.type)?.interface === 'NVMe') {
                                 selectedComponents.storage2.type = 'none';
                             } else if (selectedComponents.storage1.type && components.storage.find(s => s.id === selectedComponents.storage1.type)?.interface === 'NVMe') {
@@ -695,7 +711,7 @@
                             }
                         }
                         if (currentSataCount > newMb.sata_ports) {
-                            // Reset one SATA if over limit, prioritize storage2
+                            // If too many SATA, prioritize resetting storage2
                             if (selectedComponents.storage2.type && components.storage.find(s => s.id === selectedComponents.storage2.type)?.interface === 'SATA') {
                                 selectedComponents.storage2.type = 'none';
                             } else if (selectedComponents.storage1.type && components.storage.find(s => s.id === selectedComponents.storage1.type)?.interface === 'SATA') {
@@ -703,6 +719,7 @@
                             }
                         }
 
+                        // Check GPU PCIe generation compatibility
                         if (selectedComponents.gpu && selectedComponents.gpu !== 'integrated') {
                              const gpuItem = components.gpu.find(g => g.id === selectedComponents.gpu);
                              if (gpuItem && gpuItem.pcie_gen !== 'N/A' && gpuItem.pcie_gen !== newMb.pcie_gen) {
@@ -711,8 +728,9 @@
                         }
                     }
 
-                    populateOptions(); // Re-populate all to apply new filters
+                    populateOptions(); // Re-populate all to apply new filters and reset incompatible selections
                 } else if (category === 'ram') {
+                    // Update RAM quantity max based on selected motherboard
                     const selectedMb = selectedComponents.motherboard ? components.motherboard.find(mb => mb.id === selectedComponents.motherboard) : null;
                     document.getElementById('ram-max-modules').textContent = selectedMb ? selectedMb.ram_slots : 4;
                     document.getElementById('ram-quantity-input').max = selectedMb ? selectedMb.ram_slots : 4;
@@ -721,15 +739,15 @@
                         selectedComponents.ram.quantity = (selectedMb ? selectedMb.ram_slots : 4);
                     }
                 } else if (category.startsWith('storage')) {
-                    // Re-populate storage options to reflect slot availability
+                    // Re-populate storage options to reflect slot availability after a storage selection
                     populateOptions();
                 } else if (category === 'gpu') {
-                    // Re-populate GPU options if motherboard changes
-                    populateOptions();
+                    // Re-populate GPU options if motherboard changes (handled by motherboard/cpu block above)
                 }
 
-                updateTotal();
+                updateTotal(); // Recalculate total price
 
+                // Update notebook image based on casing selection
                 if (category === 'casing') {
                     document.getElementById('notebook-image').src = item.image;
                 }
@@ -738,17 +756,25 @@
             return container;
         }
 
+        // Filters components based on current mode and compatibility
         function getFilteredOptions(category) {
             let filtered = components[category];
 
             const selectedMb = selectedComponents.motherboard ? components.motherboard.find(mb => mb.id === selectedComponents.motherboard) : null;
             const selectedCpu = selectedComponents.cpu ? components.cpu.find(cpu => cpu.id === selectedComponents.cpu) : null;
 
-            // Apply mode filter first
+            // Apply mode filter (basic_only, advanced_only, or available in both)
             filtered = filtered.filter(item => {
-                const showInBasic = item.basic_only === true;
-                const showInAdvanced = item.advanced_only === true;
-                return (currentMode === 'basic' && showInBasic) || (currentMode === 'advanced' && (showInBasic || showInAdvanced));
+                const isBasicOnly = item.basic_only === true;
+                const isAdvancedOnly = item.advanced_only === true;
+
+                if (currentMode === 'basic') {
+                    // In basic mode, show if it's basic_only OR if it's available in both (neither specified)
+                    return isBasicOnly || (!isBasicOnly && !isAdvancedOnly);
+                } else { // currentMode === 'advanced'
+                    // In advanced mode, show if it's advanced_only OR if it's available in both (neither specified)
+                    return isAdvancedOnly || (!isBasicOnly && !isAdvancedOnly);
+                }
             });
 
             // Apply compatibility filters
@@ -759,7 +785,7 @@
             } else if (category === 'ram' && selectedMb) {
                 filtered = filtered.filter(item => item.type === selectedMb.ram_type);
             } else if (category === 'storage') { // For storage1 and storage2
-                // Count currently selected NVMe/SATA drives
+                // Count currently selected NVMe/SATA drives to enforce slot limits
                 let currentNvmeCount = 0;
                 let currentSataCount = 0;
                 if (selectedComponents.storage1.type && selectedComponents.storage1.type !== 'none') {
@@ -774,24 +800,24 @@
                 }
 
                 filtered = filtered.filter(item => {
-                    if (!selectedMb) return true; // No motherboard selected, no limits
+                    if (!selectedMb) return true; // No motherboard selected, no limits apply yet
+                    
+                    // Allow selection of current items even if slots are full (for re-population)
+                    if (selectedComponents.storage1.type === item.id || selectedComponents.storage2.type === item.id) return true;
+
                     if (item.interface === 'NVMe' && currentNvmeCount >= selectedMb.nvme_slots) {
-                        // Allow selection if this is the currently selected item
-                        if (selectedComponents.storage1.type === item.id || selectedComponents.storage2.type === item.id) return true;
-                        return false;
+                        return false; // Cannot add more NVMe drives
                     }
                     if (item.interface === 'SATA' && currentSataCount >= selectedMb.sata_ports) {
-                        // Allow selection if this is the currently selected item
-                        if (selectedComponents.storage1.type === item.id || selectedComponents.storage2.type === item.id) return true;
-                        return false;
+                        return false; // Cannot add more SATA drives
                     }
                     return true;
                 });
             } else if (category === 'gpu') {
                 filtered = filtered.filter(item => {
-                    if (item.id === 'integrated') return true; // Always allow integrated GPU
-                    if (!selectedMb) return true; // No motherboard selected, allow all dedicated GPUs
-                    // Check PCIe generation compatibility
+                    if (item.id === 'integrated') return true; // Integrated GPU is always an option
+                    if (!selectedMb) return true; // No motherboard selected, allow all dedicated GPUs initially
+                    // Check PCIe generation compatibility with the selected motherboard
                     return item.pcie_gen === selectedMb.pcie_gen || item.pcie_gen === 'N/A'; // N/A for integrated is always compatible
                 });
             }
@@ -799,6 +825,7 @@
             return filtered;
         }
 
+        // Populates all component options in the UI
         function populateOptions() {
             const categoriesToPopulate = ['casing', 'motherboard', 'cpu', 'gpu', 'display', 'keyboard', 'battery', 'peripherals'];
             
@@ -837,7 +864,7 @@
 
             // Populate Storage 2 options (excluding 'none' which is static)
             const storage2OptionsContainer = document.getElementById('storage2-options');
-            // Keep the "Nenhum" option, clear others
+            // Keep the "Nenhum" option, clear others before re-populating
             const noneOptionEl = storage2OptionsContainer.querySelector('[data-id="none"]');
             storage2OptionsContainer.innerHTML = '';
             if (noneOptionEl) storage2OptionsContainer.appendChild(noneOptionEl);
@@ -855,56 +882,74 @@
                 if (category === 'ram') {
                     selectedId = selectedComponents.ram.type;
                     const ramItem = components.ram.find(r => r.id === selectedId);
+                    // If selected RAM is no longer valid (e.g., incompatible with new MB or out of stock), reset
                     if (selectedId && (!ramItem || !getFilteredOptions('ram').some(opt => opt.id === selectedId) || ramItem.stock <= 0)) {
                         selectedComponents.ram.type = null;
-                        ramTypeSelect.value = '';
+                        ramTypeSelect.value = ''; // Reset select dropdown
                     } else if (selectedId) {
-                        ramTypeSelect.value = selectedId;
+                        ramTypeSelect.value = selectedId; // Set select dropdown to current selection
                     }
                 } else if (category === 'storage1' || category === 'storage2') {
                     selectedId = selectedComponents[category].type;
                     if (selectedId && selectedId !== 'none') {
                         const storageItem = components.storage.find(s => s.id === selectedId);
+                        // If selected storage is no longer valid, reset
                         if (!storageItem || !getFilteredOptions('storage').some(opt => opt.id === selectedId) || storageItem.stock <= 0) {
                             selectedComponents[category].type = (category === 'storage2' ? 'none' : null);
                         }
                     }
+                    // Apply 'selected' class to the corresponding option item
                     const el = document.getElementById(`${category}-options`).querySelector(`[data-id="${selectedComponents[category].type}"]`);
                     if (el) el.classList.add('selected');
                 } else if (category === 'peripherals') {
                     selectedId = selectedComponents.peripherals;
                     if (selectedId && selectedId !== 'none-peripherals') {
                         const peripheralItem = components.peripherals.find(p => p.id === selectedId);
+                        // If selected peripheral is no longer valid, reset
                         if (!peripheralItem || !getFilteredOptions('peripherals').some(opt => opt.id === selectedId) || peripheralItem.stock <= 0) {
                             selectedComponents.peripherals = 'none-peripherals';
                         }
                     }
+                    // Apply 'selected' class to the corresponding option item
                     const el = document.getElementById(`${category}-options`).querySelector(`[data-id="${selectedComponents.peripherals}"]`);
                     if (el) el.classList.add('selected');
                 }
-                else {
+                else { // For single-select categories like casing, motherboard, CPU, GPU, Display, Keyboard, Battery
                     const item = components[category].find(c => c.id === selectedId);
+                    // If selected item is no longer valid, reset
                     if (selectedId && (!item || !getFilteredOptions(category).some(opt => opt.id === selectedId) || item.stock <= 0)) {
                         selectedComponents[category] = null;
                     }
+                    // Apply 'selected' class to the corresponding option item
                     const el = document.getElementById(`${category}-options`).querySelector(`[data-id="${selectedComponents[category]}"]`);
                     if (el) el.classList.add('selected');
                 }
             }
 
-            // Update RAM quantity max based on motherboard
+            // Update RAM quantity max based on currently selected motherboard
             const selectedMb = selectedComponents.motherboard ? components.motherboard.find(mb => mb.id === selectedComponents.motherboard) : null;
             document.getElementById('ram-max-modules').textContent = selectedMb ? selectedMb.ram_slots : 4;
             document.getElementById('ram-quantity-input').max = selectedMb ? selectedMb.ram_slots : 4;
+            // Adjust RAM quantity if it exceeds the new max modules
             if (parseInt(document.getElementById('ram-quantity-input').value) > (selectedMb ? selectedMb.ram_slots : 4)) {
                 document.getElementById('ram-quantity-input').value = (selectedMb ? selectedMb.ram_slots : 4);
                 selectedComponents.ram.quantity = (selectedMb ? selectedMb.ram_slots : 4);
             }
 
-            updateTotal();
+            // Update notebook image on initial load based on default casing
+            if (selectedComponents.casing) {
+                const casingItem = components.casing.find(c => c.id === selectedComponents.casing);
+                if (casingItem) {
+                    document.getElementById('notebook-image').src = casingItem.image;
+                }
+            }
+
+            updateTotal(); // Recalculate total price after all options are populated and selections adjusted
         }
 
+        // Sets up all event listeners for user interactions
         function setupEventListeners() {
+            // RAM quantity input listener
             document.getElementById('ram-quantity-input').addEventListener('input', (event) => {
                 let quantity = parseInt(event.target.value);
                 const maxRam = parseInt(event.target.max);
@@ -915,6 +960,7 @@
                 updateTotal();
             });
 
+            // RAM type select listener
             document.getElementById('ram-type-select').addEventListener('change', (event) => {
                 selectedComponents.ram.type = event.target.value;
                 updateTotal();
@@ -925,34 +971,38 @@
                 currentMode = 'basic';
                 document.getElementById('basic-mode-btn').classList.add('active');
                 document.getElementById('advanced-mode-btn').classList.remove('active');
-                populateOptions();
+                populateOptions(); // Re-populate options based on new mode
             });
 
             document.getElementById('advanced-mode-btn').addEventListener('click', () => {
                 currentMode = 'advanced';
                 document.getElementById('advanced-mode-btn').classList.add('active');
                 document.getElementById('basic-mode-btn').classList.remove('active');
-                populateOptions();
+                populateOptions(); // Re-populate options based on new mode
             });
 
-            // Trade-in calculation
+            // Trade-in calculation button listener
             document.getElementById('calculate-tradein').addEventListener('click', () => {
                 const condition = document.getElementById('tradein-condition').value;
                 const age = document.getElementById('tradein-age').value;
                 const specs = document.getElementById('tradein-specs').value;
                 let baseValue = 0;
 
+                // Base value based on general specifications
                 if (specs === 'high-end') baseValue = 3000;
                 else if (specs === 'mid-range') baseValue = 1500;
                 else baseValue = 500;
 
+                // Adjust value based on age
                 if (age === '1-3years') baseValue *= 0.7;
                 else if (age === '>3years') baseValue *= 0.4;
 
+                // Adjust value based on condition
                 if (condition === 'good') baseValue *= 0.9;
                 else if (condition === 'fair') baseValue *= 0.6;
                 else if (condition === 'poor') baseValue *= 0.3;
 
+                // Round to nearest R$10
                 tradeInCredit = Math.round(baseValue / 10) * 10;
                 document.getElementById('tradein-value-display').textContent = `Valor Estimado: ${formatPrice(tradeInCredit)}`;
                 updateTotal();
@@ -975,6 +1025,7 @@
                     const content = e.target.result;
                     let fileValue = 0;
 
+                    // Simple keyword-based evaluation for demonstration
                     if (content.toLowerCase().includes('rtx 3080') || content.toLowerCase().includes('rtx 4070') || content.toLowerCase().includes('ryzen 9') || content.toLowerCase().includes('i9-')) {
                         fileValue = 4000;
                     } else if (content.toLowerCase().includes('rtx 2060') || content.toLowerCase().includes('rtx 3050') || content.toLowerCase().includes('ryzen 7') || content.toLowerCase().includes('i7-')) {
@@ -983,6 +1034,7 @@
                         fileValue = 1000;
                     }
 
+                    // Add some randomness for a more "realistic" estimation
                     fileValue *= (0.8 + Math.random() * 0.4);
                     fileValue = Math.round(fileValue / 10) * 10;
 
@@ -999,13 +1051,14 @@
                 reader.readAsText(file);
             });
 
-            // Order button and modal
+            // Order button and modal functionality
             const orderButton = document.getElementById('order-button');
             const orderModal = document.getElementById('order-modal');
             const closeButton = document.querySelector('.close-button');
 
             orderButton.addEventListener('click', () => {
                 let allSelected = true;
+                // List of required categories that must have a selection
                 const requiredCategories = ['casing', 'motherboard', 'cpu', 'ram', 'storage1', 'gpu', 'display', 'keyboard', 'battery'];
                 
                 requiredCategories.forEach(cat => {
@@ -1018,6 +1071,7 @@
                     }
                 });
 
+                // If not all required components are selected, show an error message in the modal
                 if (!allSelected) {
                     const modalContent = document.getElementById('modal-order-summary');
                     modalContent.innerHTML = `<p class="text-red-400">Por favor, selecione todos os componentes obrigatórios antes de finalizar o pedido.</p>`;
@@ -1026,6 +1080,7 @@
                     return;
                 }
 
+                // Build the summary HTML for the modal
                 let modalSummaryHtml = '';
                 for (const key in selectedComponents) {
                     let componentDisplay = '';
@@ -1068,20 +1123,24 @@
                     }
                     
                     if (componentDisplay) {
-                        modalSummaryHtml += `<p><strong>${key.charAt(0).toUpperCase() + key.slice(1)}:</strong> ${componentDisplay} (${formatPrice(componentPrice)})</p>`;
+                        // Capitalize the first letter of the category name for display
+                        const displayCategoryName = key.charAt(0).toUpperCase() + key.slice(1);
+                        modalSummaryHtml += `<p><strong>${displayCategoryName}:</strong> ${componentDisplay} (${formatPrice(componentPrice)})</p>`;
                     }
                 }
                 modalSummaryHtml += `<p class="text-red-300"><strong>Crédito de Troca:</strong> ${formatPrice(tradeInCredit)}</p>`;
 
                 document.getElementById('modal-order-summary').innerHTML = modalSummaryHtml;
                 document.getElementById('modal-total-price').textContent = document.getElementById('total-price-display').textContent;
-                orderModal.style.display = 'flex';
+                orderModal.style.display = 'flex'; // Show the modal
             });
 
+            // Close modal when close button is clicked
             closeButton.addEventListener('click', () => {
                 orderModal.style.display = 'none';
             });
 
+            // Close modal when clicking outside the modal content
             window.addEventListener('click', (event) => {
                 if (event.target === orderModal) {
                     orderModal.style.display = 'none';
@@ -1089,28 +1148,29 @@
             });
         }
 
-        // Intersection Observer for scroll animations
+        // Intersection Observer for scroll animations (fade-in effect for sections)
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('in-view');
-                    observer.unobserve(entry.target);
+                    entry.target.classList.add('in-view'); // Add class to trigger fade-in
+                    observer.unobserve(entry.target); // Stop observing once visible
                 }
             });
-        }, { threshold: 0.1 });
+        }, { threshold: 0.1 }); // Trigger when 10% of the element is visible
 
+        // Observes all 'card' sections for scroll animations
         function observeSections() {
             document.querySelectorAll('section.card').forEach(section => {
                 observer.observe(section);
             });
         }
 
-        // Initialize on DOMContentLoaded
+        // Initialize the application when the DOM is fully loaded
         document.addEventListener('DOMContentLoaded', () => {
-            populateOptions();
-            setupEventListeners();
-            updateTotal();
-            observeSections();
+            populateOptions(); // Populate all component options
+            setupEventListeners(); // Set up all interactive event listeners
+            updateTotal(); // Calculate initial total price
+            observeSections(); // Start observing sections for animations
         });
     </script>
 </body>
