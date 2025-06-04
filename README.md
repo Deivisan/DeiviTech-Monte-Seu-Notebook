@@ -1,31 +1,70 @@
-# README.md
+# DeiviTech: Monte Seu Notebook Personalizado
 
-## DeiviTech - Monte Seu Notebook Personalizado
+Este projeto é um configurador interativo de notebooks, permitindo que os usuários selecionem diversos componentes (carcaça, placa-mãe, CPU, RAM, armazenamento, GPU, tela, teclado, bateria e periféricos) e vejam o preço total atualizado em tempo real. Ele também inclui uma funcionalidade de estimativa de valor de troca para notebooks usados.
 
-Este projeto é um configurador de notebooks profissionais, onde o usuário pode montar seu notebook escolhendo cada componente, visualizar o preço em tempo real e até simular a troca de um notebook usado.
+---
 
-### Lógica do Site
+## 🚀 Funcionalidades
 
-- **Componentes Dinâmicos:** Todas as opções de carcaça, placa-mãe, CPU, RAM, armazenamento, GPU, tela, teclado, bateria e periféricos são carregadas dinamicamente a partir de arrays JavaScript.
-- **Compatibilidade:** O sistema filtra automaticamente as opções compatíveis (ex: só mostra CPUs compatíveis com a placa-mãe escolhida, RAM do tipo correto, limita quantidade de slots, etc).
-- **Estoque:** Cada opção tem um estoque simulado. Opções sem estoque aparecem desabilitadas.
-- **Modo Básico/Avançado:** O usuário pode alternar entre modos para ver opções mais simples ou avançadas.
-- **Resumo em Tempo Real:** O resumo do pedido é atualizado automaticamente conforme as escolhas, mostrando todos os itens e o preço total.
-- **Simulação de Troca:** O usuário pode simular o valor de troca do seu notebook antigo, preenchendo informações ou enviando um relatório do sistema.
-- **Finalização:** Ao finalizar o pedido, um modal mostra o resumo completo e o valor total.
+- **Configuração Modular:** Escolha entre uma variedade de componentes para montar o notebook ideal.
+- **Preço em Tempo Real:** O valor total é atualizado dinamicamente a cada seleção.
+- **Modos de Configuração:** Alterna entre "Modo Básico" (opções simplificadas) e "Modo Avançado" (todas as opções e detalhes técnicos).
+- **Validação de Compatibilidade:** A interface filtra opções incompatíveis com as seleções atuais (ex: tipo de RAM compatível com a placa-mãe, socket da CPU).
+- **Controle de Estoque:** Exibe o estoque disponível para cada componente e desabilita opções esgotadas.
+- **Estimativa de Troca:** Calcule um valor estimado para o seu notebook usado com base na condição, idade e especificações.
+- **Upload de Relatório:** Envie um relatório de sistema (`.txt`, `.html`, `.json`) para uma avaliação de troca mais precisa.
+- **Resumo do Pedido:** Uma seção de resumo exibe todas as suas escolhas e o total final.
+- **Animações de Scroll:** Seções que aparecem com um efeito de fade-in ao rolar a página.
 
-### Como usar
+---
 
-1. Abra o arquivo `index.html` em seu navegador.
-2. Escolha cada componente do notebook.
-3. Veja o preço total atualizado automaticamente.
-4. Simule o valor de troca do seu notebook antigo (opcional).
-5. Clique em "Finalizar Pedido" para ver o resumo.
+## 🛠️ Tecnologias Utilizadas
 
-### Adaptação
+- **HTML5:** Estrutura base da página.
+- **CSS3 (Tailwind CSS):** Estilização e responsividade da interface.
+- **JavaScript (Vanilla JS):** Lógica de configuração, cálculo de preços, validação e interatividade.
+- **Google Fonts (Inter):** Tipografia moderna e legível.
 
-- Para adicionar/remover modelos, edite os arrays no JavaScript.
-- O site é totalmente estático, não requer backend.
+---
+
+## ⚙️ Como Rodar o Projeto
+
+Este projeto é um arquivo HTML estático e pode ser executado diretamente no navegador.
+
+1. **Clone o Repositório (se aplicável):**
+    ```bash
+    git clone <URL_DO_SEU_REPOSITORIO>
+    cd deivitech-notebook-configurator
+    ```
+
+2. **Abra o Arquivo:**
+    Simplesmente abra o arquivo `index.html` no seu navegador preferido.
+
+    ```bash
+    # Exemplo no Linux/macOS
+    open index.html
+
+    # Exemplo no Windows
+    start index.html
+    ```
+
+---
+
+## 📂 Estrutura do Projeto
+
+```
+/
+├── index.html         # Página principal do configurador
+├── README.md          # Este arquivo de documentação
+└── (outros arquivos de suporte, se necessário)
+```
+
+---
+
+## 📊 Gráficos e Visualizações
+
+O projeto pode ser facilmente adaptado para incluir gráficos de comparação de preços, desempenho ou estatísticas de escolha dos usuários utilizando bibliotecas como [Chart.js](https://www.chartjs.org/) ou [Google Charts](https://developers.google.com/chart).  
+Basta adicionar o script da biblioteca desejada e criar um `<canvas>` ou `<div>` para exibir os gráficos, alimentando-os com os dados das escolhas feitas no configurador.
 
 ---
 
