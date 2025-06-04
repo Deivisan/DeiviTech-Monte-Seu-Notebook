@@ -6,25 +6,27 @@
     <title>DeiviTech: Monte Seu Notebook Profissional</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Custom CSS Variables for Professional Theme */
+        /* Variáveis CSS personalizadas para o tema profissional */
         :root {
-            --color-bg-dark: #0A0A0A; /* Deep almost-black */
-            --color-text-light: #E0E0E0; /* Off-white for readability */
-            --color-primary-blue: #007BFF; /* Vibrant Blue */
-            --color-accent-red: #DC3545; /* Alert/Accent Red */
-            --color-card-bg: #1C1C1C; /* Slightly lighter dark for cards */
-            --color-border-subtle: #333333; /* Subtle border for separation */
-            --color-button-bg-hover: #0056B3; /* Darker blue on hover */
-            --color-selected-bg: #0056B3; /* Darker blue for selected items */
-            --color-selected-border: #007BFF; /* Primary blue for selected border */
-            --color-disabled-text: #6C757D; /* Muted gray for disabled text */
-            --color-success-green: #28A745; /* Standard success green */
-            --color-summary-bg: #2C2C2C; /* Slightly lighter than card for summary */
+            --color-bg-dark: #0A0A0A; /* Preto profundo */
+            --color-text-light: #E0E0E0; /* Branco suave para legibilidade */
+            --color-primary-blue: #007BFF; /* Azul vibrante */
+            --color-accent-red: #DC3545; /* Vermelho de alerta/destaque */
+            --color-card-bg: #1C1C1C; /* Escuro ligeiramente mais claro para cartões */
+            --color-border-subtle: #333333; /* Borda sutil para separação */
+            --color-button-bg-hover: #0056B3; /* Azul mais escuro ao passar o mouse */
+            --color-selected-bg: #0056B3; /* Azul mais escuro para itens selecionados */
+            --color-selected-border: #007BFF; /* Azul primário para borda selecionada */
+            --color-disabled-text: #6C757D; /* Cinza opaco para texto desabilitado */
+            --color-success-green: #28A745; /* Verde padrão de sucesso */
+            --color-summary-bg: #2C2C2C; /* Ligeiramente mais claro que o cartão para o resumo */
         }
 
         body {
@@ -40,7 +42,7 @@
         .card {
             background-color: var(--color-card-bg);
             border-radius: 0.75rem;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5); /* Deeper shadow */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5); /* Sombra mais profunda */
             padding: 1.5rem;
             border: 1px solid var(--color-border-subtle);
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, opacity 0.5s ease-out;
@@ -71,7 +73,7 @@
             box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
         }
         .option-item.disabled {
-            opacity: 0.6; /* More visible disabled state */
+            opacity: 0.6; /* Estado desabilitado mais visível */
             cursor: not-allowed;
             background-color: #1A1A1A;
             border-color: #2A2A2A;
@@ -105,7 +107,7 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0,0,0,0.85); /* Darker overlay */
+            background-color: rgba(0,0,0,0.85); /* Overlay mais escuro */
             backdrop-filter: blur(6px);
             justify-content: center;
             align-items: center;
@@ -167,44 +169,44 @@
 
         <div class="lg:grid lg:grid-cols-4 lg:gap-8">
             <div class="lg:col-span-3 space-y-8">
-                <!-- Notebook Image -->
+                <!-- Imagem do Notebook -->
                 <section class="card flex justify-center items-center p-6">
-                    <!-- Default image for the notebook, updated dynamically -->
+                    <!-- Imagem padrão do notebook, atualizada dinamicamente -->
                     <img id="notebook-image" src="https://placehold.co/400x250/121212/e0e0e0?text=Notebook+DeiviTech" alt="Notebook Personalizado" class="rounded-lg shadow-lg border border-gray-700">
                 </section>
 
-                <!-- Carcaça Section -->
+                <!-- Seção Carcaça -->
                 <section id="casing-section" class="card">
                     <h2 class="text-2xl font-bold mb-6 text-blue-400">1. Escolha a Carcaça</h2>
                     <div id="casing-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <!-- Options will be dynamically loaded here -->
+                        <!-- As opções serão carregadas dinamicamente aqui -->
                     </div>
                 </section>
 
-                <!-- Placa Mãe Section -->
+                <!-- Seção Placa Mãe -->
                 <section id="motherboard-section" class="card">
                     <h2 class="text-2xl font-bold mb-6 text-blue-400">2. Selecione a Placa Mãe</h2>
                     <div id="motherboard-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <!-- Options will be dynamically loaded here -->
+                        <!-- As opções serão carregadas dinamicamente aqui -->
                     </div>
                 </section>
 
-                <!-- Processador Section -->
+                <!-- Seção Processador -->
                 <section id="cpu-section" class="card">
                     <h2 class="text-2xl font-bold mb-6 text-blue-400">3. Selecione o Processador (CPU)</h2>
                     <div id="cpu-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <!-- Options will be dynamically loaded here -->
+                        <!-- As opções serão carregadas dinamicamente aqui -->
                     </div>
                 </section>
 
-                <!-- Memória RAM Section -->
+                <!-- Seção Memória RAM -->
                 <section id="ram-section" class="card">
                     <h2 class="text-2xl font-bold mb-6 text-blue-400">4. Configure a Memória RAM</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label for="ram-type-select" class="block text-sm font-medium text-gray-300 mb-2">Tipo de Módulo RAM:</label>
                             <select id="ram-type-select" class="block w-full p-3 border border-gray-600 rounded-lg shadow-sm bg-gray-700 text-gray-200 focus:ring-blue-500 focus:border-blue-500">
-                                <!-- Options will be dynamically loaded here -->
+                                <!-- As opções serão carregadas dinamicamente aqui -->
                             </select>
                         </div>
                         <div>
@@ -215,15 +217,15 @@
                     </div>
                 </section>
 
-                <!-- Armazenamento Section 1 -->
+                <!-- Seção Armazenamento Principal -->
                 <section id="storage1-section" class="card">
                     <h2 class="text-2xl font-bold mb-6 text-blue-400">5. Armazenamento Principal</h2>
                     <div id="storage1-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <!-- Options will be dynamically loaded here -->
+                        <!-- As opções serão carregadas dinamicamente aqui -->
                     </div>
                 </section>
 
-                <!-- Armazenamento Section 2 (Optional) -->
+                <!-- Seção Armazenamento Secundário (Opcional) -->
                 <section id="storage2-section" class="card">
                     <h2 class="text-2xl font-bold mb-6 text-blue-400">6. Armazenamento Secundário (Opcional)</h2>
                     <div id="storage2-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -237,51 +239,51 @@
                                 </div>
                             </label>
                         </div>
-                        <!-- Other options will be dynamically loaded here -->
+                        <!-- Outras opções serão carregadas dinamicamente aqui -->
                     </div>
                 </section>
 
-                <!-- Placa de Vídeo Section -->
+                <!-- Seção Placa de Vídeo -->
                 <section id="gpu-section" class="card">
                     <h2 class="text-2xl font-bold mb-6 text-blue-400">7. Selecione a Placa de Vídeo (GPU)</h2>
                     <div id="gpu-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <!-- Options will be dynamically loaded here -->
+                        <!-- As opções serão carregadas dinamicamente aqui -->
                     </div>
                 </section>
 
-                <!-- Tela Section -->
+                <!-- Seção Tela -->
                 <section id="display-section" class="card">
                     <h2 class="text-2xl font-bold mb-6 text-blue-400">8. Escolha a Tela</h2>
                     <div id="display-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <!-- Options will be dynamically loaded here -->
+                        <!-- As opções serão carregadas dinamicamente aqui -->
                     </div>
                 </section>
 
-                <!-- Teclado Section -->
+                <!-- Seção Teclado -->
                 <section id="keyboard-section" class="card">
                     <h2 class="text-2xl font-bold mb-6 text-blue-400">9. Selecione o Teclado</h2>
                     <div id="keyboard-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <!-- Options will be dynamically loaded here -->
+                        <!-- As opções serão carregadas dinamicamente aqui -->
                     </div>
                 </section>
 
-                <!-- Bateria Section -->
+                <!-- Seção Bateria -->
                 <section id="battery-section" class="card">
                     <h2 class="text-2xl font-bold mb-6 text-blue-400">10. Escolha a Bateria</h2>
                     <div id="battery-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <!-- Options will be dynamically loaded here -->
+                        <!-- As opções serão carregadas dinamicamente aqui -->
                     </div>
                 </section>
 
-                <!-- Peripherals Section -->
+                <!-- Seção Periféricos -->
                 <section id="peripherals-section" class="card">
                     <h2 class="text-2xl font-bold mb-6 text-blue-400">11. Adicione Periféricos</h2>
                     <div id="peripherals-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <!-- Options will be dynamically loaded here -->
+                        <!-- As opções serão carregadas dinamicamente aqui -->
                     </div>
                 </section>
 
-                <!-- Trade-in Section -->
+                <!-- Seção Troca de Notebook Usado -->
                 <section id="tradein-section" class="card">
                     <h2 class="text-2xl font-bold mb-6 text-red-400">12. Troque Seu Notebook Usado</h2>
                     <p class="text-gray-300 mb-4">Estime o valor do seu notebook usado para abater no preço final.</p>
@@ -329,7 +331,7 @@
                 </section>
             </div>
 
-            <!-- Summary Section -->
+            <!-- Seção Resumo do Pedido -->
             <div class="lg:col-span-1 mt-8 lg:mt-0">
                 <div class="sticky-summary card p-6 bg-gray-800 border-blue-600">
                     <h2 class="text-2xl font-bold mb-4 text-blue-400">Resumo do Pedido</h2>
@@ -357,19 +359,40 @@
             </div>
         </div>
 
+        <!-- Nova Seção de Contato -->
+        <section class="card mt-12">
+            <h2 class="text-2xl font-bold mb-6 text-blue-400">Fale Conosco!</h2>
+            <p class="text-gray-300 mb-4">Tem alguma dúvida ou sugestão sobre a montagem do seu notebook? Entre em contato!</p>
+            <div class="flex flex-wrap justify-center gap-6 text-lg">
+                <a href="mailto:DeiviLSantana@outlook.com?subject=D%C3%BAvida%20sobre%20montagem%20de%20notebook%20DeiviTech&body=Ol%C3%A1%2C%20acabei%20de%20visualizar%20seu%20site%20sobre%20montagem%20personalizada%20de%20notebooks%2C%20e%20fiquei%20na%20d%C3%BAvida%20de%20..." target="_blank" class="text-blue-400 hover:text-blue-300 transition-colors duration-200 flex items-center">
+                    <i class="fas fa-envelope mr-2"></i> Email
+                </a>
+                <a href="https://wa.me/5575981231019?text=Ol%C3%A1%20DeiviTech%2C%20acabei%20de%20visualizar%20seu%20site%20sobre%20montagem%20personalizada%20de%20notebooks%2C%20e%20fiquei%20na%20d%C3%BAvida%20de%20..." target="_blank" class="text-blue-400 hover:text-blue-300 transition-colors duration-200 flex items-center">
+                    <i class="fab fa-whatsapp mr-2"></i> WhatsApp
+                </a>
+                <a href="https://t.me/deivilsan?text=Ol%C3%A1%20DeiviTech%2C%20acabei%20de%20visualizar%20seu%20site%20sobre%20montagem%20personalizada%20de%20notebooks%2C%20e%20fiquei%20na%20d%C3%BAvida%20de%20..." target="_blank" class="text-blue-400 hover:text-blue-300 transition-colors duration-200 flex items-center">
+                    <i class="fab fa-telegram mr-2"></i> Telegram
+                </a>
+                <a href="https://instagram.com/deivilsan" target="_blank" class="text-blue-400 hover:text-blue-300 transition-colors duration-200 flex items-center">
+                    <i class="fab fa-instagram mr-2"></i> Instagram
+                </a>
+            </div>
+        </section>
+
+
         <footer class="text-center mt-16 text-gray-500 text-sm">
             <p>&copy; 2025 DeiviTech. Todos os direitos reservados. Preços são estimativas.</p>
         </footer>
     </main>
 
-    <!-- Order Confirmation Modal -->
+    <!-- Modal de Confirmação de Pedido -->
     <div id="order-modal" class="modal">
         <div class="modal-content">
             <span class="close-button">&times;</span>
             <h2 class="text-2xl font-bold text-blue-400 mb-4">Pedido Finalizado com Sucesso!</h2>
             <p class="text-gray-300 mb-4">Seu notebook personalizado DeiviTech foi configurado. Um de nossos especialistas entrará em contato para confirmar os detalhes e finalizar a compra.</p>
             <div id="modal-order-summary" class="bg-gray-800 p-4 rounded-lg border border-gray-700 text-sm text-gray-200">
-                <!-- Summary will be injected here -->
+                <!-- O resumo será injetado aqui -->
             </div>
             <p class="text-lg font-bold text-blue-400 mt-4">Total: <span id="modal-total-price">R$ 0,00</span></p>
             <button class="mt-6 w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200" onclick="document.getElementById('order-modal').style.display='none';">
@@ -379,19 +402,19 @@
     </div>
 
     <script>
-        // Helper to get CSS variable value
+        // Função auxiliar para obter o valor de uma variável CSS
         function getCssVar(name) {
             return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
         }
 
-        // Component data for different parts of the notebook
+        // Dados dos componentes para diferentes partes do notebook
         const components = {
             casing: [
-                { id: 'standard-black', name: 'Carcaça Padrão (Preta)', price: 200, description_basic: 'Material durável e leve, acabamento fosco.', description_advanced: 'Carcaça de policarbonato de alta densidade com acabamento anodizado fosco, resistente a arranhões.', image: 'https://placehold.co/400x250/121212/e0e0e0?text=Notebook+Preto', stock: Math.floor(Math.random() * 10) + 5 },
-                { id: 'standard-silver', name: 'Carcaça Padrão (Prata)', price: 220, description_basic: 'Material durável e leve, acabamento prateado.', description_advanced: 'Carcaça de policarbonato com revestimento metálico prateado, oferece equilíbrio entre peso e durabilidade.', image: 'https://placehold.co/400x250/a0a0a0/121212?text=Notebook+Prata', stock: Math.floor(Math.random() * 10) + 5 },
-                { id: 'premium-aluminum', name: 'Carcaça Premium (Alumínio)', price: 500, description_basic: 'Acabamento sofisticado e maior resistência, design elegante.', description_advanced: 'Chassi unibody em liga de alumínio de grau aeroespacial, oferecendo rigidez estrutural superior e dissipação térmica aprimorada.', image: 'https://placehold.co/400x250/808080/121212?text=Notebook+Aluminio', stock: Math.floor(Math.random() * 10) + 5 },
-                { id: 'gaming-aggressive', name: 'Carcaça Gaming (Design Agressivo)', price: 650, description_basic: 'Estilo arrojado com ventilação otimizada e iluminação RGB.', description_advanced: 'Design angular em compósito de fibra de carbono e policarbonato, com zonas de ventilação agressivas e iluminação RGB personalizável (perfil ICC).', image: 'https://placehold.co/400x250/400000/e0e0e0?text=Notebook+Gaming', stock: Math.floor(Math.random() * 10) + 5 },
-                { id: 'ultrabook-slim', name: 'Carcaça Ultrabook (Fina)', price: 700, description_basic: 'Design ultrafino e leve, ideal para portabilidade.', description_advanced: 'Construção em liga de magnésio-alumínio, resultando em um perfil de 12mm e peso inferior a 1.2kg, otimizado para portabilidade extrema.', image: 'https://placehold.co/400x250/000040/e0e0e0?text=Notebook+Ultrafino', stock: Math.floor(Math.random() * 10) + 5 }
+                { id: 'standard-black', name: 'Carcaça Padrão (Preta)', price: 200, description_basic: 'Material durável e leve, acabamento fosco.', description_advanced: 'Carcaça de policarbonato de alta densidade com acabamento anodizado fosco, resistente a arranhões.', image: 'https://placehold.co/400x250/121212/e0e0e0?text=Notebook+Preto', stock: Math.floor(Math.random() * 10) + 5, basic_only: true, advanced_only: true },
+                { id: 'standard-silver', name: 'Carcaça Padrão (Prata)', price: 220, description_basic: 'Material durável e leve, acabamento prateado.', description_advanced: 'Carcaça de policarbonato com revestimento metálico prateado, oferece equilíbrio entre peso e durabilidade.', image: 'https://placehold.co/400x250/a0a0a0/121212?text=Notebook+Prata', stock: Math.floor(Math.random() * 10) + 5, basic_only: true, advanced_only: true },
+                { id: 'premium-aluminum', name: 'Carcaça Premium (Alumínio)', price: 500, description_basic: 'Acabamento sofisticado e maior resistência, design elegante.', description_advanced: 'Chassi unibody em liga de alumínio de grau aeroespacial, oferecendo rigidez estrutural superior e dissipação térmica aprimorada.', image: 'https://placehold.co/400x250/808080/121212?text=Notebook+Aluminio', stock: Math.floor(Math.random() * 10) + 5, basic_only: true, advanced_only: true },
+                { id: 'gaming-aggressive', name: 'Carcaça Gaming (Design Agressivo)', price: 650, description_basic: 'Estilo arrojado com ventilação otimizada e iluminação RGB.', description_advanced: 'Design angular em compósito de fibra de carbono e policarbonato, com zonas de ventilação agressivas e iluminação RGB personalizável (perfil ICC).', image: 'https://placehold.co/400x250/400000/e0e0e0?text=Notebook+Gaming', stock: Math.floor(Math.random() * 10) + 5, basic_only: false, advanced_only: true },
+                { id: 'ultrabook-slim', name: 'Carcaça Ultrabook (Fina)', price: 700, description_basic: 'Design ultrafino e leve, ideal para portabilidade.', description_advanced: 'Construção em liga de magnésio-alumínio, resultando em um perfil de 12mm e peso inferior a 1.2kg, otimizado para portabilidade extrema.', image: 'https://placehold.co/400x250/000040/e0e0e0?text=Notebook+Ultrafino', stock: Math.floor(Math.random() * 10) + 5, basic_only: false, advanced_only: true }
             ],
             motherboard: [
                 { id: 'intel-h610', name: 'Intel H610 (Básico)', price: 300, description_basic: 'Chipset de entrada para CPUs Intel, essencial.', description_advanced: 'Chipset Intel H610, suporte a LGA1700, 2 slots DDR4 SO-DIMM (máx. 32GB), 1x M.2 PCIe Gen3, 2x SATA III, 1x PCIe x16 Gen4.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, cpu_socket: 'LGA1700', ram_type: 'DDR4', ram_slots: 2, nvme_slots: 1, sata_ports: 2, pcie_gen: 'Gen4' },
@@ -428,7 +451,7 @@
                 { id: 'ddr5-32gb-5600', name: 'DDR5 32GB (5600MHz)', price: 1050, description_basic: 'Velocidade extrema para o máximo de FPS.', description_advanced: 'Módulo SO-DIMM DDR5 de 32GB, 5600MHz CL36, o mais rápido para gaming competitivo e aplicações de baixa latência.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, type: 'DDR5' },
                 { id: 'ddr5-64gb-5600', name: 'DDR5 64GB (5600MHz)', price: 2000, description_basic: 'O ápice da performance em memória RAM.', description_advanced: 'Módulo SO-DIMM DDR5 de 64GB, 5600MHz CL36, a melhor performance e capacidade disponível para notebooks.', advanced_only: true, stock: Math.floor(Math.random() * 5) + 1, type: 'DDR5' }
             ],
-            storage: [ // Used for both storage1 and storage2
+            storage: [ // Usado para armazenamento1 e armazenamento2
                 { id: 'nvme-512gb-gen4', name: 'SSD NVMe 512GB (PCIe Gen4)', price: 300, description_basic: 'Velocidade e espaço para o sistema e programas essenciais.', description_advanced: 'SSD NVMe PCIe Gen4 x4 de 512GB, velocidades de leitura/escrita sequenciais de até 7000/5000 MB/s.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, interface: 'NVMe', pcie_gen: 'Gen4' },
                 { id: 'nvme-1tb-gen4', name: 'SSD NVMe 1TB (PCIe Gen4)', price: 500, description_basic: 'Amplo espaço e alta velocidade para jogos e arquivos grandes.', description_advanced: 'SSD NVMe PCIe Gen4 x4 de 1TB, ideal para gamers e criadores de conteúdo com grandes bibliotecas.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, interface: 'NVMe', pcie_gen: 'Gen4' },
                 { id: 'nvme-2tb-gen4', name: 'SSD NVMe 2TB (PCIe Gen4)', price: 900, description_basic: 'Capacidade máxima e performance superior.', description_advanced: 'SSD NVMe PCIe Gen4 x4 de 2TB, oferece o máximo de espaço e velocidade para a maioria dos usuários exigentes.', basic_only: true, stock: Math.floor(Math.random() * 10) + 5, interface: 'NVMe', pcie_gen: 'Gen4' },
@@ -484,9 +507,9 @@
             ]
         };
 
-        // State to hold the currently selected components
+        // Estado para armazenar os componentes atualmente selecionados
         let selectedComponents = {
-            casing: null, // Initialized to null, will be set to the first option on load
+            casing: null, // Inicializado como nulo, será definido para a primeira opção ao carregar
             motherboard: null,
             cpu: null,
             ram: { type: null, quantity: 1 },
@@ -500,12 +523,12 @@
         };
 
         let tradeInCredit = 0;
-        let currentMode = 'basic'; // 'basic' or 'advanced'
+        let currentMode = 'basic'; // 'basic' ou 'advanced'
 
-        // Function to format price to Brazilian Real
+        // Função para formatar o preço para Real Brasileiro
         const formatPrice = (price) => `R$ ${price.toFixed(2).replace('.', ',')}`;
 
-        // Function to get the price of a component by category and ID
+        // Função para obter o preço de um componente por categoria e ID
         function getComponentPrice(category, id) {
             if (id === 'none' || id === 'none-peripherals') return 0;
             const componentList = components[category];
@@ -513,20 +536,20 @@
             return component ? component.price : 0;
         }
 
-        // Function to get the stock of a component by category and ID
+        // Função para obter o estoque de um componente por categoria e ID
         function getComponentStock(category, id) {
-            if (id === 'none' || id === 'none-peripherals') return 999; // Unlimited stock for "None" option
+            if (id === 'none' || id === 'none-peripherals') return 999; // Estoque ilimitado para a opção "Nenhum"
             const componentList = components[category];
             const component = componentList.find(c => c.id === id);
             return component ? component.stock : 0;
         }
 
-        // Function to get the description based on the current mode (basic/advanced)
+        // Função para obter a descrição com base no modo atual (básico/avançado)
         function getComponentDescription(item, mode) {
             return mode === 'basic' ? item.description_basic : item.description_advanced;
         }
 
-        // Function to update the total price and summary
+        // Função para atualizar o preço total e o resumo
         function updateTotal() {
             let totalPrice = 0;
 
@@ -561,7 +584,7 @@
             updateSummary();
         }
 
-        // Function to update the summary details displayed on the right panel
+        // Função para atualizar os detalhes do resumo exibidos no painel direito
         function updateSummary() {
             const summaryDetails = document.getElementById('summary-details');
             summaryDetails.innerHTML = `
@@ -580,7 +603,7 @@
             `;
         }
 
-        // Function to create an option element for a component
+        // Função para criar um elemento de opção para um componente
         function createOptionElement(item, category, isRadio = true) {
             const container = document.createElement('div');
             container.className = 'option-item';
@@ -589,7 +612,7 @@
             container.dataset.category = category;
 
             const input = document.createElement('input');
-            input.type = isRadio ? 'radio' : 'hidden'; // Use radio for selection, hidden for non-selectable items if needed
+            input.type = isRadio ? 'radio' : 'hidden'; // Usa rádio para seleção, oculto para itens não selecionáveis, se necessário
             input.id = `${category}-${item.id}`;
             input.name = category;
             input.value = item.id;
@@ -605,7 +628,7 @@
 
             if (disabledClass) {
                 container.classList.add(disabledClass);
-                container.style.pointerEvents = 'none'; // Disable click events
+                container.style.pointerEvents = 'none'; // Desabilita eventos de clique
             }
 
             const content = document.createElement('div');
@@ -619,71 +642,71 @@
             container.appendChild(input);
             container.appendChild(label);
 
-            // Add event listener for option selection
+            // Adiciona listener de evento para seleção de opção
             container.addEventListener('click', () => {
-                if (container.classList.contains('disabled')) return; // Prevent selection of disabled items
+                if (container.classList.contains('disabled')) return; // Previne seleção de itens desabilitados
 
                 const parent = container.parentNode;
                 parent.querySelectorAll('.option-item').forEach(el => el.classList.remove('selected'));
                 container.classList.add('selected');
                 input.checked = true;
                 
-                // Logic to handle stock decrement/increment and selection update
+                // Lógica para lidar com decremento/incremento de estoque e atualização de seleção
                 if (item.stock !== undefined && item.stock !== 999) {
                     if (category === 'ram') {
                         if (selectedComponents.ram.type) {
                             const prevRamType = components.ram.find(r => r.id === selectedComponents.ram.type);
-                            if (prevRamType && prevRamType.stock !== 999) prevRamType.stock += selectedComponents.ram.quantity; // Return stock
+                            if (prevRamType && prevRamType.stock !== 999) prevRamType.stock += selectedComponents.ram.quantity; // Retorna estoque
                         }
                         selectedComponents.ram.type = item.id;
-                        if (item.stock !== 999) item.stock -= selectedComponents.ram.quantity; // Deduct new stock
+                        if (item.stock !== 999) item.stock -= selectedComponents.ram.quantity; // Deduz novo estoque
                     } else if (category.startsWith('storage')) {
                         const prevStorageId = selectedComponents[category].type;
                         if (prevStorageId && prevStorageId !== 'none') {
                             const prevStorageItem = components.storage.find(s => s.id === prevStorageId);
-                            if (prevStorageItem && prevStorageItem.stock !== 999) prevStorageItem.stock++; // Return stock
+                            if (prevStorageItem && prevStorageItem.stock !== 999) prevStorageItem.stock++; // Retorna estoque
                         }
                         selectedComponents[category].type = item.id;
-                        if (item.stock !== 999 && item.id !== 'none') item.stock--; // Deduct new stock
+                        if (item.stock !== 999 && item.id !== 'none') item.stock--; // Deduz novo estoque
                     } else if (category === 'peripherals') {
                         const prevPeripheralId = selectedComponents.peripherals;
                         if (prevPeripheralId && prevPeripheralId !== 'none-peripherals') {
                             const prevPeripheralItem = components.peripherals.find(p => p.id === prevPeripheralId);
-                            if (prevPeripheralItem && prevPeripheralItem.stock !== 999) prevPeripheralItem.stock++; // Return stock
+                            if (prevPeripheralItem && prevPeripheralItem.stock !== 999) prevPeripheralItem.stock++; // Retorna estoque
                         }
                         selectedComponents.peripherals = item.id;
-                        if (item.stock !== 999 && item.id !== 'none-peripherals') item.stock--; // Deduct new stock
+                        if (item.stock !== 999 && item.id !== 'none-peripherals') item.stock--; // Deduz novo estoque
                     } else {
                         if (selectedComponents[category]) {
                             const prevItem = components[category].find(c => c.id === selectedComponents[category]);
-                            if (prevItem && prevItem.stock !== 999) prevItem.stock++; // Return stock
+                            if (prevItem && prevItem.stock !== 999) prevItem.stock++; // Retorna estoque
                         }
                         selectedComponents[category] = item.id;
-                        if (item.stock !== 999) item.stock--; // Deduct new stock
+                        if (item.stock !== 999) item.stock--; // Deduz novo estoque
                     }
                 }
                 
-                // Trigger re-population of dependent options for compatibility
+                // Dispara a repopulação de opções dependentes para compatibilidade
                 if (category === 'motherboard' || category === 'cpu') {
                     const newMb = category === 'motherboard' ? item : (selectedComponents.motherboard ? components.motherboard.find(mb => mb.id === selectedComponents.motherboard) : null);
                     const newCpu = category === 'cpu' ? item : (selectedComponents.cpu ? components.cpu.find(cpu => cpu.id === selectedComponents.cpu) : null);
 
-                    // Check CPU compatibility with new MB
+                    // Verifica compatibilidade da CPU com a nova MB
                     if (newMb && selectedComponents.cpu && (!newCpu || newCpu.socket !== newMb.cpu_socket)) {
                         selectedComponents.cpu = null;
                     }
-                    // Check MB compatibility with new CPU
+                    // Verifica compatibilidade da MB com a nova CPU
                     if (newCpu && selectedComponents.motherboard && (!newMb || newMb.cpu_socket !== newCpu.socket)) {
                         selectedComponents.motherboard = null;
                     }
 
-                    // Reset RAM, Storage, GPU if they become incompatible
+                    // Reseta RAM, Armazenamento, GPU se ficarem incompatíveis
                     if (newMb) {
                         if (selectedComponents.ram.type && components.ram.find(r => r.id === selectedComponents.ram.type).type !== newMb.ram_type) {
                             selectedComponents.ram.type = null;
                             selectedComponents.ram.quantity = 1;
                         }
-                        // Check NVMe/SATA slots
+                        // Verifica slots NVMe/SATA
                         let currentNvmeCount = 0;
                         let currentSataCount = 0;
                         if (selectedComponents.storage1.type && selectedComponents.storage1.type !== 'none') {
@@ -698,7 +721,7 @@
                         }
 
                         if (currentNvmeCount > newMb.nvme_slots) {
-                            // Reset one NVMe if over limit, prioritize storage2
+                            // Reseta um NVMe se exceder o limite, prioriza storage2
                             if (selectedComponents.storage2.type && components.storage.find(s => s.id === selectedComponents.storage2.type)?.interface === 'NVMe') {
                                 selectedComponents.storage2.type = 'none';
                             } else if (selectedComponents.storage1.type && components.storage.find(s => s.id === selectedComponents.storage1.type)?.interface === 'NVMe') {
@@ -706,7 +729,7 @@
                             }
                         }
                         if (currentSataCount > newMb.sata_ports) {
-                            // Reset one SATA if over limit, prioritize storage2
+                            // Reseta um SATA se exceder o limite, prioriza storage2
                             if (selectedComponents.storage2.type && components.storage.find(s => s.id === selectedComponents.storage2.type)?.interface === 'SATA') {
                                 selectedComponents.storage2.type = 'none';
                             } else if (selectedComponents.storage1.type && components.storage.find(s => s.id === selectedComponents.storage1.type)?.interface === 'SATA') {
@@ -717,12 +740,12 @@
                         if (selectedComponents.gpu && selectedComponents.gpu !== 'integrated') {
                              const gpuItem = components.gpu.find(g => g.id === selectedComponents.gpu);
                              if (gpuItem && gpuItem.pcie_gen !== 'N/A' && gpuItem.pcie_gen !== newMb.pcie_gen) {
-                                 selectedComponents.gpu = null; // Incompatible GPU
+                                 selectedComponents.gpu = null; // GPU incompatível
                              }
                         }
                     }
 
-                    populateOptions(); // Re-populate all to apply new filters
+                    populateOptions(); // Repopula tudo para aplicar novos filtros
                 } else if (category === 'ram') {
                     const selectedMb = selectedComponents.motherboard ? components.motherboard.find(mb => mb.id === selectedComponents.motherboard) : null;
                     document.getElementById('ram-max-modules').textContent = selectedMb ? selectedMb.ram_slots : 4;
@@ -732,16 +755,16 @@
                         selectedComponents.ram.quantity = (selectedMb ? selectedMb.ram_slots : 4);
                     }
                 } else if (category.startsWith('storage')) {
-                    // Re-populate storage options to reflect slot availability
+                    // Repopula opções de armazenamento para refletir a disponibilidade de slots
                     populateOptions();
                 } else if (category === 'gpu') {
-                    // Re-populate GPU options if motherboard changes
+                    // Repopula opções de GPU se a placa-mãe mudar
                     populateOptions();
                 }
 
                 updateTotal();
 
-                // Update notebook image if casing is selected
+                // Atualiza a imagem do notebook se a carcaça for selecionada
                 if (category === 'casing') {
                     document.getElementById('notebook-image').src = item.image;
                 }
@@ -750,29 +773,31 @@
             return container;
         }
 
-        // Function to filter options based on current mode and compatibility
+        // Função para filtrar opções com base no modo atual e compatibilidade
         function getFilteredOptions(category) {
             let filtered = components[category];
 
             const selectedMb = selectedComponents.motherboard ? components.motherboard.find(mb => mb.id === selectedComponents.motherboard) : null;
             const selectedCpu = selectedComponents.cpu ? components.cpu.find(cpu => cpu.id === selectedComponents.cpu) : null;
 
-            // Apply mode filter first
+            // Aplica o filtro de modo primeiro
             filtered = filtered.filter(item => {
                 const showInBasic = item.basic_only === true;
                 const showInAdvanced = item.advanced_only === true;
-                return (currentMode === 'basic' && showInBasic) || (currentMode === 'advanced' && (showInBasic || showInAdvanced || (!item.basic_only && !item.advanced_only))); // Show all if no specific mode is set
+                // Se o item não tem basic_only nem advanced_only definidos, ele aparece em ambos os modos
+                return (currentMode === 'basic' && (showInBasic || (!item.basic_only && !item.advanced_only))) ||
+                       (currentMode === 'advanced' && (showInAdvanced || showInBasic || (!item.basic_only && !item.advanced_only)));
             });
 
-            // Apply compatibility filters
+            // Aplica filtros de compatibilidade
             if (category === 'cpu' && selectedMb) {
                 filtered = filtered.filter(item => item.socket === selectedMb.cpu_socket);
             } else if (category === 'motherboard' && selectedCpu) {
                 filtered = filtered.filter(item => item.cpu_socket === selectedCpu.socket);
             } else if (category === 'ram' && selectedMb) {
                 filtered = filtered.filter(item => item.type === selectedMb.ram_type);
-            } else if (category === 'storage') { // For storage1 and storage2
-                // Count currently selected NVMe/SATA drives
+            } else if (category === 'storage') { // Para armazenamento1 e armazenamento2
+                // Conta os drives NVMe/SATA atualmente selecionados
                 let currentNvmeCount = 0;
                 let currentSataCount = 0;
                 if (selectedComponents.storage1.type && selectedComponents.storage1.type !== 'none') {
@@ -787,8 +812,8 @@
                 }
 
                 filtered = filtered.filter(item => {
-                    if (!selectedMb) return true; // No motherboard selected, no limits
-                    // Allow selection if this is the currently selected item OR if there's space
+                    if (!selectedMb) return true; // Nenhuma placa-mãe selecionada, sem limites
+                    // Permite a seleção se este for o item atualmente selecionado OU se houver espaço
                     if (item.interface === 'NVMe' && currentNvmeCount >= selectedMb.nvme_slots) {
                         return selectedComponents.storage1.type === item.id || selectedComponents.storage2.type === item.id;
                     }
@@ -799,24 +824,24 @@
                 });
             } else if (category === 'gpu') {
                 filtered = filtered.filter(item => {
-                    if (item.id === 'integrated') return true; // Always allow integrated GPU
-                    if (!selectedMb) return true; // No motherboard selected, allow all dedicated GPUs
-                    // Check PCIe generation compatibility
-                    return item.pcie_gen === selectedMb.pcie_gen || item.pcie_gen === 'N/A'; // N/A for integrated is always compatible
+                    if (item.id === 'integrated') return true; // Sempre permite GPU integrada
+                    if (!selectedMb) return true; // Nenhuma placa-mãe selecionada, permite todas as GPUs dedicadas
+                    // Verifica compatibilidade da geração PCIe
+                    return item.pcie_gen === selectedMb.pcie_gen || item.pcie_gen === 'N/A'; // N/A para integrada é sempre compatível
                 });
             }
 
             return filtered;
         }
 
-        // Function to populate all component options
+        // Função para popular todas as opções de componentes
         function populateOptions() {
             const categoriesToPopulate = ['casing', 'motherboard', 'cpu', 'gpu', 'display', 'keyboard', 'battery', 'peripherals'];
             
             categoriesToPopulate.forEach(category => {
                 const container = document.getElementById(`${category}-options`);
                 if (container) {
-                    container.innerHTML = ''; // Clear previous options
+                    container.innerHTML = ''; // Limpa opções anteriores
                     const options = getFilteredOptions(category);
                     options.forEach(item => {
                         const optionElement = createOptionElement(item, category);
@@ -825,7 +850,7 @@
                 }
             });
 
-            // Populate RAM type select
+            // Popula o select de tipo de RAM
             const ramTypeSelect = document.getElementById('ram-type-select');
             ramTypeSelect.innerHTML = '<option value="">Selecione o tipo de RAM...</option>';
             const ramOptions = getFilteredOptions('ram');
@@ -837,7 +862,7 @@
                 ramTypeSelect.appendChild(option);
             });
 
-            // Populate Storage 1 options
+            // Popula as opções de Armazenamento 1
             const storage1OptionsContainer = document.getElementById('storage1-options');
             storage1OptionsContainer.innerHTML = '';
             const storage1Options = getFilteredOptions('storage');
@@ -846,9 +871,9 @@
                 storage1OptionsContainer.appendChild(optionElement);
             });
 
-            // Populate Storage 2 options (excluding 'none' which is static)
+            // Popula as opções de Armazenamento 2 (excluindo 'none' que é estático)
             const storage2OptionsContainer = document.getElementById('storage2-options');
-            // Keep the "Nenhum" option, clear others
+            // Mantém a opção "Nenhum", limpa as outras
             const noneOptionEl = storage2OptionsContainer.querySelector('[data-id="none"]');
             storage2OptionsContainer.innerHTML = '';
             if (noneOptionEl) storage2OptionsContainer.appendChild(noneOptionEl);
@@ -859,7 +884,7 @@
                 storage2OptionsContainer.appendChild(optionElement);
             });
 
-            // Re-select previously chosen options and handle invalidations
+            // Resseleciona opções escolhidas anteriormente e lida com invalidações
             for (const category in selectedComponents) {
                 let selectedId = selectedComponents[category];
 
@@ -903,83 +928,96 @@
                 }
             }
 
-            // Set default selections if none are made (e.g., on initial load)
-            // This is crucial for the casing to appear initially
+            // Define seleções padrão se nenhuma for feita (ex: no carregamento inicial)
+            // Isso é crucial para que a carcaça apareça inicialmente
             if (!selectedComponents.casing && components.casing.length > 0) {
                 const defaultCasing = getFilteredOptions('casing')[0];
                 if (defaultCasing) {
                     selectedComponents.casing = defaultCasing.id;
-                    document.getElementById('notebook-image').src = defaultCasing.image;
-                    const el = document.getElementById('casing-options').querySelector(`[data-id="${selectedComponents.casing}"]`);
-                    if (el) el.classList.add('selected');
                 }
             }
+            // Garante que a imagem do notebook seja atualizada com base na carcaça selecionada
+            const currentCasing = selectedComponents.casing ? components.casing.find(c => c.id === selectedComponents.casing) : null;
+            if (currentCasing) {
+                document.getElementById('notebook-image').src = currentCasing.image;
+            } else {
+                document.getElementById('notebook-image').src = "https://placehold.co/400x250/121212/e0e0e0?text=Notebook+DeiviTech";
+            }
+
+
             if (!selectedComponents.motherboard && components.motherboard.length > 0) {
                 const defaultMb = getFilteredOptions('motherboard')[0];
                 if (defaultMb) {
                     selectedComponents.motherboard = defaultMb.id;
-                    const el = document.getElementById('motherboard-options').querySelector(`[data-id="${selectedComponents.motherboard}"]`);
-                    if (el) el.classList.add('selected');
                 }
             }
             if (!selectedComponents.cpu && components.cpu.length > 0) {
                 const defaultCpu = getFilteredOptions('cpu')[0];
                 if (defaultCpu) {
                     selectedComponents.cpu = defaultCpu.id;
-                    const el = document.getElementById('cpu-options').querySelector(`[data-id="${selectedComponents.cpu}"]`);
-                    if (el) el.classList.add('selected');
                 }
             }
             if (!selectedComponents.ram.type && components.ram.length > 0) {
                 const defaultRam = getFilteredOptions('ram')[0];
                 if (defaultRam) {
                     selectedComponents.ram.type = defaultRam.id;
-                    ramTypeSelect.value = defaultRam.id;
                 }
             }
             if (!selectedComponents.storage1.type && components.storage.length > 0) {
                 const defaultStorage1 = getFilteredOptions('storage')[0];
                 if (defaultStorage1) {
                     selectedComponents.storage1.type = defaultStorage1.id;
-                    const el = document.getElementById('storage1-options').querySelector(`[data-id="${selectedComponents.storage1.type}"]`);
-                    if (el) el.classList.add('selected');
                 }
             }
             if (!selectedComponents.gpu && components.gpu.length > 0) {
                 const defaultGpu = getFilteredOptions('gpu')[0];
                 if (defaultGpu) {
                     selectedComponents.gpu = defaultGpu.id;
-                    const el = document.getElementById('gpu-options').querySelector(`[data-id="${selectedComponents.gpu}"]`);
-                    if (el) el.classList.add('selected');
                 }
             }
             if (!selectedComponents.display && components.display.length > 0) {
                 const defaultDisplay = getFilteredOptions('display')[0];
                 if (defaultDisplay) {
                     selectedComponents.display = defaultDisplay.id;
-                    const el = document.getElementById('display-options').querySelector(`[data-id="${selectedComponents.display}"]`);
-                    if (el) el.classList.add('selected');
                 }
             }
             if (!selectedComponents.keyboard && components.keyboard.length > 0) {
                 const defaultKeyboard = getFilteredOptions('keyboard')[0];
                 if (defaultKeyboard) {
                     selectedComponents.keyboard = defaultKeyboard.id;
-                    const el = document.getElementById('keyboard-options').querySelector(`[data-id="${selectedComponents.keyboard}"]`);
-                    if (el) el.classList.add('selected');
                 }
             }
             if (!selectedComponents.battery && components.battery.length > 0) {
                 const defaultBattery = getFilteredOptions('battery')[0];
                 if (defaultBattery) {
                     selectedComponents.battery = defaultBattery.id;
-                    const el = document.getElementById('battery-options').querySelector(`[data-id="${selectedComponents.battery}"]`);
-                    if (el) el.classList.add('selected');
                 }
             }
 
+            // Após definir os padrões, aplica a classe 'selected' aos elementos correspondentes
+            for (const category in selectedComponents) {
+                let currentSelectedId = null;
+                if (category === 'ram') {
+                    currentSelectedId = selectedComponents.ram.type;
+                } else if (category === 'storage1' || category === 'storage2') {
+                    currentSelectedId = selectedComponents[category].type;
+                } else if (category === 'peripherals') {
+                    currentSelectedId = selectedComponents.peripherals;
+                } else {
+                    currentSelectedId = selectedComponents[category];
+                }
 
-            // Update RAM quantity max based on motherboard
+                if (currentSelectedId) {
+                    const el = document.getElementById(`${category}-options`)?.querySelector(`[data-id="${currentSelectedId}"]`);
+                    if (el) {
+                        el.classList.add('selected');
+                        const input = el.querySelector('input[type="radio"]');
+                        if (input) input.checked = true;
+                    }
+                }
+            }
+
+            // Atualiza a quantidade máxima de RAM com base na placa-mãe
             const selectedMb = selectedComponents.motherboard ? components.motherboard.find(mb => mb.id === selectedComponents.motherboard) : null;
             document.getElementById('ram-max-modules').textContent = selectedMb ? selectedMb.ram_slots : 4;
             document.getElementById('ram-quantity-input').max = selectedMb ? selectedMb.ram_slots : 4;
@@ -991,9 +1029,9 @@
             updateTotal();
         }
 
-        // Function to set up all event listeners
+        // Função para configurar todos os listeners de eventos
         function setupEventListeners() {
-            // RAM quantity input listener
+            // Listener para o input de quantidade de RAM
             document.getElementById('ram-quantity-input').addEventListener('input', (event) => {
                 let quantity = parseInt(event.target.value);
                 const maxRam = parseInt(event.target.max);
@@ -1004,13 +1042,13 @@
                 updateTotal();
             });
 
-            // RAM type select listener
+            // Listener para o select de tipo de RAM
             document.getElementById('ram-type-select').addEventListener('change', (event) => {
                 selectedComponents.ram.type = event.target.value;
                 updateTotal();
             });
 
-            // Mode toggle buttons
+            // Botões de alternância de modo
             document.getElementById('basic-mode-btn').addEventListener('click', () => {
                 currentMode = 'basic';
                 document.getElementById('basic-mode-btn').classList.add('active');
@@ -1025,7 +1063,7 @@
                 populateOptions();
             });
 
-            // Trade-in calculation
+            // Cálculo do valor de troca
             document.getElementById('calculate-tradein').addEventListener('click', () => {
                 const condition = document.getElementById('tradein-condition').value;
                 const age = document.getElementById('tradein-age').value;
@@ -1048,7 +1086,7 @@
                 updateTotal();
             });
 
-            // File upload for detailed evaluation
+            // Upload de arquivo para avaliação detalhada
             document.getElementById('upload-info-btn').addEventListener('click', () => {
                 const fileInput = document.getElementById('system-info-file');
                 const file = fileInput.files[0];
@@ -1089,7 +1127,7 @@
                 reader.readAsText(file);
             });
 
-            // Order button and modal
+            // Botão de pedido e modal
             const orderButton = document.getElementById('order-button');
             const orderModal = document.getElementById('order-modal');
             const closeButton = document.querySelector('.close-button');
@@ -1179,29 +1217,29 @@
             });
         }
 
-        // Intersection Observer for scroll animations (for cards to fade in)
+        // Intersection Observer para animações de rolagem (para os cartões aparecerem gradualmente)
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('in-view');
-                    observer.unobserve(entry.target); // Stop observing once in view
+                    observer.unobserve(entry.target); // Para de observar assim que estiver visível
                 }
             });
-        }, { threshold: 0.1 }); // Trigger when 10% of the element is visible
+        }, { threshold: 0.1 }); // Dispara quando 10% do elemento está visível
 
-        // Function to observe sections for animation
+        // Função para observar seções para animação
         function observeSections() {
             document.querySelectorAll('section.card').forEach(section => {
                 observer.observe(section);
             });
         }
 
-        // Initialize on DOMContentLoaded
+        // Inicializa no DOMContentLoaded
         document.addEventListener('DOMContentLoaded', () => {
-            populateOptions(); // Populate all options and set initial selections
-            setupEventListeners(); // Set up all interactive event listeners
-            updateTotal(); // Calculate and display initial total price
-            observeSections(); // Start observing sections for scroll animations
+            populateOptions(); // Popula todas as opções e define as seleções iniciais
+            setupEventListeners(); // Configura todos os listeners de eventos interativos
+            updateTotal(); // Calcula e exibe o preço total inicial
+            observeSections(); // Começa a observar as seções para animações de rolagem
         });
     </script>
 </body>
