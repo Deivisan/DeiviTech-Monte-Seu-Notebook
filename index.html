@@ -8,7 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
             --color-bg-main-start: #073B4C; 
@@ -25,8 +27,7 @@
             --color-secondary-hover: #05A980;
             --color-secondary-text: #073B4C;
             --color-accent-yellow: #FFD166;
-            --color-accent-red: #FF6B6B;
-            --color-accent-red-hover: #E05050;
+            --color-accent-red: #FF6B6B;            --color-accent-red-hover: #E05050;
             --color-border-subtle: rgba(17, 138, 178, 0.2);
             --color-selected-bg: var(--color-primary);
             --color-selected-text: #FFFFFF;
@@ -34,11 +35,10 @@
             --color-disabled-bg: #F1F3F5;
             --color-disabled-text: #AEB6BF;
             --color-disabled-border: #E0E0E0;
+            --color-text-secondary: #5A6B8C;
             --shadow-card: 0 8px 12px -4px rgba(0, 0, 0, 0.06), 0 3px 5px -3px rgba(0, 0, 0, 0.08);
             --shadow-card-hover: 0 15px 20px -5px rgba(0, 0, 0, 0.08), 0 6px 8px -5px rgba(0, 0, 0, 0.1);
-        }
-
-        body.dark-mode {
+        }        body.dark-mode {
             --color-bg-main-start: #0A192F; 
             --color-bg-main-end: #132F4C;
             --color-text-main: #CCD6F6;
@@ -51,7 +51,8 @@
             --color-primary-hover: #52D0B8;
             --color-primary-light: #1A3A5A; 
             --color-secondary: #FFD166; 
-            --color-secondary-text: #0A192F; 
+            --color-secondary-text: #0A192F;
+            --color-text-secondary: #8B9DC3;
             --color-disabled-bg: #1A2A47;
             --color-disabled-text: #5A6B8C;
             --color-disabled-border: #2A3A5A;
@@ -62,14 +63,136 @@
             background: linear-gradient(135deg, var(--color-bg-main-start) 0%, var(--color-bg-main-end) 100%);
             color: var(--color-text-main);
             scroll-behavior: smooth;
-            animation: gradientAnimation 20s ease infinite alternate;
             transition: background-color 0.3s ease, color 0.3s ease;
+            position: relative;
+            overflow-x: hidden;
+        }        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(17, 138, 178, 0.15) 0%, transparent 25%),
+                radial-gradient(circle at 80% 70%, rgba(6, 214, 160, 0.15) 0%, transparent 25%),
+                radial-gradient(circle at 40% 80%, rgba(255, 209, 102, 0.08) 0%, transparent 20%),
+                radial-gradient(circle at 60% 20%, rgba(17, 138, 178, 0.08) 0%, transparent 15%),
+                linear-gradient(45deg, transparent 40%, rgba(6, 214, 160, 0.02) 50%, transparent 60%),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='%23118AB2' fill-opacity='0.06'%3E%3Cpath d='M40 40c2.2 0 4-1.8 4-4s-1.8-4-4-4-4 1.8-4 4 1.8 4 4 4zm-20-20c2.2 0 4-1.8 4-4s-1.8-4-4-4-4 1.8-4 4 1.8 4 4 4zm40 0c2.2 0 4-1.8 4-4s-1.8-4-4-4-4 1.8-4 4 1.8 4 4 4zm-20 40c2.2 0 4-1.8 4-4s-1.8-4-4-4-4 1.8-4 4 1.8 4 4 4zm-40 0c2.2 0 4-1.8 4-4s-1.8-4-4-4-4 1.8-4 4 1.8 4 4 4zm80 0c2.2 0 4-1.8 4-4s-1.8-4-4-4-4 1.8-4 4 1.8 4 4 4z'/%3E%3C/g%3E%3C/svg%3E");
+            z-index: -2;
+            opacity: 1;
+            animation: techBgAnimation 180s linear infinite;
         }
-
-        @keyframes gradientAnimation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(45deg, transparent 60%, rgba(6, 214, 160, 0.08) 70%, transparent 80%),
+                linear-gradient(135deg, transparent 60%, rgba(17, 138, 178, 0.08) 70%, transparent 80%),
+                linear-gradient(315deg, transparent 70%, rgba(255, 209, 102, 0.05) 80%, transparent 90%),
+                conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(17, 138, 178, 0.02) 90deg, transparent 180deg, rgba(6, 214, 160, 0.02) 270deg, transparent 360deg);
+            z-index: -1;
+            pointer-events: none;
+            animation: techBgWaves 240s ease-in-out infinite alternate;
+        }
+        
+        @keyframes techBgAnimation {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(-5px, -10px) rotate(90deg); }
+            50% { transform: translate(10px, 5px) rotate(180deg); }
+            75% { transform: translate(-3px, 8px) rotate(270deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+        
+        @keyframes techBgWaves {
+            0% { 
+                background-position: 0% 0%, 100% 100%, 50% 50%, 25% 75%;
+                opacity: 0.6;
+            }
+            50% { 
+                background-position: 100% 25%, 0% 75%, 75% 25%, 50% 50%;                opacity: 0.8;
+            }
+            100% { 
+                background-position: 50% 50%, 50% 50%, 100% 100%, 75% 25%;
+                opacity: 0.6;
+            }
+        }
+        
+        /* Partículas flutuantes */
+        .tech-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .tech-particle {
+            position: absolute;
+            background: linear-gradient(45deg, rgba(17, 138, 178, 0.6), rgba(6, 214, 160, 0.6));
+            border-radius: 50%;
+            animation: float-up 15s linear infinite;
+            opacity: 0;
+        }
+        
+        .tech-particle:nth-child(odd) {
+            background: linear-gradient(45deg, rgba(6, 214, 160, 0.5), rgba(255, 209, 102, 0.5));
+            animation-duration: 12s;        }
+        
+        .tech-particle:nth-child(3n) {
+            background: linear-gradient(45deg, rgba(255, 209, 102, 0.4), rgba(17, 138, 178, 0.4));
+            animation-duration: 18s;
+        }
+        
+        @keyframes float-up {
+            0% {
+                opacity: 0;
+                transform: translateY(100vh) translateX(0px) scale(0);
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(90vh) translateX(10px) scale(0.5);
+            }
+            50% {
+                opacity: 0.8;
+                transform: translateY(50vh) translateX(-20px) scale(1);
+            }
+            90% {
+                opacity: 0.3;
+                transform: translateY(10vh) translateX(30px) scale(0.8);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-10vh) translateX(0px) scale(0);
+            }
+        }
+        
+        /* Efeito de ondas no fundo */
+        @keyframes wave {
+            0%, 100% { transform: translateX(0px) translateY(0px); }
+            25% { transform: translateX(10px) translateY(-5px); }
+            50% { transform: translateX(-5px) translateY(10px); }
+            75% { transform: translateX(-10px) translateY(-10px); }
+        }
+        
+        .tech-wave {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, transparent 30%, rgba(17, 138, 178, 0.03) 70%);
+            z-index: -2;
+            animation: wave 20s ease-in-out infinite;
         }
         
         .beta-watermark {
@@ -234,9 +357,55 @@
         
         .mode-toggle-btn { background-color: transparent; color: var(--color-text-main); border: 2px solid var(--color-secondary); transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out; }
         .mode-toggle-btn.active { background-color: var(--color-secondary); color: var(--color-secondary-text); box-shadow: 0 2px 8px rgba(6, 214, 160, 0.4); }
-        body.dark-mode .mode-toggle-btn.active { box-shadow: 0 2px 8px rgba(var(--color-secondary), 0.4); } /* Adjust for dark mode secondary */
+        body.dark-mode .mode-toggle-btn.active { box-shadow: 0 2px 8px rgba(255, 209, 102, 0.4); } /* Adjust for dark mode secondary */
         .mode-toggle-btn:hover:not(.active) { background-color: rgba(6, 214, 160, 0.15); }
         body.dark-mode .mode-toggle-btn:hover:not(.active) { background-color: rgba(var(--color-secondaryRgbForAlpha), 0.15); } /* Adjust for dark mode secondary */
+        
+        /* Classes para botões */
+        .btn-primary {
+            background-color: var(--color-primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .btn-primary:hover {
+            background-color: var(--color-primary-hover);
+            transform: translateY(-1px);
+        }
+        
+        .btn-secondary {
+            background-color: var(--color-secondary);
+            color: var(--color-secondary-text);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .btn-secondary:hover {
+            background-color: var(--color-secondary-hover);
+            transform: translateY(-1px);
+        }
+        
+        .btn-accent-yellow {
+            background-color: var(--color-accent-yellow);
+            color: var(--color-text-card);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .btn-accent-yellow:hover {
+            background-color: #E6BC47;
+            transform: translateY(-1px);
+        }
         /* Note: --color-secondaryRgbForAlpha would need to be defined in JS if secondary changes significantly */
 
         
@@ -410,7 +579,8 @@
             margin-top: 0.25rem;
         }
         .service-item .details-toggle { color: var(--color-primary); cursor: pointer; font-size: 0.9em; }
-        .service-item .details-content { display: none; margin-top: 0.5rem; padding-left: 1rem; border-left: 2px solid var(--color-border-subtle); font-size: 0.85rem;}
+        /* CORRECTION: Removed 'display: none' to allow the <details> tag to control visibility */
+        .service-item .details-content { margin-top: 0.5rem; padding-left: 1rem; border-left: 2px solid var(--color-border-subtle); font-size: 0.85rem;}
 
         .theme-toggle-btn {
             background-color: transparent;
@@ -499,7 +669,7 @@
     <main class="container mx-auto px-4 py-8 md:py-12">
         <header class="text-center mb-12">
             <div class="flex justify-between items-center mb-4">
-                <h1 class="text-3xl md:text-4xl font-bold text-left" style="color: var(--color-text-main);">DeiviTech</h1>
+                <h1 class="text-xl md:text-2xl font-medium text-left tracking-wide" style="color: var(--color-text-main); opacity: 0.85; letter-spacing: 0.05em;"><i class="fas fa-laptop-code mr-2 text-sm opacity-70"></i>DeiviTech</h1>
                 <div>
                     <button id="theme-toggle" class="theme-toggle-btn mr-3" title="Alternar Tema">
                         <i class="fas fa-lightbulb"></i> <!-- Changes to fa-moon in JS -->
@@ -510,16 +680,114 @@
                 </div>
             </div>
             <h2 class="text-4xl md:text-5xl font-bold" style="color:var(--color-secondary); margin-top: -1rem;">Notebooks Personalizados</h2>
-            <p class="mt-4 text-lg text-[var(--color-text-main)]">Escolha cada componente ou serviço e veja o preço em tempo real!</p>
-            <div class="mt-8 flex justify-center gap-4">
+            <p class="mt-4 text-lg text-[var(--color-text-main)]">Escolha cada componente ou serviço e veja o preço em tempo real!</p>            <div class="mt-8 flex justify-center gap-4">
+                <button id="assisted-mode-btn" class="mode-toggle-btn py-2 px-6 rounded-lg font-semibold"><i class="fas fa-hands-helping mr-1"></i>MODO ASSISTIDO</button>
                 <button id="basic-mode-btn" class="mode-toggle-btn py-2 px-6 rounded-lg font-semibold active">Modo Básico</button>
                 <button id="advanced-mode-btn" class="mode-toggle-btn py-2 px-6 rounded-lg font-semibold">Modo Avançado</button>
+            </div>
+            
+            <!-- Seção de Informações Avançadas -->
+            <div id="advanced-info-section" class="mt-8 hidden">
+                <div class="bg-[var(--color-card-bg)] p-6 rounded-lg shadow-lg border border-[var(--color-primary)]">
+                    <h3 class="text-2xl font-bold text-[var(--color-primary)] mb-4 text-center">
+                        <i class="fas fa-microscope mr-2"></i>Modo Avançado Ativado
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- Painéis de Informação Técnica -->
+                        <div class="space-y-4">
+                            <div class="bg-[var(--color-card-bg-alt)] p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2 flex items-center">
+                                    <i class="fas fa-tachometer-alt mr-2 text-[var(--color-secondary)]"></i>
+                                    Análise Térmica e TDP
+                                </h4>
+                                <div id="thermal-analysis" class="text-sm space-y-2">
+                                    <div class="flex justify-between">
+                                        <span>TDP Total:</span>
+                                        <span id="total-tdp" class="font-mono">0W</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Dissipação Necessária:</span>
+                                        <span id="heat-dissipation" class="font-mono">Baixa</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div id="thermal-bar" class="h-2 rounded-full bg-green-500" style="width: 30%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-[var(--color-card-bg-alt)] p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2 flex items-center">
+                                    <i class="fas fa-bolt mr-2 text-[var(--color-accent-yellow)]"></i>
+                                    Estimativa de Consumo
+                                </h4>
+                                <div id="power-analysis" class="text-sm space-y-2">
+                                    <div class="flex justify-between">
+                                        <span>Modo Idle:</span>
+                                        <span id="idle-power" class="font-mono">0W</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Carga Máxima:</span>
+                                        <span id="max-power" class="font-mono">0W</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Autonomia Estimada:</span>
+                                        <span id="battery-estimate" class="font-mono">0h</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Gráficos Técnicos -->
+                        <div class="space-y-4">
+                            <div class="bg-[var(--color-card-bg-alt)] p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2 text-center">Performance Score Detalhado</h4>
+                                <div class="h-32">
+                                    <canvas id="performanceRadarChart"></canvas>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-[var(--color-card-bg-alt)] p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2 text-center">Benchmark Comparativo</h4>
+                                <div id="benchmark-comparison" class="text-xs space-y-1">
+                                    <div class="flex justify-between">
+                                        <span>Cinebench R23:</span>
+                                        <span id="cinebench-score" class="font-mono">0 pts</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>3DMark Time Spy:</span>
+                                        <span id="timespy-score" class="font-mono">0 pts</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>PCMark 10:</span>
+                                        <span id="pcmark-score" class="font-mono">0 pts</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Recomendações Inteligentes -->
+                    <div class="mt-6 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border-l-4 border-[var(--color-primary)]">
+                        <h4 class="font-semibold mb-2 flex items-center">
+                            <i class="fas fa-lightbulb mr-2 text-[var(--color-primary)]"></i>
+                            Recomendações Inteligentes
+                        </h4>
+                        <div id="smart-recommendations" class="text-sm">
+                            <p class="mb-2">Análise baseada na sua configuração atual:</p>
+                            <ul id="recommendations-list" class="list-disc list-inside space-y-1 text-gray-700">
+                                <li>Configure componentes para ver recomendações personalizadas</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </header>
         
         <div class="mb-8">
             <div id="main-tabs-container" class="flex border-b border-[var(--color-border-subtle)] flex-wrap">
-                <button id="tab-configure" class="tab-button active" onclick="showTab('configure')"><i class="fas fa-cogs mr-2"></i>Configurar Novo</button>
+                <button id="tab-concept" class="tab-button active" onclick="showTab('concept')"><i class="fas fa-lightbulb mr-2"></i>Conceito</button>
+                <button id="tab-configure" class="tab-button" onclick="showTab('configure')"><i class="fas fa-cogs mr-2"></i>Configurar Novo</button>
                 <button id="tab-ready" class="tab-button" onclick="showTab('ready')"><i class="fas fa-laptop-medical mr-2"></i>Notebooks Prontos</button>
                 <button id="tab-tradein" class="tab-button" onclick="showTab('tradein')"><i class="fas fa-recycle mr-2"></i>Trocar Notebook Usado</button>
                 <button id="tab-services" class="tab-button" onclick="showTab('services')"><i class="fas fa-tools mr-2"></i>Formatação e Serviços</button>
@@ -528,9 +796,237 @@
             </div>
         </div>
 
-        <div id="configure-tab-content" class="tab-content active">
-            <section id="quality-slider-section" class="card mb-12">
-                <h2 class="text-2xl font-bold mb-4 text-center"><span class="section-icon">🌟</span>Configuração Rápida por Preset</h2>
+        <div id="concept-tab-content" class="tab-content active">
+            <div class="p-6 bg-[var(--color-card-bg)] rounded-lg shadow-lg">                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-[var(--color-primary)] mb-4">Configurador Inteligente de Notebooks</h2>
+                    <p class="text-lg text-[var(--color-text-secondary)]">Encontre o notebook perfeito para suas necessidades com nossa plataforma de configuração assistida</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-10">
+                    <div class="card p-6 border-t-4 border-[var(--color-primary)] hover:shadow-lg transition-all">
+                        <div class="text-center mb-4">
+                            <i class="fas fa-magic text-4xl text-[var(--color-primary)]"></i>
+                            <h3 class="text-xl font-semibold mt-3">Configuração Assistida</h3>
+                        </div>
+                        <p>Nosso sistema inteligente analisa suas necessidades e recomenda a configuração ideal, otimizando desempenho e orçamento.</p>
+                        <div class="mt-4 text-center">
+                            <button onclick="showTab('configure'); document.getElementById('assisted-mode-btn').click()" class="btn-primary px-4 py-2 rounded-lg"><i class="fas fa-wand-magic-sparkles mr-2"></i>Experimentar</button>
+                        </div>
+                    </div>
+                    
+                    <div class="card p-6 border-t-4 border-[var(--color-secondary)] hover:shadow-lg transition-all">
+                        <div class="text-center mb-4">
+                            <i class="fas fa-sliders text-4xl text-[var(--color-secondary)]"></i>
+                            <h3 class="text-xl font-semibold mt-3">Configuração Personalizada</h3>
+                        </div>
+                        <p>Controle total sobre cada componente. Escolha processador, memória, armazenamento e todos os detalhes do seu notebook ideal.</p>
+                        <div class="mt-4 text-center">
+                            <button onclick="showTab('configure'); document.getElementById('basic-mode-btn').click()" class="btn-secondary px-4 py-2 rounded-lg"><i class="fas fa-cogs mr-2"></i>Configurar</button>
+                        </div>
+                    </div>
+                    
+                    <div class="card p-6 border-t-4 border-[var(--color-accent-yellow)] hover:shadow-lg transition-all">
+                        <div class="text-center mb-4">
+                            <i class="fas fa-laptop-medical text-4xl text-[var(--color-accent-yellow)]"></i>
+                            <h3 class="text-xl font-semibold mt-3">Notebooks Prontos</h3>
+                        </div>
+                        <p>Seleção cuidadosa de notebooks pré-configurados para diferentes perfis: estudante, profissional, gamer e criativo.</p>
+                        <div class="mt-4 text-center">
+                            <button onclick="showTab('ready')" class="btn-accent-yellow px-4 py-2 rounded-lg"><i class="fas fa-laptop mr-2"></i>Ver Opções</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-[var(--color-card-bg-alt)] p-6 rounded-lg mb-8">
+                    <h3 class="text-2xl font-bold mb-4 text-center">Como Funciona</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-center">
+                        <div class="p-4">
+                            <div class="w-12 h-12 bg-[var(--color-primary)] rounded-full flex items-center justify-center text-white text-xl font-bold mx-auto mb-3">1</div>
+                            <h4 class="font-semibold mb-2">Escolha o Modo</h4>
+                            <p class="text-sm">Selecione entre modo assistido ou configuração manual</p>
+                        </div>
+                        <div class="p-4">
+                            <div class="w-12 h-12 bg-[var(--color-primary)] rounded-full flex items-center justify-center text-white text-xl font-bold mx-auto mb-3">2</div>
+                            <h4 class="font-semibold mb-2">Personalize</h4>
+                            <p class="text-sm">Selecione os componentes ou responda às perguntas</p>
+                        </div>
+                        <div class="p-4">
+                            <div class="w-12 h-12 bg-[var(--color-primary)] rounded-full flex items-center justify-center text-white text-xl font-bold mx-auto mb-3">3</div>
+                            <h4 class="font-semibold mb-2">Revise</h4>
+                            <p class="text-sm">Verifique o resumo e o desempenho estimado</p>
+                        </div>
+                        <div class="p-4">
+                            <div class="w-12 h-12 bg-[var(--color-primary)] rounded-full flex items-center justify-center text-white text-xl font-bold mx-auto mb-3">4</div>
+                            <h4 class="font-semibold mb-2">Finalize</h4>
+                            <p class="text-sm">Adicione serviços extras e finalize seu pedido</p>
+                        </div>
+                    </div>
+                </div>
+                  <!-- Seção de Gráficos e Informações -->
+                <div class="bg-[var(--color-card-bg-alt)] p-6 rounded-lg mb-8">
+                    <h3 class="text-2xl font-bold mb-4 text-center">Entenda a Performance dos Notebooks Modernos</h3>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-6">
+                        <!-- Gráfico de Comparação CPU Mobile vs Desktop -->
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold mb-3 text-center">CPUs Mobile vs Desktop - Eficiência Energética</h4>
+                            <div class="chart-container" style="position: relative; height:250px;">
+                                <canvas id="cpuEfficiencyChart"></canvas>
+                            </div>
+                            <p class="text-sm mt-3 text-center text-gray-600">Processadores mobile modernos oferecem excelente performance com menor consumo de energia</p>
+                        </div>
+                        
+                        <!-- Gráfico de Autonomia de Bateria -->
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold mb-3 text-center">Autonomia de Bateria por Tipo de Uso</h4>
+                            <div class="chart-container" style="position: relative; height:250px;">
+                                <canvas id="batteryLifeChart"></canvas>
+                            </div>
+                            <p class="text-sm mt-3 text-center text-gray-600">A autonomia varia significativamente dependendo do perfil de uso do notebook</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-6">
+                        <!-- Gráfico de Performance GPU Mobile -->
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold mb-3 text-center">Performance GPUs Mobile - Gaming 1080p</h4>
+                            <div class="chart-container" style="position: relative; height:250px;">
+                                <canvas id="gpuPerformanceChart"></canvas>
+                            </div>
+                            <p class="text-sm mt-3 text-center text-gray-600">GPUs modernas para notebook oferecem performance competitiva para gaming</p>
+                        </div>
+                        
+                        <!-- Gráfico de Velocidade de Armazenamento -->
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold mb-3 text-center">Velocidade de Armazenamento - Impacto no Sistema</h4>
+                            <div class="chart-container" style="position: relative; height:250px;">
+                                <canvas id="storageSpeedChart"></canvas>
+                            </div>
+                            <p class="text-sm mt-3 text-center text-gray-600">SSDs NVMe oferecem velocidades até 10x maiores que HDDs tradicionais</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Informações de Escolha de Notebooks -->
+                    <div class="bg-white p-6 rounded-lg shadow mb-6">
+                        <h4 class="font-semibold mb-4 text-center">Guia de Escolha - Notebook Ideal por Perfil</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                            <div class="text-center p-4 border border-gray-200 rounded-lg">
+                                <i class="fas fa-graduation-cap text-3xl text-blue-500 mb-2"></i>
+                                <h5 class="font-semibold mb-2">Estudante</h5>
+                                <ul class="text-sm text-left space-y-1">
+                                    <li>• i3/Ryzen 3 + 8GB RAM</li>
+                                    <li>• SSD 256GB</li>
+                                    <li>• Tela 14-15.6" FHD</li>
+                                    <li>• Bateria 50Wh+</li>
+                                </ul>
+                            </div>
+                            <div class="text-center p-4 border border-gray-200 rounded-lg">
+                                <i class="fas fa-briefcase text-3xl text-green-500 mb-2"></i>
+                                <h5 class="font-semibold mb-2">Profissional</h5>
+                                <ul class="text-sm text-left space-y-1">
+                                    <li>• i5/Ryzen 5 + 16GB RAM</li>
+                                    <li>• SSD 512GB NVMe</li>
+                                    <li>• Tela 14-16" FHD/QHD</li>
+                                    <li>• Bateria 65Wh+</li>
+                                </ul>
+                            </div>
+                            <div class="text-center p-4 border border-gray-200 rounded-lg">
+                                <i class="fas fa-gamepad text-3xl text-red-500 mb-2"></i>
+                                <h5 class="font-semibold mb-2">Gamer</h5>
+                                <ul class="text-sm text-left space-y-1">
+                                    <li>• i7/Ryzen 7 + 16-32GB RAM</li>
+                                    <li>• SSD 1TB NVMe Gen4</li>
+                                    <li>• GPU RTX 4060+</li>
+                                    <li>• Tela 144Hz+</li>
+                                </ul>
+                            </div>
+                            <div class="text-center p-4 border border-gray-200 rounded-lg">
+                                <i class="fas fa-palette text-3xl text-purple-500 mb-2"></i>
+                                <h5 class="font-semibold mb-2">Criativo</h5>
+                                <ul class="text-sm text-left space-y-1">
+                                    <li>• i7/Ryzen 7 + 32GB RAM</li>
+                                    <li>• SSD 1TB+ NVMe</li>
+                                    <li>• GPU RTX 4070+</li>
+                                    <li>• Tela 4K/OLED</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Dicas de Otimização -->
+                    <div class="bg-white p-4 rounded-lg shadow mb-6">
+                        <h4 class="font-semibold mb-3">Dicas para Maximizar Performance e Autonomia</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <h5 class="font-medium mb-2 text-green-600">✓ Para Maior Autonomia</h5>
+                                <ul class="list-disc pl-5 space-y-1 text-sm">
+                                    <li>Escolha CPUs da série H ou U (baixo consumo)</li>
+                                    <li>Prefira RAM em dual-channel (2x8GB ao invés de 1x16GB)</li>
+                                    <li>SSD consome menos que HDD</li>
+                                    <li>Telas IPS consomem menos que OLED</li>
+                                    <li>Baterias 60Wh+ são ideais para uso prolongado</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h5 class="font-medium mb-2 text-blue-600">⚡ Para Maior Performance</h5>
+                                <ul class="list-disc pl-5 space-y-1 text-sm">
+                                    <li>CPUs i7/Ryzen 7 para multitarefas intensas</li>
+                                    <li>32GB RAM para edição de vídeo/3D</li>
+                                    <li>SSDs NVMe Gen4 para transferências rápidas</li>
+                                    <li>GPUs RTX 4060+ para jogos modernos</li>
+                                    <li>Telas 144Hz+ para gaming competitivo</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <button onclick="showTab('configure')" class="btn-primary px-6 py-3 text-lg rounded-lg"><i class="fas fa-arrow-right mr-2"></i>Começar Agora</button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="configure-tab-content" class="tab-content">
+            <!-- Layout principal com grid para conteúdo principal e painel lateral -->
+            <div class="lg:grid lg:grid-cols-4 lg:gap-8">
+                <!-- Painel lateral integrado de recursos -->
+                <div class="lg:col-span-1 order-last lg:order-first">
+                    <div id="integrated-performance-display" class="card sticky top-24 p-4 bg-[var(--color-card-bg-alt)] border-l-4 border-[var(--color-primary)]">
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="text-lg font-bold font-orbitron text-[var(--color-primary)]"><i class="fas fa-chart-line mr-2"></i>Status</h3>
+                            <div class="text-xs px-2 py-1 bg-[var(--color-primary)] text-white rounded-full">Live</div>
+                        </div>
+                        <div class="mb-4">
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Desempenho</span>
+                                <span id="integrated-performance-percentage">45%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 mb-1">
+                                <div id="integrated-performance-bar" class="h-2.5 rounded-full" style="width: 45%; background-color: var(--color-secondary);"></div>
+                            </div>
+                            <p id="integrated-performance-text" class="text-xs text-gray-600 dark:text-gray-400 italic">Nível: Intermediário</p>
+                        </div>
+                        <div class="mb-4">
+                            <h4 class="text-sm font-semibold mb-2 flex items-center">
+                                <i class="fas fa-microchip mr-2 text-[var(--color-primary)]"></i>Componentes
+                            </h4>
+                            <div id="integrated-components-list" class="text-xs space-y-2 max-h-48 overflow-y-auto pr-1 border-l-2 border-gray-200 dark:border-gray-700 pl-2">
+                                <!-- Componentes serão adicionados dinamicamente via JavaScript -->
+                            </div>
+                        </div>
+                        <div class="pt-3 border-t border-gray-200 dark:border-gray-700">
+                            <div class="flex justify-between items-center">
+                                <p class="text-sm font-semibold">Total:</p>
+                                <p id="integrated-total-price" class="text-lg font-bold text-[var(--color-primary)]">R$ 0,00</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Coluna principal com componentes de configuração -->
+                <div class="lg:col-span-3 space-y-8">            <section id="quality-slider-section" class="card mb-12">
+                <h2 class="text-2xl font-bold mb-4 text-center"><span class="section-icon"><i class="fas fa-sliders-h"></i></span>Configuração Rápida por Preset</h2>
                 <div class="flex flex-col items-center">
                     <div class="w-full max-w-xl px-4">
                         <input type="range" id="quality-slider" min="0" max="2" value="1" class="w-full cursor-pointer">
@@ -543,39 +1039,27 @@
                     <p id="current-preset-display" class="mt-3 text-md text-[var(--color-text-card)] font-semibold">Preset Ativo: Balanceado</p>
                 </div>
             </section>
-
-            <div class="lg:grid lg:grid-cols-4 lg:gap-8">
-                <div class="lg:col-span-3 space-y-8">
-                    <section class="card flex flex-col justify-center items-center p-6 bg-[var(--color-card-bg-alt)]">
-                        <i class="fas fa-play-circle text-6xl text-[var(--color-primary)] mb-3"></i>
-                        <p class="text-lg text-[var(--color-text-card)]">Conceito do Notebook em Funcionamento (Vídeo em Breve)</p>
-                        <p class="text-sm text-gray-500 body.dark-mode:text-gray-400">Imagine seu notebook DeiviTech aqui!</p>
-                    </section>
                     
                     <section id="platform-selection-section" class="card">
                         <h2 class="text-2xl font-bold mb-6"><span class="section-icon"><i class="fas fa-layer-group"></i></span>1. Escolha a Plataforma</h2>
                         <div id="platform-options" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-                    </section>
-
-                    <section id="casing-section" class="card">
-                        <h2 class="text-2xl font-bold mb-6"><span class="section-icon">💻</span>2. Escolha a Carcaça</h2>
+                    </section>                    <section id="casing-section" class="card">
+                        <h2 class="text-2xl font-bold mb-6"><span class="section-icon"><i class="fas fa-laptop"></i></span>2. Escolha a Carcaça</h2>
                         <div id="casing-options" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
                     </section>
 
                     <section id="motherboard-section" class="card">
-                        <h2 class="text-2xl font-bold mb-6"><span class="section-icon">🔩</span>3. Selecione a Placa Mãe</h2>
-                        <p id="motherboard-helper-text" class="text-sm text-gray-500 body.dark-mode:text-gray-400 mb-4">Selecione uma plataforma (Intel/AMD) acima primeiro.</p>
+                        <h2 class="text-2xl font-bold mb-6"><span class="section-icon"><i class="fas fa-microchip"></i></span>3. Selecione a Placa Mãe</h2>
+                        <p id="motherboard-helper-text" class="text-sm text-gray-500 dark:text-gray-400 mb-4">Selecione uma plataforma (Intel/AMD) acima primeiro.</p>
                         <div id="motherboard-options" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
                     </section>
 
                     <section id="cpu-section" class="card">
                         <h2 class="text-2xl font-bold mb-6"><span class="section-icon"><i class="fas fa-brain"></i></span>4. Selecione o Processador (CPU)</h2>
-                        <p id="cpu-helper-text" class="text-sm text-gray-500 body.dark-mode:text-gray-400 mb-4">Selecione uma placa mãe compatível primeiro.</p>
+                        <p id="cpu-helper-text" class="text-sm text-gray-500 dark:text-gray-400 mb-4">Selecione uma placa mãe compatível primeiro.</p>
                         <div id="cpu-options" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-                    </section>
-
-                    <section id="ram-section" class="card">
-                        <h2 class="text-2xl font-bold mb-6"><span class="section-icon">💾</span>5. Configure a Memória RAM</h2>
+                    </section>                    <section id="ram-section" class="card">
+                        <h2 class="text-2xl font-bold mb-6"><span class="section-icon"><i class="fas fa-microchip"></i></span>5. Configure a Memória RAM</h2>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label for="ram-type-select" class="block text-sm font-medium text-[var(--color-text-card)] mb-2">Módulos de RAM (DDR):</label>
@@ -589,16 +1073,14 @@
                             </div>
                         </div>
                          <p class="mt-3 text-sm text-gray-600 body.dark-mode:text-gray-400">Oferecemos módulos DDR4 (Ex: 3200MHz, 3600MHz) e DDR5 (Ex: 5200MHz, 5600MHz, 6000MHz+), incluindo opções ECC para workstations. A compatibilidade e velocidade exata dependem da placa mãe selecionada.</p>
-                    </section>
-
-                    <section id="storage1-section" class="card">
-                        <h2 class="text-2xl font-bold mb-6"><span class="section-icon">💽</span>6. Armazenamento Principal (SSD/NVMe)</h2>
+                    </section>                    <section id="storage1-section" class="card">
+                        <h2 class="text-2xl font-bold mb-6"><span class="section-icon"><i class="fas fa-hdd"></i></span>6. Armazenamento Principal (SSD/NVMe)</h2>
                         <div id="storage1-options" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
                          <p class="mt-3 text-sm text-gray-600 body.dark-mode:text-gray-400">Dispomos de SSDs SATA, NVMe PCIe Gen3, Gen4 e Gen5 para máxima performance. HDDs disponíveis para armazenamento secundário ou necessidades específicas.</p>
                     </section>
 
                     <section id="storage2-section" class="card">
-                        <h2 class="text-2xl font-bold mb-6"><span class="section-icon">💿</span>7. Armazenamento Secundário (Opcional)</h2>
+                        <h2 class="text-2xl font-bold mb-6"><span class="section-icon"><i class="fas fa-database"></i></span>7. Armazenamento Secundário (Opcional)</h2>
                         <div id="storage2-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                              <div class="option-item" data-id="none" data-price="0" data-category="storage2">
                                 <input type="radio" id="storage2-none" name="storage2" value="none" class="hidden">
@@ -637,7 +1119,6 @@
                         <h2 class="text-2xl font-bold mb-6"><span class="section-icon"><i class="fas fa-puzzle-piece"></i></span>9. Software Adicional Detalhado</h2>
                         <p id="detailed-software-helper-text" class="text-sm text-gray-500 body.dark-mode:text-gray-400 mb-4">Selecione um SO para ver opções de software. Softwares gratuitos não alteram o preço.</p>
                         <div id="software-tabs-container" class="software-tabs-container">
-                            <!-- JS will populate these buttons -->
                             <button class="software-tab-button active" data-tab="multimedia">Multimídia</button>
                             <button class="software-tab-button" data-tab="design">Design/Criação</button>
                             <button class="software-tab-button" data-tab="development">Desenvolvimento (TI)</button>
@@ -647,37 +1128,35 @@
                         <div id="software-design-tab" class="software-tab-content grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
                         <div id="software-development-tab" class="software-tab-content grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
                         <div id="software-productivity-tab" class="software-tab-content grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-                    </section>
-
-                    <section id="gpu-section" class="card">
-                        <h2 class="text-2xl font-bold mb-6"><span class="section-icon">🎮</span>10. Placa de Vídeo (GPU)</h2>
+                    </section>                    <section id="gpu-section" class="card">
+                        <h2 class="text-2xl font-bold mb-6"><span class="section-icon"><i class="fas fa-gamepad"></i></span>10. Placa de Vídeo (GPU)</h2>
                         <div id="gpu-options" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
                     </section>
 
                     <section id="display-section" class="card">
-                        <h2 class="text-2xl font-bold mb-6"><span class="section-icon">🖥️</span>11. Tela</h2>
+                        <h2 class="text-2xl font-bold mb-6"><span class="section-icon"><i class="fas fa-desktop"></i></span>11. Tela</h2>
                         <div id="display-options" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
                     </section>
 
                     <section id="keyboard-section" class="card">
-                        <h2 class="text-2xl font-bold mb-6"><span class="section-icon">⌨️</span>12. Teclado</h2>
+                        <h2 class="text-2xl font-bold mb-6"><span class="section-icon"><i class="fas fa-keyboard"></i></span>12. Teclado</h2>
                         <div id="keyboard-options" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
                     </section>
 
                     <section id="network-adapter-section" class="card">
-                        <h2 class="text-2xl font-bold mb-6"><span class="section-icon">📶</span>13. Adaptador de Rede Wi-Fi e Bluetooth</h2>
-                        <p class="text-sm text-gray-600 body.dark-mode:text-gray-400 mb-3">Escolha entre Wi-Fi 5, Wi-Fi 6/6E, até o novíssimo Wi-Fi 7, com versões de Bluetooth correspondentes (4.2, 5.2, 5.3, 5.4).</p>
-                        <div id="network-adapter-options" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-                         <p class="mt-4 text-sm text-gray-600 body.dark-mode:text-gray-400">Porta Ethernet: <span id="ethernet-info" class="font-semibold">Verifique a placa mãe</span></p>
-                    </section>
-
-                    <section id="battery-section" class="card">
-                        <h2 class="text-2xl font-bold mb-6"><span class="section-icon">🔋</span>14. Bateria</h2>
+                        <h2 class="text-2xl font-bold mb-6"><span class="section-icon"><i class="fas fa-wifi"></i></span>13. Conectividade Wi-Fi e Bluetooth</h2>
+                        <p class="text-sm text-gray-600 body.dark-mode:text-gray-400 mb-3">A conectividade Wi-Fi e Bluetooth será fornecida diretamente pela placa mãe selecionada.</p>
+                        <div class="bg-blue-50 dark:bg-blue-900/30 p-4 rounded-lg">
+                            <p class="text-sm"><i class="fas fa-info-circle mr-2"></i>Informação: O adaptador de rede Wi-Fi e Bluetooth já está integrado na placa mãe selecionada. Não é necessário escolher um adaptador separadamente.</p>
+                            <p class="mt-2 text-sm text-gray-600 body.dark-mode:text-gray-400">Porta Ethernet: <span id="ethernet-info" class="font-semibold">Integrada na placa mãe</span></p>
+                        </div>
+                    </section>                    <section id="battery-section" class="card">
+                        <h2 class="text-2xl font-bold mb-6"><span class="section-icon"><i class="fas fa-battery-full"></i></span>14. Bateria</h2>
                         <div id="battery-options" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
                     </section>
 
                     <section id="peripherals-section" class="card">
-                        <h2 class="text-2xl font-bold mb-6"><span class="section-icon">🖱️</span>15. Periféricos (Múltipla Escolha)</h2>
+                        <h2 class="text-2xl font-bold mb-6"><span class="section-icon"><i class="fas fa-mouse"></i></span>15. Periféricos (Múltipla Escolha)</h2>
                         <div id="peripherals-options" class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-3"></div>
                     </section>
                      <div class="mt-10 text-center">
@@ -687,9 +1166,8 @@
                     </div>
                 </div>
 
-                <div class="lg:col-span-1 mt-8 lg:mt-0">
-                    <div class="sticky-summary card p-6">
-                        <h2 class="text-2xl font-bold mb-2"><span class="section-icon">🛒</span>Seu Carrinho DeiviTech</h2>
+                <div class="lg:col-span-1 mt-8 lg:mt-0">                    <div class="sticky-summary card p-6">
+                        <h2 class="text-2xl font-bold mb-2"><span class="section-icon"><i class="fas fa-shopping-cart"></i></span>Seu Carrinho DeiviTech</h2>
                         <div class="mb-4">
                             <h3 class="text-lg font-semibold text-center mb-1">Nível de Performance Estimado</h3>
                             <div id="performance-bar-container"><div id="performance-bar">0%</div></div>
@@ -715,14 +1193,13 @@
             </div>
         </div>
         
-        <div id="tradein-tab-content" class="tab-content">
-             <section id="tradein-section" class="card"> 
-                <h2 class="text-2xl font-bold mb-6 text-[var(--color-accent-red)]"><span class="section-icon" style="color: var(--color-accent-red);">♻️</span>Troque Seu Notebook Usado e Ganhe Desconto!</h2>
+        <div id="tradein-tab-content" class="tab-content">             <section id="tradein-section" class="card"> 
+                <h2 class="text-2xl font-bold mb-6 text-[var(--color-accent-red)]"><span class="section-icon" style="color: var(--color-accent-red);"><i class="fas fa-recycle"></i></span>Troque Seu Notebook Usado e Ganhe Desconto!</h2>
                 <p class="mb-4 text-sm text-gray-600 body.dark-mode:text-gray-400">Avalie seu notebook usado e obtenha um crédito para sua nova máquina DeiviTech. Siga os passos abaixo.</p>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                     <div> <label for="tradein-condition" class="block text-sm font-medium text-[var(--color-text-card)] mb-2">Condição Geral:</label> <select id="tradein-condition" class="block w-full custom-select"> <option value="excellent">Excelente (Como novo)</option> <option value="good">Boa (Pequenas marcas de uso)</option> <option value="fair">Razoável (Marcas visíveis, funcional)</option> <option value="poor">Ruim (Defeitos, peças faltando)</option> </select> </div>
-                    <div> <label for="tradein-age" class="block text-sm font-medium text-[var(--color-text-card)] mb-2">Idade Aproximada:</label> <select id="tradein-age" class="block w-full custom-select"> <option value="<1year">&lt; 1 ano</option> <option value="1-2years">1-2 anos</option> <option value="2-3years">2-3 anos</option> <option value=">3years">&gt; 3 anos</option> </select> </div>
+                    <div> <label for="tradein-age" class="block text-sm font-medium text-[var(--color-text-card)] mb-2">Idade Aproximada:</label> <select id="tradein-age" class="block w-full custom-select"> <option value="<1year">< 1 ano</option> <option value="1-2years">1-2 anos</option> <option value="2-3years">2-3 anos</option> <option value=">3years">> 3 anos</option> </select> </div>
                     <div class="md:col-span-2"> <label for="tradein-specs" class="block text-sm font-medium text-[var(--color-text-card)] mb-2">Nível de Especificações Originais:</label> <select id="tradein-specs" class="block w-full custom-select"> <option value="high-end">Alto Desempenho (Ex: Core i7/Ryzen 7+, GPU dedicada)</option> <option value="mid-range">Médio Desempenho (Ex: Core i5/Ryzen 5, GPU básica ou integrada)</option> <option value="low-end">Baixo Desempenho (Ex: Celeron/Atom, uso básico)</option> </select> </div>
                 </div>
                 <button id="calculate-tradein" class="w-full btn btn-danger mb-4">Calcular Valor de Troca Estimado</button>
@@ -791,6 +1268,54 @@
             </div>
         </div>
         
+        <div id="ai-integration-tab-content" class="tab-content">
+            <div class="p-6 bg-[var(--color-card-bg)] rounded-lg shadow-lg">
+                <h2 class="text-2xl font-bold mb-4 text-[var(--color-primary)]"><i class="fas fa-brain mr-2"></i>Integração com IA</h2>
+                <p class="mb-6">Utilize a inteligência artificial para analisar sua configuração atual e receber recomendações personalizadas.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                    <!-- Análise de Performance -->                    
+                    <div class="card p-5 border border-[var(--color-border-subtle)] rounded-lg">
+                        <h3 class="text-xl font-semibold mb-3"><i class="fas fa-chart-line text-[var(--color-primary)] mr-2"></i>Análise de Performance</h3>
+                        <p class="mb-4">Identifique possíveis gargalos na sua configuração atual e receba uma análise detalhada do desempenho esperado.</p>
+                        <button id="analyzeBtn" class="btn btn-primary w-full py-2 mb-4"><i class="fas fa-magnifying-glass mr-2"></i>Analisar Configuração</button>
+                        <div id="ai-result" class="p-4 bg-[var(--color-card-bg-alt)] rounded-lg min-h-[100px] text-[var(--color-text-secondary)]">
+                            <p class="italic text-center">A análise aparecerá aqui após clicar no botão acima.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Recomendações de Upgrade -->                    
+                    <div class="card p-5 border border-[var(--color-border-subtle)] rounded-lg">
+                        <h3 class="text-xl font-semibold mb-3"><i class="fas fa-arrow-trend-up text-[var(--color-primary)] mr-2"></i>Recomendações de Upgrade</h3>
+                        <p class="mb-4">Receba sugestões personalizadas de melhorias com o melhor custo-benefício para o seu caso de uso.</p>
+                        <button id="upgradeBtn" class="btn btn-primary w-full py-2 mb-4"><i class="fas fa-wand-magic-sparkles mr-2"></i>Sugerir Upgrades</button>
+                        <div id="upgrade-result" class="p-4 bg-[var(--color-card-bg-alt)] rounded-lg min-h-[100px] text-[var(--color-text-secondary)]">
+                            <p class="italic text-center">As recomendações aparecerão aqui após clicar no botão acima.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Gráficos de Performance -->                
+                <div class="mt-8">
+                    <h3 class="text-xl font-semibold mb-4"><i class="fas fa-chart-bar text-[var(--color-primary)] mr-2"></i>Gráficos de Performance</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="card p-4 border border-[var(--color-border-subtle)] rounded-lg">
+                            <h4 class="text-lg font-medium mb-3">Performance em Jogos (1080p)</h4>
+                            <div class="h-[250px]">
+                                <canvas id="gaming-chart"></canvas>
+                            </div>
+                        </div>
+                        <div class="card p-4 border border-[var(--color-border-subtle)] rounded-lg">
+                            <h4 class="text-lg font-medium mb-3">Comparativo de Sistemas Operacionais</h4>
+                            <div class="h-[250px]">
+                                <canvas id="os-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <footer class="text-center mt-16 pt-8 border-t border-[var(--color-primary-light)] opacity-90">
             <div class="mb-6">
                 <h3 class="text-xl font-semibold text-[var(--color-secondary)] mb-4">Pagamento Facilitado</h3>
@@ -813,14 +1338,14 @@
                 <a href="https://wa.me/5575981231019" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                 <a href="https://t.me/+5575981231019" target="_blank"><i class="fab fa-telegram"></i> Telegram</a>
             </div>
-            <p class="text-[var(--color-text-main)] text-sm">&copy; <span id="current-year"></span> DeiviTech por Deivison Santana. Todos os direitos reservados.</p>
+            <p class="text-[var(--color-text-main)] text-sm">© <span id="current-year"></span> DeiviTech por Deivison Santana. Todos os direitos reservados.</p>
             <p class="text-xs text-[var(--color-text-main)] opacity-70 mt-1">Preços e disponibilidade são estimativas e sujeitos a confirmação.</p>
         </footer>
     </main>
 
     <div id="order-modal" class="modal">
         <div class="modal-content">
-            <span class="close-button">&times;</span>
+            <span class="close-button">×</span>
             <h2 id="modal-title" class="text-2xl font-bold mb-4">Confirmação</h2>
             <div id="modal-message-content" class="mb-4"></div>
             <div id="modal-order-summary" class="bg-[var(--color-card-bg-alt)] p-4 rounded-lg border border-[var(--color-border-subtle)] text-sm max-h-60 overflow-y-auto custom-scrollbar"></div>
@@ -863,75 +1388,54 @@
             platform: [
                 { id: 'intel', name: 'Plataforma Intel', price: 0, stock: 50, performance_score: 0, icon: 'fab fa-intel', description_basic: 'Processadores e chipsets Intel.', description_advanced: 'Ideal para uma vasta gama de aplicações, desde produtividade a gaming de ponta, com tecnologias como Thunderbolt e suporte a memórias DDR4/DDR5 dependendo do chipset. Ótima compatibilidade de software.' },
                 { id: 'amd', name: 'Plataforma AMD', price: 0, stock: 45, performance_score: 0, icon: 'fa-brands fa-amd', description_basic: 'Processadores e chipsets AMD.', description_advanced: 'Foco em multitarefas e eficiência energética com CPUs Ryzen. Excelente performance em jogos e criação de conteúdo, especialmente com APUs potentes (gráficos integrados). Suporte a DDR4/DDR5.' }
-            ],
-            casing: [ 
-                { id: 'casing-eco', name: 'Carcaça EcoFlex Preta', price: 95, stock: 20, performance_score: 5, icon: 'fas fa-box-open', description_basic: 'Funcional e leve.', description_advanced: 'Policarbonato reciclado, ventilação básica, design minimalista, 1x USB 3.0, 2x USB 2.0.' },
-                { id: 'casing-silverstone', name: 'Carcaça SilverStone Slim Prata', price: 125, stock: 18, performance_score: 10, icon: 'fas fa-laptop', description_basic: 'Elegante e portátil.', description_advanced: 'Liga de alumínio escovado fina, ideal para portabilidade com estilo. 2x USB 3.1, 1x USB-C.' },
-                { id: 'casing-pro-alum', name: 'Carcaça Pro Alumínio Grafite', price: 280, stock: 12, performance_score: 15, icon: 'fas fa-laptop-code', description_basic: 'Robusta, alumínio premium.', description_advanced: 'Chassi unibody em alumínio aeroespacial, dissipação térmica superior, durabilidade extra. 2x USB 3.2, 1x Thunderbolt 4 (se mobo suportar).' },
-                { id: 'casing-gamer-rgb', name: 'Carcaça Gamer RGB Fusion X', price: 340, stock: 10, performance_score: 20, icon: 'fas fa-gamepad', description_basic: 'Design agressivo, RGB.', description_advanced: 'Compósito com zonas RGB personalizáveis, fluxo de ar otimizado para gaming intenso, múltiplas portas USB 3.2, áudio aprimorado.' },
-                { id: 'casing-ultrabook-mag', name: 'Carcaça Ultrabook Magnésio Sky', price: 390, stock: 8, performance_score: 18, icon: 'fas fa-feather-alt', description_basic: 'Ultra fina e leve.', description_advanced: 'Liga de magnésio, perfil <13mm, peso <1.1kg, máxima portabilidade e design sofisticado. 2x USB-C (Thunderbolt opcional).' },
-                { id: 'casing-workstation', name: 'Carcaça Workstation Titan Pro', price: 450, stock: 6, performance_score: 22, advanced_only: true, icon: 'fas fa-briefcase', description_basic: 'Durabilidade e expansão.', description_advanced: 'Estrutura reforçada, múltiplas baias internas (se aplicável ao form factor), ventilação robusta, ideal para workstations móveis de alta performance. Suporte a múltiplas conexões I/O.' },
-                { id: 'casing-convertible', name: 'Carcaça Convertível Stylus Air', price: 480, stock: 7, performance_score: 16, advanced_only: true, icon: 'fas fa-tablet-alt', description_basic: '2-em-1 com caneta.', description_advanced: 'Dobradiça 360°, tela touch (requer tela compatível), chassi leve e versátil para criatividade. Inclui slot para caneta stylus (caneta opcional).' },
-            ],
-             motherboard: [ 
-                { id: 'intel-h610m', name: 'Intel H610M Chipset', price: 160, platform: 'intel', cpu_socket: 'LGA1700', ram_type: 'DDR4', ram_slots: 2, nvme_slots: 1, sata_ports: 2, pcie_gen: 'Gen4', ethernet_speed: '1Gbps', stock: 20, performance_score: 20, basic_only: true, icon: 'fas fa-microchip', description_basic: 'Entrada, DDR4.', description_advanced: 'Chipset H610, 2x DDR4 SO-DIMM (máx 64GB @3200MHz), 1x M.2 PCIe 3.0 x4, 2x SATA III, USB 3.2 Gen1. Ideal para tarefas básicas e CPUs de entrada.' },
-                { id: 'intel-b760m-wifi', name: 'Intel B760M Wi-Fi', price: 250, platform: 'intel', cpu_socket: 'LGA1700', ram_type: 'DDR4', ram_slots: 4, nvme_slots: 2, sata_ports: 4, pcie_gen: 'Gen4', ethernet_speed: '2.5Gbps', stock: 15, performance_score: 35, icon: 'fas fa-wifi', description_basic: 'Intermediária, DDR4, Wi-Fi.', description_advanced: 'Chipset B760, 4x DDR4 SO-DIMM (máx 128GB @3200MHz+), 2x M.2 PCIe 4.0 x4, Wi-Fi 6 integrado, Bluetooth 5.2, USB 3.2 Gen2. Bom para jogos e produtividade.' }, 
-                { id: 'intel-z790-pro-wifi', name: 'Intel Z790 Pro Wi-Fi DDR5', price: 450, platform: 'intel', cpu_socket: 'LGA1700', ram_type: 'DDR5', ram_slots: 4, nvme_slots: 3, sata_ports: 4, pcie_gen: 'Gen5', ethernet_speed: '2.5Gbps', stock: 10, performance_score: 60, advanced_only: true, icon: 'fas fa-broadcast-tower', description_basic: 'Avançada, DDR5, Wi-Fi 6E.', description_advanced: 'Chipset Z790, 4x DDR5 SO-DIMM (máx 192GB @5600MHz+), 3x M.2 (1x PCIe 5.0 x4, 2x PCIe 4.0 x4), Wi-Fi 6E, Bluetooth 5.3, Thunderbolt 4 header, áudio premium. Para overclock e CPUs high-end.' },
-                { id: 'intel-w790-ace', name: 'Intel W790 ACE (Workstation)', price: 650, platform: 'intel', cpu_socket: 'LGA4677', ram_type: 'DDR5-ECC-RDIMM', ram_slots: 8, nvme_slots: 4, sata_ports: 8, pcie_gen: 'Gen5', ethernet_speed: '10Gbps', stock: 5, performance_score: 75, advanced_only: true, icon: 'fas fa-server', description_basic: 'Xeon, ECC RAM.', description_advanced: 'Para CPUs Intel Xeon W-2400/W-3400. 8x DDR5 ECC RDIMM slots, Quad M.2 PCIe 5.0, Dual 10GbE LAN, múltiplos slots PCIe x16. Focada em estabilidade e performance profissional.' }, 
-                { id: 'custom-arm-copilot', name: 'Placa Custom ARM Copilot+', price: 0, platform: 'arm', cpu_socket: 'ARM-Copilot', ram_type: 'LPDDR5X', ram_slots: 1, nvme_slots: 1, sata_ports: 0, pcie_gen: 'Gen4', ethernet_speed: 'N/A', stock: 5, performance_score: 50, advanced_only:true, icon: 'fas fa-microchip-ai', description_advanced:'Placa mãe customizada para processadores ARM de alta performance como Snapdragon X Elite, otimizada para eficiência energética e IA on-device. RAM geralmente soldada.' },
-                { id: 'amd-a620m', name: 'AMD A620M Chipset', price: 145, platform: 'amd', cpu_socket: 'AM5', ram_type: 'DDR5', ram_slots: 2, nvme_slots: 1, sata_ports: 2, pcie_gen: 'Gen4', ethernet_speed: '1Gbps', stock: 18, performance_score: 22, basic_only: true, icon: 'fas fa-microchip', description_basic: 'Entrada AM5, DDR5.', description_advanced: 'Chipset A620, 2x DDR5 SO-DIMM (máx 96GB @5200MHz), 1x M.2 PCIe 4.0 x4, USB 3.2 Gen2. Entrada para a plataforma AM5 Ryzen 7000/8000.' },
-                { id: 'amd-b650m-plus-wifi', name: 'AMD B650M Plus Wi-Fi', price: 260, platform: 'amd', cpu_socket: 'AM5', ram_type: 'DDR5', ram_slots: 4, nvme_slots: 2, sata_ports: 4, pcie_gen: 'Gen4', ethernet_speed: '2.5Gbps', stock: 14, performance_score: 40, icon: 'fas fa-wifi', description_basic: 'Intermediária AM5, DDR5, Wi-Fi.', description_advanced: 'Chipset B650, 4x DDR5 SO-DIMM (máx 192GB @6000MHz+), 2x M.2 (1x PCIe 5.0 x4, 1x PCIe 4.0 x4), Wi-Fi 6E, Bluetooth 5.2. Ótimo custo-benefício para Ryzen 7000/8000.' }, 
-                { id: 'amd-x670e-extreme', name: 'AMD X670E Extreme Gaming', price: 520, platform: 'amd', cpu_socket: 'AM5', ram_type: 'DDR5', ram_slots: 4, nvme_slots: 4, sata_ports: 6, pcie_gen: 'Gen5', ethernet_speed: '10Gbps', stock: 7, performance_score: 68, advanced_only: true, icon: 'fas fa-dragon', description_basic: 'High-end AM5, PCIe 5.0.', description_advanced: 'Chipset X670E, 4x DDR5 SO-DIMM (suporte a EXPO), Quad M.2 PCIe 5.0, 10GbE LAN, Wi-Fi 7 (dependendo do lote), áudio de alta definição, VRM robusto para overclock.' },
-                { id: 'amd-wrx90e-pro-sage', name: 'AMD WRX90 Pro SAGE (Threadripper)', price: 950, platform: 'amd', cpu_socket: 'sTR5', ram_type: 'DDR5-ECC-RDIMM', ram_slots: 8, nvme_slots: 5, sata_ports: 8, pcie_gen: 'Gen5', ethernet_speed: 'Dual 10Gbps', stock: 3, performance_score: 85, advanced_only: true, icon: 'fas fa-cogs', description_basic: 'Threadripper Pro, ECC.', description_advanced: 'Para AMD Ryzen Threadripper PRO 7000 WX-Series. 8x DDR5 ECC RDIMM (octa-channel), Penta M.2 PCIe 5.0, Múltiplos slots PCIe 5.0 x16. Para cargas de trabalho extremas.' },
-            ],
-            cpu: [ 
-                { id: 'intel-i3-13100f', name: 'Intel Core i3-13100F', price: 380, socket: 'LGA1700', performance_score: 45, stock: 25, icon: 'fas fa-brain', description_basic: 'Entrada eficiente (4C/8T).', description_advanced: '4 Cores Performance, 8 Threads, até 4.5GHz. Sem gráficos integrados (requer GPU dedicada). Bom para tarefas do dia a dia e jogos leves.' }, 
-                { id: 'intel-i5-14400f', name: 'Intel Core i5-14400F', price: 600, socket: 'LGA1700', performance_score: 65, stock: 20, icon: 'fas fa-brain', description_basic: 'Bom custo-benefício (10C/16T).', description_advanced: '6 Performance-cores + 4 Efficient-cores, 16 Threads, até 4.7GHz. Sem gráficos integrados. Ótimo para jogos e multitarefas.' }, 
-                { id: 'intel-i7-14700k', name: 'Intel Core i7-14700K', price: 1100, socket: 'LGA1700', performance_score: 88,stock: 10, advanced_only: true, icon: 'fas fa-brain', description_basic: 'Alta performance (20C/28T).', description_advanced: '8 Performance-cores + 12 Efficient-cores, 28 Threads, até 5.6GHz. Gráficos Intel UHD 770. Suporte a IA via software. Desbloqueado para overclock.' },
-                { id: 'intel-i9-14900ks', name: 'Intel Core i9-14900KS', price: 1900, socket: 'LGA1700', performance_score: 105, stock: 5, advanced_only: true, icon: 'fas fa-brain', description_basic: 'Performance extrema (24C/32T).', description_advanced: '8 Performance-cores + 16 Efficient-cores, 32 Threads, até 6.2GHz com Thermal Velocity Boost. Gráficos Intel UHD 770. Edição especial para máximo desempenho.' },
-                { id: 'intel-xeon-w5-2455x', name: 'Intel Xeon W5-2455X', price: 2800, socket: 'LGA4677', performance_score: 110, stock: 4, advanced_only: true, icon: 'fas fa-server', description_basic: 'Workstation potente (12C/24T).', description_advanced: '12 Cores, 24 Threads, até 4.8GHz. Para tarefas profissionais intensas como renderização e CAD. Suporte a RAM ECC e múltiplas linhas PCIe.' },
-                { id: 'amd-r5-7500f', name: 'AMD Ryzen 5 7500F', price: 580, socket: 'AM5', performance_score: 68, stock: 18, icon: 'fas fa-brain', description_basic: 'Ótimo p/ jogos (6C/12T).', description_advanced: '6 Cores, 12 Threads, até 5.0GHz. Sem gráficos integrados. Excelente performance em jogos com bom custo-benefício na plataforma AM5.' }, 
-                { id: 'amd-r7-8700g', name: 'AMD Ryzen 7 8700G (c/ NPU)', price: 1050, socket: 'AM5', performance_score: 78, stock: 12, icon: 'fas fa-microchip-ai', npu: true, description_basic: 'CPU c/ NPU e iGPU potente (8C/16T).', description_advanced: '8 Cores, 16 Threads, até 5.1GHz. Radeon 780M Graphics (iGPU poderosa). Inclui Ryzen AI (NPU XDNA) para aceleração de IA local. Ótimo para PCs compactos ou sem GPU dedicada.' }, 
-                { id: 'amd-r9-7950x3d', name: 'AMD Ryzen 9 7950X3D (3D V-Cache)', price: 2300, socket: 'AM5', performance_score: 115, stock: 6, advanced_only: true, icon: 'fas fa-gamepad-alt', description_basic: 'Gaming máximo (16C/32T).', description_advanced: '16 Cores, 32 Threads, até 5.7GHz. Tecnologia 3D V-Cache para performance superior em jogos. Ideal para entusiastas.' },
-                { id: 'amd-trpro-7975wx', name: 'AMD Threadripper PRO 7975WX', price: 7500, socket: 'sTR5', performance_score: 180, stock: 2, advanced_only: true, icon: 'fas fa-industry-alt', description_basic: 'Workstation extrema (32C/64T).', description_advanced: '32 Cores, 64 Threads, até 5.3GHz. Para renderização 3D, simulação complexa, análise de dados massiva e virtualização pesada. Plataforma sTR5.' },
-                { id: 'snapdragon-x-elite', name: 'Snapdragon X Elite', price: 0, socket: 'ARM-Copilot', npu: true, performance_score: 80, stock: 5, advanced_only: true, icon: 'fas fa-brain-circuit', description_basic: 'ARM c/ NPU para Copilot+ PCs.', description_advanced: 'Arquitetura ARM de alta performance com NPU dedicada (45 TOPS) para Copilot+ PCs. Foco em eficiência energética, longa duração de bateria e IA on-device. Preço integrado à placa-mãe/plataforma ARM.' },
-            ],
-            ram: [ 
-                { id: 'ddr4-8gb-3200-1pk', name: '8GB DDR4 3200MHz (1x8GB)', price: 85, type: 'DDR4', performance_score: 20, stock: 30, icon: 'fas fa-memory', description_advanced: 'Módulo único de 8GB DDR4 SO-DIMM a 3200MHz. Ideal para tarefas básicas e sistemas de entrada.' }, 
-                { id: 'ddr4-16gb-3200-2pk', name: '16GB DDR4 3200MHz (2x8GB)', price: 150, type: 'DDR4', performance_score: 30, stock: 25, icon: 'fas fa-memory', description_advanced: 'Kit dual-channel de 16GB (2x8GB) DDR4 SO-DIMM a 3200MHz. Bom para multitarefas e jogos.' }, 
-                { id: 'ddr4-32gb-3600-2pk', name: '32GB DDR4 3600MHz (2x16GB)', price: 290, type: 'DDR4', performance_score: 40, stock: 12,icon: 'fas fa-memory', description_advanced: 'Kit dual-channel de 32GB (2x16GB) DDR4 SO-DIMM a 3600MHz. Para usuários avançados e multitarefas intensas.' }, 
-                { id: 'ddr5-16gb-5200-1pk', name: '16GB DDR5 5200MHz (1x16GB)', price: 180, type: 'DDR5', performance_score: 38, stock: 22, icon: 'fas fa-memory', description_advanced: 'Módulo único de 16GB DDR5 SO-DIMM a 5200MHz. Padrão mais recente para melhor largura de banda.' }, 
-                { id: 'ddr5-32gb-5600-2pk', name: '32GB DDR5 5600MHz (2x16GB)', price: 350, type: 'DDR5', performance_score: 55, stock: 18, icon: 'fas fa-memory', description_advanced: 'Kit dual-channel de 32GB (2x16GB) DDR5 SO-DIMM a 5600MHz. Excelente para gaming e aplicações exigentes.' }, 
-                { id: 'ddr5-64gb-6000-2pk', name: '64GB DDR5 6000MHz (2x32GB)', price: 680, type: 'DDR5', performance_score: 70, stock: 8, advanced_only: true, icon: 'fas fa-memory', description_advanced: 'Kit dual-channel de 64GB (2x32GB) DDR5 SO-DIMM a 6000MHz. Para workstations e tarefas que demandam muita memória.' },
-                { id: 'ddr5-ecc-rd-32gb-4800-1pk', name: '32GB DDR5 ECC RDIMM 4800MHz (1x32GB)', price: 450, type: 'DDR5-ECC-RDIMM', performance_score: 60, stock: 6, advanced_only: true, icon: 'fas fa-shield-alt', description_advanced: 'Módulo único de 32GB DDR5 ECC Registrada SO-DIMM a 4800MHz. Para workstations Xeon/Threadripper que exigem correção de erros.' },
-                { id: 'ddr5-ecc-rd-64gb-5200-2pk', name: '64GB DDR5 ECC RDIMM 5200MHz (2x32GB)', price: 950, type: 'DDR5-ECC-RDIMM', performance_score: 80, stock: 4, advanced_only: true, icon: 'fas fa-server', description_advanced: 'Kit dual-channel de 64GB (2x32GB) DDR5 ECC Registrada SO-DIMM a 5200MHz. Alta capacidade e confiabilidade para servidores e workstations.' },
-                 { id: 'lpddr5x-16gb', name: '16GB LPDDR5X (Onboard)', price: 0, type: 'LPDDR5X', performance_score: 45, stock: 5, advanced_only: true, icon: 'fas fa-memory', description_advanced: 'Memória LPDDR5X de 16GB soldada na placa, otimizada para baixo consumo e alta largura de banda em plataformas ARM. Preço integrado à placa-mãe/plataforma ARM.' },
-            ],
-            storage: [ 
-                { id: 'sata-ssd-500gb', name: 'SSD SATA 500GB Econômico', price: 120, interface: 'SATA', performance_score: 30, stock: 25, icon: 'fas fa-hdd', description_advanced: 'SSD de 500GB com interface SATA III (até 550MB/s). Bom para upgrade de HDDs e sistemas de entrada.' }, 
-                { id: 'sata-ssd-1tb', name: 'SSD SATA 1TB Plus', price: 200, interface: 'SATA', performance_score: 35, stock: 20, icon: 'fas fa-hdd', description_advanced: 'SSD de 1TB com interface SATA III. Mais espaço com boa velocidade para o padrão SATA.' }, 
-                { id: 'nvme-gen3-512gb', name: 'SSD NVMe 512GB (PCIe 3.0)', price: 150, interface: 'NVMe', pcie_gen: 'Gen3', performance_score: 48, stock: 22, icon: 'fas fa-compact-disc', description_advanced: 'SSD NVMe de 512GB, interface PCIe 3.0 x4 (até 3500MB/s). Velocidade significativamente maior que SATA.' }, 
-                { id: 'nvme-gen4-1tb', name: 'SSD NVMe 1TB (PCIe 4.0) Veloz', price: 290, interface: 'NVMe', pcie_gen: 'Gen4', performance_score: 70, stock: 15, icon: 'fas fa-compact-disc', description_advanced: 'SSD NVMe de 1TB, interface PCIe 4.0 x4 (até 7000MB/s). Ideal para jogos, edição de vídeo e SO.' },
-                { id: 'nvme-gen4-2tb', name: 'SSD NVMe 2TB (PCIe 4.0) Ultra', price: 500, interface: 'NVMe', pcie_gen: 'Gen4', performance_score: 80, stock: 10, advanced_only: true, icon: 'fas fa-compact-disc', description_advanced: 'SSD NVMe de 2TB, interface PCIe 4.0 x4. Grande capacidade com velocidades altíssimas.' },
-                 { id: 'nvme-gen4-512gb', name: 'SSD NVMe 512GB (PCIe 4.0) Rápido', price: 220, interface: 'NVMe', pcie_gen: 'Gen4', performance_score: 65, stock: 10, icon: 'fas fa-compact-disc', description_advanced: 'SSD NVMe de 512GB, interface PCIe 4.0 x4 (até 7000MB/s). Ponto de entrada veloz para sistemas Gen4.' },
-                { id: 'nvme-gen5-1tb', name: 'SSD NVMe 1TB (PCIe 5.0) Extreme', price: 450, interface: 'NVMe', pcie_gen: 'Gen5', performance_score: 95, stock: 7, advanced_only: true, icon: 'fas fa-rocket', description_advanced: 'SSD NVMe de 1TB, interface PCIe 5.0 x4 (até 12000MB/s+). Tecnologia de ponta para máxima performance, requer placa-mãe compatível.' },
-                { id: 'nvme-gen5-2tb', name: 'SSD NVMe 2TB (PCIe 5.0) Monstro', price: 800, interface: 'NVMe', pcie_gen: 'Gen5', performance_score: 110, stock: 5, advanced_only: true, icon: 'fas fa-rocket', description_advanced: 'SSD NVMe de 2TB, interface PCIe 5.0 x4. Capacidade e velocidade extremas para os usuários mais exigentes.' },
-                { id: 'hdd-2tb-7200', name: 'HDD 2TB (7200RPM) Arquivos', price: 160, interface: 'SATA', performance_score: 15, stock: 12, advanced_only: true, icon: 'fas fa-database', description_advanced: 'Hard Disk Drive de 2TB, 7200RPM, interface SATA. Bom para armazenamento em massa de arquivos grandes, backups.' },
-                { id: 'hdd-4tb-5400', name: 'HDD 4TB (5400RPM) Backup', price: 280, interface: 'SATA', performance_score: 12, stock: 8, advanced_only: true, icon: 'fas fa-archive', description_advanced: 'Hard Disk Drive de 4TB, 5400RPM, interface SATA. Grande capacidade para backups e armazenamento de longo prazo, menor consumo de energia.' },
-            ],
-            gpu: [ 
-                { id: 'integrated', name: 'GPU Integrada (Processador)', price: 0, pcie_gen: 'N/A', performance_score: 15, stock: 999, icon: 'fas fa-image', description_advanced: 'Utiliza os gráficos integrados ao processador (ex: Intel UHD/Iris Xe, AMD Radeon Graphics). Adequada para tarefas básicas, multimídia e jogos muito leves. O desempenho varia conforme a CPU.' }, 
-                { id: 'adreno-copilot', name: 'GPU Adreno (Snapdragon)', price: 0, pcie_gen: 'N/A', performance_score: 60, stock: 5, advanced_only:true, icon: 'fas fa-mobile-alt', description_advanced: 'GPU Adreno integrada ao Snapdragon X Elite, oferecendo bom desempenho gráfico para tarefas do dia a dia, multimídia e jogos leves com alta eficiência energética. Preço integrado.' },
-                { id: 'nvidia-gtx-1650s', name: 'NVIDIA GTX 1650 Super (4GB GDDR6)', price: 450, pcie_gen: 'Gen3', performance_score: 40, stock: 12, icon: 'fas fa-gamepad', description_advanced: 'NVIDIA GeForce GTX 1650 Super com 4GB de memória GDDR6. Boa para jogos em 1080p com configurações médias.' }, 
-                { id: 'nvidia-rtx-3050-6gb', name: 'NVIDIA RTX 3050 (6GB GDDR6)', price: 650, pcie_gen: 'Gen4', performance_score: 58, stock: 15, icon: 'fas fa-gamepad', description_advanced: 'NVIDIA GeForce RTX 3050 com 6GB GDDR6. Suporte a Ray Tracing e DLSS. Boa para jogos em 1080p (médio-alto).' }, 
-                { id: 'nvidia-rtx-4060-8gb', name: 'NVIDIA RTX 4060 (8GB GDDR6)', price: 1100, pcie_gen: 'Gen4', performance_score: 80, stock: 10, icon: 'fas fa-gamepad', description_advanced: 'NVIDIA GeForce RTX 4060 com 8GB GDDR6. Arquitetura Ada Lovelace, eficiente e com DLSS 3. Excelente para 1080p/1440p gaming.' },
-                { id: 'nvidia-rtx-4070ti-12gb', name: 'NVIDIA RTX 4070 Ti (12GB GDDR6X)', price: 2100, pcie_gen: 'Gen4', performance_score: 110, stock: 7, advanced_only: true, icon: 'fas fa-fighter-jet', description_advanced: 'NVIDIA GeForce RTX 4070 Ti com 12GB GDDR6X. Alto desempenho para jogos em 1440p e 4K, com Ray Tracing e DLSS 3.' },
-                { id: 'nvidia-rtx-4090-24gb', name: 'NVIDIA RTX 4090 (24GB GDDR6X)', price: 4800, pcie_gen: 'Gen4', performance_score: 160, stock: 3, advanced_only: true, icon: 'fas fa-space-shuttle', description_advanced: 'NVIDIA GeForce RTX 4090 com 24GB GDDR6X. Performance máxima para 4K gaming, criação de conteúdo profissional e IA.' },
-                { id: 'amd-rx-6500xt-4gb', name: 'AMD RX 6500 XT (4GB GDDR6)', price: 400, pcie_gen: 'Gen4', performance_score: 38, stock: 13, icon: 'fas fa-gamepad', description_advanced: 'AMD Radeon RX 6500 XT com 4GB GDDR6. Placa de entrada RDNA2 para jogos em 1080p (baixo-médio). Interface PCIe 4.0 x4.' }, 
-                { id: 'amd-rx-7600-8gb', name: 'AMD RX 7600 (8GB GDDR6)', price: 950, pcie_gen: 'Gen4', performance_score: 75, stock: 9, icon: 'fas fa-gamepad', description_advanced: 'AMD Radeon RX 7600 com 8GB GDDR6. Arquitetura RDNA3. Ótima para jogos em 1080p (alto) e bom desempenho em 1440p.' },
-                { id: 'amd-rx-7800xt-16gb', name: 'AMD RX 7800 XT (16GB GDDR6)', price: 1900, pcie_gen: 'Gen4', performance_score: 105, stock: 6, advanced_only: true, icon: 'fas fa-fighter-jet', description_advanced: 'AMD Radeon RX 7800 XT com 16GB GDDR6. Excelente performance em 1440p e competente em 4K. Alternativa forte para GPUs high-end.' },
-                { id: 'intel-arc-a750-8gb', name: 'Intel Arc A750 (8GB GDDR6)', price: 750, pcie_gen: 'Gen4', performance_score: 62, stock: 8, icon: 'fas fa-gamepad', description_advanced: 'Intel Arc A750 com 8GB GDDR6. Boa performance em jogos 1080p/1440p, especialmente com drivers otimizados. Suporte a AV1 encoding.' }, 
-                { id: 'intel-arc-a770-16gb', name: 'Intel Arc A770 (16GB GDDR6)', price: 1200, pcie_gen: 'Gen4', performance_score: 78, stock: 5, advanced_only: true, icon: 'fas fa-gamepad', description_advanced: 'Intel Arc A770 com 16GB GDDR6. Melhor GPU da Intel Arc Alchemist, boa para criação de conteúdo e jogos, com grande VRAM.' },
+            ],            casing: [ 
+                { id: 'casing-eco', name: 'Carcaça EcoFlex Preta', price: 75, stock: 20, performance_score: 5, icon: 'fas fa-box-open', description_basic: 'Funcional e leve.', description_advanced: 'Policarbonato reciclado, ventilação básica, design minimalista, 1x USB 3.0, 2x USB 2.0.' },
+                { id: 'casing-silverstone', name: 'Carcaça SilverStone Slim Prata', price: 95, stock: 18, performance_score: 10, icon: 'fas fa-laptop', description_basic: 'Elegante e portátil.', description_advanced: 'Liga de alumínio escovado fina, ideal para portabilidade com estilo. 2x USB 3.1, 1x USB-C.' },
+                { id: 'casing-pro-alum', name: 'Carcaça Pro Alumínio Grafite', price: 220, stock: 12, performance_score: 15, icon: 'fas fa-laptop-code', description_basic: 'Robusta, alumínio premium.', description_advanced: 'Chassi unibody em alumínio aeroespacial, dissipação térmica superior, durabilidade extra. 2x USB 3.2, 1x Thunderbolt 4 (se mobo suportar).' },
+                { id: 'casing-gamer-rgb', name: 'Carcaça Gamer RGB Fusion X', price: 280, stock: 10, performance_score: 20, icon: 'fas fa-gamepad', description_basic: 'Design agressivo, RGB.', description_advanced: 'Compósito com zonas RGB personalizáveis, fluxo de ar otimizado para gaming intenso, múltiplas portas USB 3.2, áudio aprimorado.' },
+                { id: 'casing-ultrabook-mag', name: 'Carcaça Ultrabook Magnésio Sky', price: 320, stock: 8, performance_score: 18, icon: 'fas fa-feather-alt', description_basic: 'Ultra fina e leve.', description_advanced: 'Liga de magnésio, perfil <13mm, peso <1.1kg, máxima portabilidade e design sofisticado. 2x USB-C (Thunderbolt opcional).' },
+                { id: 'casing-workstation', name: 'Carcaça Workstation Titan Pro', price: 380, stock: 6, performance_score: 22, advanced_only: true, icon: 'fas fa-briefcase', description_basic: 'Durabilidade e expansão.', description_advanced: 'Estrutura reforçada, múltiplas baias internas (se aplicável ao form factor), ventilação robusta, ideal para workstations móveis de alta performance. Suporte a múltiplas conexões I/O.' },
+                { id: 'casing-convertible', name: 'Carcaça Convertível Stylus Air', price: 420, stock: 7, performance_score: 16, advanced_only: true, icon: 'fas fa-tablet-alt', description_basic: '2-em-1 com caneta.', description_advanced: 'Dobradiça 360°, tela touch (requer tela compatível), chassi leve e versátil para criatividade. Inclui slot para caneta stylus (caneta opcional).' },
+            ],             motherboard: [ 
+                { id: 'intel-h610m', name: 'Intel H610M Chipset Mobile', price: 140, platform: 'intel', cpu_socket: 'LGA1700-Mobile', ram_type: 'DDR4', ram_slots: 2, nvme_slots: 1, sata_ports: 2, pcie_gen: 'Gen4', ethernet_speed: '1Gbps', stock: 20, performance_score: 20, basic_only: true, icon: 'fas fa-microchip', description_basic: 'Entrada, DDR4.', description_advanced: 'Chipset H610 para notebooks, 2x DDR4 SO-DIMM (máx 64GB @3200MHz), 1x M.2 PCIe 3.0 x4, 2x SATA III, USB 3.2 Gen1. Ideal para tarefas básicas.' },
+                { id: 'intel-b760m-wifi', name: 'Intel B760M Mobile Wi-Fi', price: 220, platform: 'intel', cpu_socket: 'LGA1700-Mobile', ram_type: 'DDR4', ram_slots: 2, nvme_slots: 2, sata_ports: 2, pcie_gen: 'Gen4', ethernet_speed: '2.5Gbps', stock: 15, performance_score: 35, icon: 'fas fa-wifi', description_basic: 'Intermediária, DDR4, Wi-Fi.', description_advanced: 'Chipset B760 para notebooks, 2x DDR4 SO-DIMM (máx 64GB @3200MHz+), 2x M.2 PCIe 4.0 x4, Wi-Fi 6 integrado, Bluetooth 5.2. Bom para jogos e produtividade.' }, 
+                { id: 'intel-z790-pro-wifi', name: 'Intel Z790 Pro Mobile Wi-Fi DDR5', price: 380, platform: 'intel', cpu_socket: 'LGA1700-Mobile', ram_type: 'DDR5', ram_slots: 2, nvme_slots: 2, sata_ports: 2, pcie_gen: 'Gen5', ethernet_speed: '2.5Gbps', stock: 10, performance_score: 60, advanced_only: true, icon: 'fas fa-broadcast-tower', description_basic: 'Avançada, DDR5, Wi-Fi 6E.', description_advanced: 'Chipset Z790 para notebooks, 2x DDR5 SO-DIMM (máx 64GB @5600MHz+), 2x M.2 (1x PCIe 5.0 x4, 1x PCIe 4.0 x4), Wi-Fi 6E, Bluetooth 5.3, Thunderbolt 4 header. Para notebooks high-end.' },
+                { id: 'amd-a620m', name: 'AMD A620M Mobile Chipset', price: 130, platform: 'amd', cpu_socket: 'AM5-Mobile', ram_type: 'DDR5', ram_slots: 2, nvme_slots: 1, sata_ports: 2, pcie_gen: 'Gen4', ethernet_speed: '1Gbps', stock: 18, performance_score: 22, basic_only: true, icon: 'fas fa-microchip', description_basic: 'Entrada AM5, DDR5.', description_advanced: 'Chipset A620 para notebooks AMD, 2x DDR5 SO-DIMM (máx 32GB @5200MHz), 1x M.2 PCIe 4.0 x4, USB 3.2 Gen2. Entrada para notebooks Ryzen 7000/8000.' },
+                { id: 'amd-b650m-plus-wifi', name: 'AMD B650M Mobile Plus Wi-Fi', price: 240, platform: 'amd', cpu_socket: 'AM5-Mobile', ram_type: 'DDR5', ram_slots: 2, nvme_slots: 2, sata_ports: 2, pcie_gen: 'Gen4', ethernet_speed: '2.5Gbps', stock: 14, performance_score: 40, icon: 'fas fa-wifi', description_basic: 'Intermediária AM5, DDR5, Wi-Fi.', description_advanced: 'Chipset B650 para notebooks, 2x DDR5 SO-DIMM (máx 64GB @6000MHz+), 2x M.2 (1x PCIe 5.0 x4, 1x PCIe 4.0 x4), Wi-Fi 6E, Bluetooth 5.2. Ótimo custo-benefício para Ryzen móvel.' }, 
+                { id: 'amd-x670e-extreme', name: 'AMD X670E Extreme Mobile Gaming', price: 460, platform: 'amd', cpu_socket: 'AM5-Mobile', ram_type: 'DDR5', ram_slots: 2, nvme_slots: 2, sata_ports: 2, pcie_gen: 'Gen5', ethernet_speed: '10Gbps', stock: 7, performance_score: 68, advanced_only: true, icon: 'fas fa-dragon', description_basic: 'High-end AM5, PCIe 5.0.', description_advanced: 'Chipset X670E para notebooks gaming, 2x DDR5 SO-DIMM (suporte a EXPO), Dual M.2 PCIe 5.0, 10GbE LAN, Wi-Fi 7, áudio de alta definição. VRM robusto para notebooks de alto desempenho.' },
+            ],            cpu: [ 
+                { id: 'intel-i3-13100h', name: 'Intel Core i3-13100H Mobile', price: 320, socket: 'LGA1700-Mobile', performance_score: 40, stock: 25, icon: 'fas fa-brain', description_basic: 'Entrada eficiente (4C/8T).', description_advanced: '4 Cores, 8 Threads, até 4.5GHz. CPU móvel otimizada para notebooks com eficiência energética. Bom para tarefas do dia a dia e navegação.' }, 
+                { id: 'intel-i5-13500h', name: 'Intel Core i5-13500H Mobile', price: 520, socket: 'LGA1700-Mobile', performance_score: 65, stock: 20, icon: 'fas fa-brain', description_basic: 'Bom custo-benefício (12C/16T).', description_advanced: '8 Performance-cores + 4 Efficient-cores, 16 Threads, até 4.7GHz. Excelente para notebooks gaming e produtividade.' }, 
+                { id: 'intel-i7-13700h', name: 'Intel Core i7-13700H Mobile', price: 880, socket: 'LGA1700-Mobile', performance_score: 85,stock: 10, advanced_only: true, icon: 'fas fa-brain', description_basic: 'Alta performance (16C/24T).', description_advanced: '8 Performance-cores + 8 Efficient-cores, 24 Threads, até 5.0GHz. Perfeito para notebooks gaming high-end e criação de conteúdo.' },
+                { id: 'intel-i9-13900h', name: 'Intel Core i9-13900H Mobile', price: 1400, socket: 'LGA1700-Mobile', performance_score: 100, stock: 5, advanced_only: true, icon: 'fas fa-brain', description_basic: 'Performance extrema (20C/28T).', description_advanced: '8 Performance-cores + 12 Efficient-cores, 28 Threads, até 5.4GHz. Máximo desempenho móvel para notebooks workstation e gaming premium.' },
+                { id: 'amd-r5-7535h', name: 'AMD Ryzen 5 7535H Mobile', price: 480, socket: 'AM5-Mobile', performance_score: 62, stock: 18, icon: 'fas fa-brain', description_basic: 'Ótimo p/ notebooks (6C/12T).', description_advanced: '6 Cores, 12 Threads, até 4.55GHz. Excelente performance em notebooks com eficiência energética. Ideal para jogos e produtividade.' }, 
+                { id: 'amd-r7-7735h', name: 'AMD Ryzen 7 7735H Mobile', price: 750, socket: 'AM5-Mobile', performance_score: 78, stock: 12, icon: 'fas fa-brain', description_basic: 'CPU móvel potente (8C/16T).', description_advanced: '8 Cores, 16 Threads, até 4.75GHz. Ideal para notebooks gaming e criação de conteúdo com ótima eficiência energética.' }, 
+                { id: 'amd-r9-7940h', name: 'AMD Ryzen 9 7940H Mobile', price: 1200, socket: 'AM5-Mobile', performance_score: 95, stock: 6, advanced_only: true, icon: 'fas fa-brain', description_basic: 'Gaming mobile máximo (8C/16T).', description_advanced: '8 Cores, 16 Threads, até 5.2GHz. CPU móvel high-end para notebooks gaming premium e workstations móveis.' },
+            ],            ram: [                { id: 'ddr4-8gb-3200-1pk', name: '8GB DDR4 3200MHz SO-DIMM (1x8GB)', price: 75, type: 'DDR4', performance_score: 20, stock: 30, icon: 'fas fa-microchip', description_advanced: 'Módulo único de 8GB DDR4 SO-DIMM a 3200MHz. Ideal para tarefas básicas e sistemas de entrada.' }, 
+                { id: 'ddr4-16gb-3200-2pk', name: '16GB DDR4 3200MHz SO-DIMM (2x8GB)', price: 130, type: 'DDR4', performance_score: 30, stock: 25, icon: 'fas fa-microchip', description_advanced: 'Kit dual-channel de 16GB (2x8GB) DDR4 SO-DIMM a 3200MHz. Bom para multitarefas e jogos.' }, 
+                { id: 'ddr4-32gb-3600-2pk', name: '32GB DDR4 3600MHz SO-DIMM (2x16GB)', price: 250, type: 'DDR4', performance_score: 40, stock: 12,icon: 'fas fa-microchip', description_advanced: 'Kit dual-channel de 32GB (2x16GB) DDR4 SO-DIMM a 3600MHz. Para usuários avançados e multitarefas intensas.' }, 
+                { id: 'ddr5-16gb-5200-1pk', name: '16GB DDR5 5200MHz SO-DIMM (1x16GB)', price: 150, type: 'DDR5', performance_score: 38, stock: 22, icon: 'fas fa-microchip', description_advanced: 'Módulo único de 16GB DDR5 SO-DIMM a 5200MHz. Padrão mais recente para melhor largura de banda.' }, 
+                { id: 'ddr5-32gb-5600-2pk', name: '32GB DDR5 5600MHz SO-DIMM (2x16GB)', price: 290, type: 'DDR5', performance_score: 55, stock: 18, icon: 'fas fa-microchip', description_advanced: 'Kit dual-channel de 32GB (2x16GB) DDR5 SO-DIMM a 5600MHz. Excelente para gaming e aplicações exigentes.' }, 
+                { id: 'ddr5-64gb-6000-2pk', name: '64GB DDR5 6000MHz SO-DIMM (2x32GB)', price: 580, type: 'DDR5', performance_score: 70, stock: 8, advanced_only: true, icon: 'fas fa-microchip', description_advanced: 'Kit dual-channel de 64GB (2x32GB) DDR5 SO-DIMM a 6000MHz. Para notebooks workstation e tarefas que demandam muita memória.' },
+            ],            storage: [ 
+                { id: 'sata-ssd-500gb', name: 'SSD SATA 500GB Econômico', price: 100, interface: 'SATA', performance_score: 30, stock: 25, icon: 'fas fa-hdd', description_advanced: 'SSD de 500GB com interface SATA III (até 550MB/s). Bom para upgrade de HDDs e sistemas de entrada.' }, 
+                { id: 'sata-ssd-1tb', name: 'SSD SATA 1TB Plus', price: 170, interface: 'SATA', performance_score: 35, stock: 20, icon: 'fas fa-hdd', description_advanced: 'SSD de 1TB com interface SATA III. Mais espaço com boa velocidade para o padrão SATA.' }, 
+                { id: 'nvme-gen3-512gb', name: 'SSD NVMe 512GB (PCIe 3.0)', price: 130, interface: 'NVMe', pcie_gen: 'Gen3', performance_score: 48, stock: 22, icon: 'fas fa-compact-disc', description_advanced: 'SSD NVMe de 512GB, interface PCIe 3.0 x4 (até 3500MB/s). Velocidade significativamente maior que SATA.' }, 
+                { id: 'nvme-gen4-1tb', name: 'SSD NVMe 1TB (PCIe 4.0) Veloz', price: 250, interface: 'NVMe', pcie_gen: 'Gen4', performance_score: 70, stock: 15, icon: 'fas fa-compact-disc', description_advanced: 'SSD NVMe de 1TB, interface PCIe 4.0 x4 (até 7000MB/s). Ideal para jogos, edição de vídeo e SO.' },
+                { id: 'nvme-gen4-2tb', name: 'SSD NVMe 2TB (PCIe 4.0) Ultra', price: 420, interface: 'NVMe', pcie_gen: 'Gen4', performance_score: 80, stock: 10, advanced_only: true, icon: 'fas fa-compact-disc', description_advanced: 'SSD NVMe de 2TB, interface PCIe 4.0 x4. Grande capacidade com velocidades altíssimas.' },
+                 { id: 'nvme-gen4-512gb', name: 'SSD NVMe 512GB (PCIe 4.0) Rápido', price: 180, interface: 'NVMe', pcie_gen: 'Gen4', performance_score: 65, stock: 10, icon: 'fas fa-compact-disc', description_advanced: 'SSD NVMe de 512GB, interface PCIe 4.0 x4 (até 7000MB/s). Ponto de entrada veloz para sistemas Gen4.' },
+                { id: 'nvme-gen5-1tb', name: 'SSD NVMe 1TB (PCIe 5.0) Extreme', price: 380, interface: 'NVMe', pcie_gen: 'Gen5', performance_score: 95, stock: 7, advanced_only: true, icon: 'fas fa-rocket', description_advanced: 'SSD NVMe de 1TB, interface PCIe 5.0 x4 (até 12000MB/s+). Tecnologia de ponta para máxima performance, requer placa-mãe compatível.' },
+                { id: 'nvme-gen5-2tb', name: 'SSD NVMe 2TB (PCIe 5.0) Monstro', price: 680, interface: 'NVMe', pcie_gen: 'Gen5', performance_score: 110, stock: 5, advanced_only: true, icon: 'fas fa-rocket', description_advanced: 'SSD NVMe de 2TB, interface PCIe 5.0 x4. Capacidade e velocidade extremas para os usuários mais exigentes.' },
+            ],            gpu: [ 
+                { id: 'integrated', name: 'GPU Integrada (Processador)', price: 0, pcie_gen: 'N/A', performance_score: 15, stock: 999, icon: 'fas fa-image', description_advanced: 'Utiliza os gráficos integrados ao processador (Intel Iris Xe, AMD Radeon Graphics). Adequada para tarefas básicas, multimídia e jogos muito leves. O desempenho varia conforme a CPU.' }, 
+                { id: 'nvidia-gtx-1650-mobile', name: 'NVIDIA GTX 1650 Mobile (4GB GDDR6)', price: 380, pcie_gen: 'Gen3', performance_score: 40, stock: 12, icon: 'fas fa-gamepad', description_advanced: 'NVIDIA GeForce GTX 1650 para notebooks com 4GB de memória GDDR6. Boa para jogos em 1080p com configurações médias. Eficiência energética otimizada.' }, 
+                { id: 'nvidia-rtx-3050-mobile', name: 'NVIDIA RTX 3050 Mobile (6GB GDDR6)', price: 520, pcie_gen: 'Gen4', performance_score: 58, stock: 15, icon: 'fas fa-gamepad', description_advanced: 'NVIDIA GeForce RTX 3050 Mobile com 6GB GDDR6. Suporte a Ray Tracing e DLSS. Boa para jogos em 1080p (médio-alto) em notebooks.' }, 
+                { id: 'nvidia-rtx-4060-mobile', name: 'NVIDIA RTX 4060 Mobile (8GB GDDR6)', price: 850, pcie_gen: 'Gen4', performance_score: 80, stock: 10, icon: 'fas fa-gamepad', description_advanced: 'NVIDIA GeForce RTX 4060 Mobile com 8GB GDDR6. Arquitetura Ada Lovelace, eficiente e com DLSS 3. Excelente para 1080p/1440p gaming em notebooks.' },
+                { id: 'nvidia-rtx-4070-mobile', name: 'NVIDIA RTX 4070 Mobile (8GB GDDR6X)', price: 1280, pcie_gen: 'Gen4', performance_score: 100, stock: 7, advanced_only: true, icon: 'fas fa-fighter-jet', description_advanced: 'NVIDIA GeForce RTX 4070 Mobile com 8GB GDDR6X. Alto desempenho para notebooks gaming com Ray Tracing e DLSS 3 em 1440p.' },
+                { id: 'nvidia-rtx-4080-mobile', name: 'NVIDIA RTX 4080 Mobile (12GB GDDR6X)', price: 1850, pcie_gen: 'Gen4', performance_score: 130, stock: 3, advanced_only: true, icon: 'fas fa-space-shuttle', description_advanced: 'NVIDIA GeForce RTX 4080 Mobile com 12GB GDDR6X. Performance máxima para notebooks gaming premium, ideal para 1440p/4K gaming com Ray Tracing.' },
+                { id: 'amd-rx-6600m', name: 'AMD RX 6600M Mobile (8GB GDDR6)', price: 450, pcie_gen: 'Gen4', performance_score: 55, stock: 13, icon: 'fas fa-gamepad', description_advanced: 'AMD Radeon RX 6600M com 8GB GDDR6. Placa móvel RDNA2 para jogos em 1080p (médio-alto) com boa eficiência energética.' }, 
+                { id: 'amd-rx-7600m', name: 'AMD RX 7600M Mobile (8GB GDDR6)', price: 720, pcie_gen: 'Gen4', performance_score: 75, stock: 9, icon: 'fas fa-gamepad', description_advanced: 'AMD Radeon RX 7600M com 8GB GDDR6. Arquitetura RDNA3 móvel. Ótima para jogos em 1080p (alto) e bom desempenho em 1440p em notebooks.' },
+                { id: 'amd-rx-7700m', name: 'AMD RX 7700M Mobile (12GB GDDR6)', price: 1100, pcie_gen: 'Gen4', performance_score: 95, stock: 6, advanced_only: true, icon: 'fas fa-fighter-jet', description_advanced: 'AMD Radeon RX 7700M com 12GB GDDR6. Excelente performance em notebooks gaming para 1440p e competente em 4K.' },
             ],
             display: [ 
                 { id: 'disp-15fhd60', name: '15.6" FHD IPS (1920x1080, 60Hz)', price: 200, performance_score: 20, stock: 18, icon: 'fas fa-desktop', description_advanced: 'Tela de 15.6 polegadas, resolução Full HD (1920x1080), painel IPS para boas cores e ângulos de visão, taxa de atualização de 60Hz. Padrão para uso geral.' }, 
@@ -963,13 +1467,8 @@
                 { id: 'os-brunch-chromeos', name: 'Brunch ChromeOS (Full)', price: 15, description_basic: 'ChromeOS com Play Store e Linux.', description_advanced: 'Framework para instalar ChromeOS em PCs genéricos, habilitando Google Play Store e ambiente Linux (Crostini). Requer mais configuração.', storage_impact: '~25GB', ram_min: '4GB', performance_score: 3, stock: 30, advanced_only: true, icon: 'fab fa-google-play' },
                 { id: 'os-none', name: 'Nenhum (Traga sua licença/SO)', price: 0, description_basic: 'Você instala seu próprio SO.', description_advanced: 'Nenhum sistema operacional pré-instalado. Requer que você tenha sua própria licença e mídia de instalação. Ideal para usuários avançados ou com licenças específicas.', storage_impact: '0GB', ram_min: 'N/A', performance_score: 0, stock: 999, icon: 'fas fa-times-circle' }
             ],
-            network_adapter: [ 
-                { id: 'wifi5-bt4', name: 'Wi-Fi 5 + BT 4.2 Essencial', price: 55, performance_score: 5, stock: 20, icon: 'fas fa-wifi', description_basic: 'Conexão Wi-Fi AC.', description_advanced: 'Módulo Wi-Fi 802.11ac (Wi-Fi 5) Dual Band (2.4/5GHz), até 867Mbps. Bluetooth 4.2. Padrão para conectividade básica.' }, 
-                { id: 'wifi6-bt5', name: 'Wi-Fi 6 + BT 5.2 Rápido', price: 100, performance_score: 10, stock: 18, icon: 'fas fa-wifi', description_basic: 'Wi-Fi AX moderno.', description_advanced: 'Módulo Wi-Fi 802.11ax (Wi-Fi 6) Dual Band, até 2.4Gbps teóricos. Bluetooth 5.2. Melhorias em latência, capacidade (OFDMA, MU-MIMO).' },
-                { id: 'wifi6e-bt53', name: 'Wi-Fi 6E + BT 5.3 Avançado', price: 160, performance_score: 15, stock: 10, advanced_only: true, icon: 'fas fa-wifi', description_basic: 'Wi-Fi Tri-Band 6GHz.', description_advanced: 'Módulo Wi-Fi 6E, adiciona a banda de 6GHz para menos interferência e maior velocidade. Bluetooth 5.3. Ideal para ambientes congestionados e streaming de alta qualidade.' },
-                { id: 'wifi7-bt54', name: 'Wi-Fi 7 + BT 5.4 Ultra', price: 280, performance_score: 25, stock: 5, advanced_only: true, icon: 'fas fa-satellite-dish', description_basic: 'Tecnologia de ponta Wi-Fi.', description_advanced: 'Módulo Wi-Fi 802.11be (Wi-Fi 7), com canais de 320MHz, MLO (Multi-Link Operation) para velocidades e latências ainda melhores. Bluetooth 5.4. Para quem busca o máximo em conectividade sem fio.' },
-                { id: 'wifi-none', name: 'Sem Adaptador Wi-Fi', price: 0, performance_score: 0, stock: 999, icon: 'fas fa-ethernet', description_basic: 'Apenas Ethernet cabeada.', description_advanced: 'Nenhum adaptador Wi-Fi/Bluetooth será incluído. A conexão à rede será exclusivamente via porta Ethernet da placa mãe (se disponível).' }
-            ],
+            // Adaptador de rede removido pois está integrado na placa mãe
+            network_adapter: [],
             battery: [ 
                 { id: 'bat-45wh', name: 'Bateria 45Wh (Padrão)', price: 80, performance_score: 5, stock: 20, icon: 'fas fa-battery-half', description_advanced: 'Bateria de íon-lítio com capacidade de 45 Watt-hora. Autonomia padrão para uso leve a moderado.' }, 
                 { id: 'bat-60wh', name: 'Bateria 60Wh (Longa Duração)', price: 140, performance_score: 10, stock: 12, icon: 'fas fa-battery-full', description_advanced: 'Bateria de 60Wh para maior autonomia, permitindo mais tempo de uso longe da tomada. Ideal para portabilidade.' },
@@ -1039,7 +1538,7 @@
                 id: 'serv-ram-upgrade', name: 'Upgrade de Memória RAM', basePrice: 50,
                 description: 'Instalação de novos módulos de RAM (custo do(s) módulo(s) de RAM não incluso).',
                 details: `<strong>Procedimento:</strong><br>1. Verificação de compatibilidade (tipo DDR, velocidade, capacidade máxima).<br>2. Abertura segura do notebook.<br>3. Instalação dos novos módulos de RAM nos slots corretos.<br>4. Teste de reconhecimento e estabilidade.<br><u>Custo da RAM a ser adicionado</u>. Ex: 8GB DDR4 ~R$100-150. 16GB DDR5 ~R$200-300. Valores variam.`,
-                icon: 'fas fa-memory'
+                icon: 'fas fa-microchip'
             },
             {
                 id: 'serv-storage-upgrade', name: 'Upgrade de Armazenamento (HDD p/ SSD/NVMe)', basePrice: 70,
@@ -1104,31 +1603,31 @@
             {
                 id: 'ready-office-basic', name: 'DeiviTech OfficeStart Linux', hardwarePrice: 310, defaultOsId: 'os-deivios', 
                 image: 'https://placehold.co/300x200/7f8c8d/ffffff?text=OfficeStart',
-                specs: { platform: 'intel', casing: 'casing-eco', motherboard: 'intel-h610m', cpu: 'intel-i3-13100f', ram_type: 'ddr4-8gb-3200-1pk', ram_quantity: 1, storage1: 'sata-ssd-500gb', gpu: 'integrated', display: 'disp-15fhd60', keyboard: 'kbd-membrane-br', battery: 'bat-45wh', network_adapter: 'wifi5-bt4' },
+                specs: { platform: 'intel', casing: 'casing-eco', motherboard: 'intel-h610m', cpu: 'intel-i3-13100f', ram_type: 'ddr4-8gb-3200-1pk', ram_quantity: 1, storage1: 'sata-ssd-500gb', gpu: 'integrated', display: 'disp-15fhd60', keyboard: 'kbd-membrane-br', battery: 'bat-45wh' },
                 description: "Notebook básico e eficiente para estudos e trabalho com Linux. SSD para agilidade."
             },
             {
                 id: 'ready-student-plus-win', name: 'DeiviTech StudentPlus Windows', hardwarePrice: 1600, defaultOsId: 'os-win11-home', 
                 image: 'https://placehold.co/300x200/2ecc71/ffffff?text=StudentPlus',
-                specs: { platform: 'amd', casing: 'casing-silverstone', motherboard: 'amd-a620m', cpu: 'amd-r5-7500f', ram_type: 'ddr5-16gb-5200-1pk', ram_quantity: 1, storage1: 'nvme-gen3-512gb', gpu: 'integrated', display: 'disp-15fhd60', keyboard: 'kbd-backlit-br', battery: 'bat-60wh', network_adapter: 'wifi6-bt5'},
+                specs: { platform: 'amd', casing: 'casing-silverstone', motherboard: 'amd-a620m', cpu: 'amd-r5-7500f', ram_type: 'ddr5-16gb-5200-1pk', ram_quantity: 1, storage1: 'nvme-gen3-512gb', gpu: 'integrated', display: 'disp-15fhd60', keyboard: 'kbd-backlit-br', battery: 'bat-60wh'},
                 description: "Ideal para estudantes: Portátil, bom desempenho com Ryzen 5, SSD NVMe e Windows 11 Home. Tela Full HD e teclado retroiluminado."
             },
              {
                 id: 'ready-devmaster-linux', name: 'DeiviTech DevMaster Linux', hardwarePrice: 2780, defaultOsId: 'os-deivios',
                 image: 'https://placehold.co/300x200/1abc9c/ffffff?text=DevMaster+Linux',
-                specs: { platform: 'amd', casing: 'casing-pro-alum', motherboard: 'amd-b650m-plus-wifi', cpu: 'amd-r7-8700g', ram_type: 'ddr5-32gb-5600-2pk', ram_quantity: 1, storage1: 'nvme-gen4-1tb', gpu: 'integrated', display: 'disp-15fhd144', keyboard: 'kbd-backlit-br', battery: 'bat-60wh', network_adapter: 'wifi6e-bt53' },
+                specs: { platform: 'amd', casing: 'casing-pro-alum', motherboard: 'amd-b650m-plus-wifi', cpu: 'amd-r7-8700g', ram_type: 'ddr5-32gb-5600-2pk', ram_quantity: 1, storage1: 'nvme-gen4-1tb', gpu: 'integrated', display: 'disp-15fhd144', keyboard: 'kbd-backlit-br', battery: 'bat-60wh' },
                 description: "Potência e leveza para desenvolvedores Linux. CPU AMD Ryzen com NPU, 32GB RAM DDR5 e SSD NVMe rápido. Tela Full HD 144Hz e DeiviOS otimizado."
             },
             {
                 id: 'ready-gamer-rtx4060', name: 'DeiviTech GamerBlast RTX4060', hardwarePrice: 4250, defaultOsId: 'os-win11-home',
                 image: 'https://placehold.co/300x200/e74c3c/ffffff?text=GamerBlast+4060',
-                specs: { platform: 'intel', casing: 'casing-gamer-rgb', motherboard: 'intel-b760m-wifi', cpu: 'intel-i5-14400f', ram_type: 'ddr4-16gb-3200-2pk', ram_quantity: 1, storage1: 'nvme-gen4-1tb', gpu: 'nvidia-rtx-4060-8gb', display: 'disp-15fhd144', keyboard: 'kbd-mech-rgb-br', battery: 'bat-60wh', network_adapter: 'wifi6-bt5'},
+                specs: { platform: 'intel', casing: 'casing-gamer-rgb', motherboard: 'intel-b760m-wifi', cpu: 'intel-i5-14400f', ram_type: 'ddr4-16gb-3200-2pk', ram_quantity: 1, storage1: 'nvme-gen4-1tb', gpu: 'nvidia-rtx-4060-8gb', display: 'disp-15fhd144', keyboard: 'kbd-mech-rgb-br', battery: 'bat-60wh'},
                 description: "Domine seus jogos com a RTX 4060 e CPU Intel de 14ª geração. 16GB RAM, SSD NVMe veloz e tela 144Hz para uma experiência fluida."
             },
             { 
                 id: 'ready-ultralight-copilot', name: 'DeiviTech Air Copilot+', hardwarePrice: 1500, defaultOsId: 'os-win11-home', // Hardware price is mobo + chip + ram etc.
                 image: 'https://placehold.co/300x200/3498db/ecf0f1?text=Air+Copilot%2B',
-                specs: { platform: 'arm', casing: 'casing-ultrabook-mag', motherboard: 'custom-arm-copilot', cpu: 'snapdragon-x-elite', ram_type: 'lpddr5x-16gb', ram_quantity: 1, storage1: 'nvme-gen4-512gb', gpu: 'adreno-copilot', display: 'disp-14touch', keyboard: 'kbd-lowprofile-rgb', battery: 'bat-75wh-pro', network_adapter: 'wifi7-bt54' },
+                specs: { platform: 'arm', casing: 'casing-ultrabook-mag', motherboard: 'custom-arm-copilot', cpu: 'snapdragon-x-elite', ram_type: 'lpddr5x-16gb', ram_quantity: 1, storage1: 'nvme-gen4-512gb', gpu: 'adreno-copilot', display: 'disp-14touch', keyboard: 'kbd-lowprofile-rgb', battery: 'bat-75wh-pro' },
                 description: "O futuro da computação móvel com Snapdragon X Elite e NPU. Ultraleve, bateria de longa duração e Windows 11 otimizado para IA. (Modelo conceitual)"
             }
         ];
@@ -1183,13 +1682,10 @@
             }
             // Fallback for an unknown mode (should not happen)
             return !showInBasic && !showInAdvanced; 
-        };
-
-
-        // CORE LOGIC FUNCTIONS
+        };        // CORE LOGIC FUNCTIONS        
         function showTab(tabName) {
             activeTab = tabName;
-            ['configure', 'ready', 'tradein', 'services', 'specific-budget'].forEach(id => {
+            ['concept', 'configure', 'ready', 'tradein', 'services', 'specific-budget'].forEach(id => {
                 const contentEl = document.getElementById(`${id}-tab-content`);
                 const tabBtnEl = document.getElementById(`tab-${id}`);
                 if (contentEl) contentEl.style.display = tabName === id ? 'block' : 'none';
@@ -1201,13 +1697,29 @@
                     }
                 }
             });
-            if(tabName === 'ready') populateReadyNotebooks();
-            if(tabName === 'services') populateServices();
-            if(tabName === 'configure') {
+            
+            // Scroll para o topo quando trocar de aba, especialmente para 'configure'
+            setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 100);
+            
+            if (tabName === 'configure') {
                 populateOptions(); 
                 populateDetailedSoftwareOptions();
             }
-            if(['configure', 'ready', 'tradein', 'services', 'specific-budget'].includes(tabName)) {
+            
+            if(tabName === 'ready') populateReadyNotebooks();
+            if(tabName === 'services') populateServices();
+            if(tabName === 'concept') {
+                // Inicializa os gráficos na aba de conceito
+                setTimeout(() => {
+                    const conceptTabContent = document.getElementById('concept-tab-content');
+                    if (conceptTabContent && conceptTabContent.style.display !== 'none') {
+                        initNotebookCharts();
+                    }
+                }, 300);
+            }
+            if(['concept', 'configure', 'ready', 'tradein', 'services', 'specific-budget'].includes(tabName)) {
                  setTimeout(observeSections, 100); 
             }
         }
@@ -1395,7 +1907,8 @@
         
         function calculateTotalPerformance() {
             let totalScore = 0;
-            const weights = { cpu: 0.25, gpu: 0.30, ram: 0.15, storage1: 0.12, motherboard: 0.03, display: 0.03, os: 0.02, network_adapter: 0.02, casing:0.01, battery:0.01, npu_bonus: 0.06 };
+            // Removido network_adapter dos pesos e redistribuído para motherboard
+            const weights = { cpu: 0.25, gpu: 0.30, ram: 0.15, storage1: 0.12, motherboard: 0.05, display: 0.03, os: 0.02, casing:0.01, battery:0.01, npu_bonus: 0.06 };
             let hasNPU = false;
             let powerProfileScore = 0; 
 
@@ -1417,7 +1930,7 @@
             addScore('motherboard', selectedComponents.motherboard);
             addScore('display', selectedComponents.display);
             addScore('os', selectedComponents.os);
-            addScore('network_adapter', selectedComponents.network_adapter);
+            // Adaptador de rede removido pois está integrado na placa-mãe
             addScore('casing', selectedComponents.casing);
             addScore('battery', selectedComponents.battery);
 
@@ -1455,6 +1968,12 @@
             } else {
                  energyDisplay.innerHTML = `Tendência de Energia: -`;
             }
+            
+            // Atualizar o painel integrado
+            updateIntegratedDisplay();
+            
+            // Retornar o valor de percentage para uso em outras funções
+            return percentage;
         }
 
         function applyQualityPreset(presetValue) {
@@ -1511,13 +2030,9 @@
             };
             
             setComponent('casing', preset.casing);
-            if (setComponent('motherboard', preset.motherboard)) { 
-                setComponent('cpu', preset.cpu); 
-                setComponent('ram', preset.ram_type, preset.ram_quantity); 
-            } else { 
-                 setComponent('cpu', preset.cpu); 
-                 setComponent('ram', preset.ram_type, preset.ram_quantity);
-            }
+            setComponent('motherboard', preset.motherboard);
+            setComponent('cpu', preset.cpu);
+            setComponent('ram', preset.ram_type, preset.ram_quantity);
             setComponent('storage1', preset.storage1_type);
             setComponent('storage2', preset.storage2_type);
             setComponent('gpu', preset.gpu);
@@ -1528,7 +2043,7 @@
                 if(preset.software) setComponent('software', preset.software); // Then attempt to set software
             }
 
-            setComponent('network_adapter', preset.network_adapter);
+            // Adaptador de rede removido pois está integrado na placa mãe
             setComponent('battery', preset.battery);
             if(preset.peripherals) setComponent('peripherals', preset.peripherals);
 
@@ -1633,6 +2148,9 @@
             if (selectedComponents.os2 && document.getElementById('dualboot-checkbox').checked) {
                 componentsTotalPrice += getComponentPrice('os', selectedComponents.os2);
             }
+            
+            // Atualizar o painel integrado
+            updateIntegratedDisplay();
 
             let finalNotebookPrice = componentsTotalPrice - tradeInCredit;
             document.getElementById('total-price-display').textContent = formatPrice(Math.max(0, finalNotebookPrice));
@@ -1641,10 +2159,13 @@
             selectedServices.forEach(serviceId => {
                 servicesTotalPrice += getServicePrice(serviceId);
             });
-            document.getElementById('total-services-price-display').textContent = formatPrice(servicesTotalPrice);
-
-            updateSummary();
+            document.getElementById('total-services-price-display').textContent = formatPrice(servicesTotalPrice);            updateSummary();
             calculateTotalPerformance();
+            
+            // Atualizar informações avançadas se o modo avançado estiver ativo
+            if (currentMode === 'advanced') {
+                updateAdvancedInfo();
+            }
         }
 
         function updateSummary() {
@@ -1679,7 +2200,8 @@
             if (selectedComponents.software.length > 0) { 
                 addItem('Software Adicional', selectedComponents.software.map(id => getComponentById('software', id)?.name).filter(name => name).join(', ') || 'Nenhum', 'fas fa-cogs');
             }
-            if(selectedComponents.network_adapter) addItem('Rede Wi-Fi/BT', getCompName('network_adapter', selectedComponents.network_adapter), getCompIcon('network_adapter',selectedComponents.network_adapter));
+            // Adaptador de rede removido pois está integrado na placa mãe
+            addItem('Conectividade', 'Wi-Fi/Bluetooth integrado na placa mãe', 'fas fa-wifi');
             if(selectedComponents.battery) addItem('Bateria', getCompName('battery', selectedComponents.battery), getCompIcon('battery',selectedComponents.battery));
             
             if (selectedComponents.peripherals.length > 0) {
@@ -1892,13 +2414,9 @@
                     });
                 }
             } else if (category === 'gpu') {
-                if (selectedMb?.pcie_gen) { 
-                    filtered = filtered.filter(item => {
-                        if (item.id === 'integrated' || item.id === 'adreno-copilot') return true; 
-                        if (!item.pcie_gen || item.pcie_gen === 'N/A') return true; 
-                        return true; 
-                    });
-                }
+                // CORRECTION: Removed broken/ineffective filter logic for GPU.
+                // GPU backward/forward compatibility is generally good, so complex filtering
+                // isn't as critical as for CPU sockets or RAM types and is better left open.
             } else if (category === 'software') { // This part is generic to ALL software, should be applied AFTER category selection.
                 const mainOS = getComponentById('os', selectedComponents.os);
                 if(mainOS && mainOS.id !== 'os-none') {
@@ -1915,7 +2433,7 @@
             platformContainer.innerHTML = '';
             components.platform.forEach(item => platformContainer.appendChild(createOptionElement(item, 'platform')));
             
-            const categoriesToPopulate = ['casing', 'motherboard', 'cpu', 'gpu', 'display', 'keyboard', 'os', 'network_adapter', 'battery'];
+            const categoriesToPopulate = ['casing', 'motherboard', 'cpu', 'gpu', 'display', 'keyboard', 'os', 'battery']; // Adaptador de rede removido pois está integrado na placa mãe
             categoriesToPopulate.forEach(category => {
                 const container = document.getElementById(`${category}-options`);
                 const helperTextEl = document.getElementById(`${category}-helper-text`);
@@ -2166,20 +2684,212 @@
                 });
             });
             updateTotal(); // Initial update of services total
-        }
-
-        function toggleAdvancedModeTabs() {
+        }        function toggleAdvancedModeTabs() {
             const aiTab = document.getElementById('tab-ai-integration');
             const budgetTab = document.getElementById('tab-specific-budget');
+            const advancedInfoSection = document.getElementById('advanced-info-section');
+            
             if (currentMode === 'advanced') {
                 aiTab.style.display = 'inline-block'; 
                 budgetTab.style.display = 'inline-block';
+                advancedInfoSection.classList.remove('hidden');
+                updateAdvancedInfo();
             } else {
                 aiTab.style.display = 'none';
                 budgetTab.style.display = 'none';
+                advancedInfoSection.classList.add('hidden');
                 if (activeTab === 'specific-budget') { // If advanced tab was active, switch to configure
                     showTab('configure'); 
                 }
+            }
+        }
+        
+        function updateAdvancedInfo() {
+            // Calcular TDP total
+            let totalTDP = 0;
+            let idlePower = 5; // Base do sistema
+            let maxPower = 10; // Base do sistema
+            
+            const cpuComponent = getComponentById('cpu', selectedComponents.cpu);
+            const gpuComponent = getComponentById('gpu', selectedComponents.gpu);
+            const ramComponent = getComponentById('ram', selectedComponents.ram);
+            const storageComponent = getComponentById('storage', selectedComponents.storage1);
+            const displayComponent = getComponentById('display', selectedComponents.display);
+            const batteryComponent = getComponentById('battery', selectedComponents.battery);
+            
+            // Calcular consumo dos componentes
+            if (cpuComponent) {
+                const cpuTDP = cpuComponent.name.includes('i3') ? 15 : 
+                              cpuComponent.name.includes('i5') ? 28 : 
+                              cpuComponent.name.includes('i7') ? 45 : 
+                              cpuComponent.name.includes('i9') ? 55 : 
+                              cpuComponent.name.includes('Ryzen 3') ? 15 : 
+                              cpuComponent.name.includes('Ryzen 5') ? 35 : 
+                              cpuComponent.name.includes('Ryzen 7') ? 45 : 55;
+                totalTDP += cpuTDP;
+                idlePower += cpuTDP * 0.1;
+                maxPower += cpuTDP;
+            }
+            
+            if (gpuComponent && gpuComponent.id !== 'integrated') {
+                const gpuTDP = gpuComponent.name.includes('1650') ? 35 : 
+                              gpuComponent.name.includes('3050') ? 45 : 
+                              gpuComponent.name.includes('4060') ? 50 : 
+                              gpuComponent.name.includes('4070') ? 65 : 
+                              gpuComponent.name.includes('4080') ? 80 : 
+                              gpuComponent.name.includes('6600') ? 35 : 
+                              gpuComponent.name.includes('7600') ? 45 : 
+                              gpuComponent.name.includes('7700') ? 55 : 35;
+                totalTDP += gpuTDP;
+                idlePower += gpuTDP * 0.05;
+                maxPower += gpuTDP;
+            }
+            
+            if (ramComponent) {
+                const ramPower = ramComponent.name.includes('DDR5') ? 5 : 3;
+                idlePower += ramPower;
+                maxPower += ramPower;
+            }
+            
+            if (storageComponent) {
+                const storagePower = storageComponent.name.includes('NVMe') ? 8 : 5;
+                idlePower += storagePower;
+                maxPower += storagePower;
+            }
+            
+            if (displayComponent) {
+                const displayPower = displayComponent.name.includes('OLED') ? 15 : 
+                                   displayComponent.name.includes('4K') ? 12 : 
+                                   displayComponent.name.includes('QHD') ? 10 : 8;
+                idlePower += displayPower;
+                maxPower += displayPower;
+            }
+            
+            // Atualizar UI
+            document.getElementById('total-tdp').textContent = `${totalTDP}W`;
+            document.getElementById('idle-power').textContent = `${idlePower}W`;
+            document.getElementById('max-power').textContent = `${maxPower}W`;
+            
+            // Calcular autonomia estimada
+            const batteryCapacity = batteryComponent ? 
+                parseInt(batteryComponent.name.match(/(\d+)Wh/)?.[1] || '45') : 45;
+            const estimatedBattery = Math.round(batteryCapacity / idlePower * 10) / 10;
+            document.getElementById('battery-estimate').textContent = `${estimatedBattery}h`;
+            
+            // Atualizar barra térmica
+            const thermalLoad = Math.min(totalTDP / 150 * 100, 100);
+            const thermalBar = document.getElementById('thermal-bar');
+            thermalBar.style.width = `${thermalLoad}%`;
+            thermalBar.className = `h-2 rounded-full ${thermalLoad < 30 ? 'bg-green-500' : 
+                                                      thermalLoad < 60 ? 'bg-yellow-500' : 'bg-red-500'}`;
+            
+            document.getElementById('heat-dissipation').textContent = 
+                thermalLoad < 30 ? 'Baixa' : thermalLoad < 60 ? 'Moderada' : 'Alta';
+            
+            // Calcular scores de benchmark estimados
+            const performanceScore = calculateTotalPerformance();
+            const cinebenchScore = Math.round(performanceScore * 50);
+            const timespyScore = Math.round(performanceScore * 30);
+            const pcmarkScore = Math.round(performanceScore * 40);
+            
+            document.getElementById('cinebench-score').textContent = `${cinebenchScore} pts`;
+            document.getElementById('timespy-score').textContent = `${timespyScore} pts`;
+            document.getElementById('pcmark-score').textContent = `${pcmarkScore} pts`;
+            
+            // Gerar recomendações inteligentes
+            generateSmartRecommendations();
+            
+            // Atualizar gráfico radar de performance
+            updatePerformanceRadarChart();
+        }
+        
+        function generateSmartRecommendations() {
+            const recommendations = [];
+            const cpuComponent = getComponentById('cpu', selectedComponents.cpu);
+            const gpuComponent = getComponentById('gpu', selectedComponents.gpu);
+            const ramComponent = getComponentById('ram', selectedComponents.ram);
+            const storageComponent = getComponentById('storage', selectedComponents.storage1);
+            
+            // Análise de gargalos
+            if (cpuComponent && gpuComponent && cpuComponent.performance_score < gpuComponent.performance_score * 0.7) {
+                recommendations.push('CPU pode ser um gargalo para a GPU selecionada. Considere um processador mais potente.');
+            }
+            
+            if (ramComponent && ramComponent.name.includes('8GB') && (cpuComponent?.name.includes('i7') || cpuComponent?.name.includes('Ryzen 7'))) {
+                recommendations.push('Para CPUs high-end, recomendamos 16GB ou mais de RAM para melhor performance.');
+            }
+            
+            if (storageComponent && storageComponent.name.includes('SATA') && cpuComponent?.name.includes('i7')) {
+                recommendations.push('SSD NVMe ofereceria significativo ganho de performance para esta configuração.');
+            }
+            
+            if (gpuComponent && gpuComponent.id === 'integrated' && selectedComponents.display && 
+                selectedComponents.display.includes('144Hz')) {
+                recommendations.push('GPU integrada pode não aproveitar totalmente telas de alta taxa de atualização.');
+            }
+            
+            if (recommendations.length === 0) {
+                recommendations.push('Configuração bem balanceada! Todos os componentes trabalham em harmonia.');
+            }
+            
+            const listElement = document.getElementById('recommendations-list');
+            listElement.innerHTML = recommendations.map(rec => `<li>${rec}</li>`).join('');
+        }
+        
+        function updatePerformanceRadarChart() {
+            const ctx = document.getElementById('performanceRadarChart');
+            if (!ctx) return;
+            
+            // Destruir gráfico existente se houver
+            if (window.performanceChart) {
+                window.performanceChart.destroy();
+            }
+            
+            const cpuScore = getComponentById('cpu', selectedComponents.cpu)?.performance_score || 0;
+            const gpuScore = getComponentById('gpu', selectedComponents.gpu)?.performance_score || 0;
+            const ramScore = getComponentById('ram', selectedComponents.ram)?.performance_score || 0;
+            const storageScore = getComponentById('storage', selectedComponents.storage1)?.performance_score || 0;
+            
+            if (typeof Chart !== 'undefined') {
+                window.performanceChart = new Chart(ctx, {
+                    type: 'radar',
+                    data: {
+                        labels: ['CPU', 'GPU', 'RAM', 'Storage', 'Overall'],
+                        datasets: [{
+                            label: 'Performance Score',
+                            data: [cpuScore, gpuScore, ramScore, storageScore, calculateTotalPerformance()],
+                            backgroundColor: 'rgba(17, 138, 178, 0.2)',
+                            borderColor: 'rgb(17, 138, 178)',
+                            pointBackgroundColor: 'rgb(17, 138, 178)',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: 'rgb(17, 138, 178)'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        elements: {
+                            line: {
+                                borderWidth: 2
+                            }
+                        },
+                        scales: {
+                            r: {
+                                angleLines: {
+                                    display: true
+                                },
+                                suggestedMin: 0,
+                                suggestedMax: 100
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        }
+                    }
+                });
             }
         }
 
@@ -2212,22 +2922,239 @@
             });
 
 
+            document.getElementById('assisted-mode-btn').addEventListener('click', () => {
+                if (currentMode === 'assisted') return;
+                currentMode = 'assisted';
+                document.getElementById('assisted-mode-btn').classList.add('active');
+                document.getElementById('basic-mode-btn').classList.remove('active');
+                document.getElementById('advanced-mode-btn').classList.remove('active');
+                
+                // Mostrar modal de assistência
+                const assistedModal = document.createElement('div');
+                assistedModal.className = 'modal';
+                assistedModal.style.display = 'flex';
+                assistedModal.innerHTML = `
+                    <div class="modal-content" style="max-width: 600px;">
+                        <span class="close-button">×</span>
+                        <h2 class="text-2xl font-bold mb-4"><i class="fas fa-robot text-[var(--color-primary)] mr-2"></i>Assistente de Configuração</h2>
+                        <p class="mb-4">Olá! Estou aqui para ajudar você a escolher o notebook ideal para suas necessidades.</p>
+                        <div class="mb-4">
+                            <h3 class="text-lg font-semibold mb-2">Para qual finalidade você usará o notebook?</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                <button class="purpose-btn p-3 border rounded-lg hover:bg-[var(--color-primary-light)] transition-all" data-purpose="work"><i class="fas fa-briefcase mr-2"></i>Trabalho/Produtividade</button>
+                                <button class="purpose-btn p-3 border rounded-lg hover:bg-[var(--color-primary-light)] transition-all" data-purpose="study"><i class="fas fa-graduation-cap mr-2"></i>Estudo</button>
+                                <button class="purpose-btn p-3 border rounded-lg hover:bg-[var(--color-primary-light)] transition-all" data-purpose="gaming"><i class="fas fa-gamepad mr-2"></i>Jogos</button>
+                                <button class="purpose-btn p-3 border rounded-lg hover:bg-[var(--color-primary-light)] transition-all" data-purpose="design"><i class="fas fa-paint-brush mr-2"></i>Design/Criação</button>
+                                <button class="purpose-btn p-3 border rounded-lg hover:bg-[var(--color-primary-light)] transition-all" data-purpose="programming"><i class="fas fa-code mr-2"></i>Programação</button>
+                                <button class="purpose-btn p-3 border rounded-lg hover:bg-[var(--color-primary-light)] transition-all" data-purpose="general"><i class="fas fa-laptop mr-2"></i>Uso Geral</button>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <h3 class="text-lg font-semibold mb-2">Qual é o seu orçamento aproximado?</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                <button class="budget-btn p-3 border rounded-lg hover:bg-[var(--color-primary-light)] transition-all" data-budget="low"><i class="fas fa-coins mr-2"></i>Até R$ 3.000</button>
+                                <button class="budget-btn p-3 border rounded-lg hover:bg-[var(--color-primary-light)] transition-all" data-budget="medium"><i class="fas fa-money-bill-wave mr-2"></i>R$ 3.000 a R$ 5.000</button>
+                                <button class="budget-btn p-3 border rounded-lg hover:bg-[var(--color-primary-light)] transition-all" data-budget="high"><i class="fas fa-gem mr-2"></i>Acima de R$ 5.000</button>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <h3 class="text-lg font-semibold mb-2">Você precisa de portabilidade?</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                <button class="portability-btn p-3 border rounded-lg hover:bg-[var(--color-primary-light)] transition-all" data-portability="high"><i class="fas fa-suitcase mr-2"></i>Sim, levo para vários lugares</button>
+                                <button class="portability-btn p-3 border rounded-lg hover:bg-[var(--color-primary-light)] transition-all" data-portability="low"><i class="fas fa-home mr-2"></i>Não, uso principalmente em casa</button>
+                            </div>
+                        </div>
+                        <button id="get-recommendation-btn" class="w-full btn btn-primary mt-4 py-3 font-bold text-lg"><i class="fas fa-magic mr-2"></i>Obter Recomendação</button>
+                    </div>
+                `;
+                document.body.appendChild(assistedModal);
+                
+                const closeBtn = assistedModal.querySelector('.close-button');
+                closeBtn.addEventListener('click', () => {
+                    document.body.removeChild(assistedModal);
+                    // Voltar para o modo básico se o modal for fechado
+                    document.getElementById('basic-mode-btn').click();
+                });
+                
+                // Variáveis para armazenar as escolhas do usuário
+                let selectedPurpose = null;
+                let selectedBudget = null;
+                let selectedPortability = null;
+                
+                // Adicionar eventos aos botões de finalidade
+                const purposeBtns = assistedModal.querySelectorAll('.purpose-btn');
+                purposeBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        purposeBtns.forEach(b => b.classList.remove('bg-[var(--color-primary-light)]'));
+                        btn.classList.add('bg-[var(--color-primary-light)]');
+                        selectedPurpose = btn.dataset.purpose;
+                    });
+                });
+                
+                // Adicionar eventos aos botões de orçamento
+                const budgetBtns = assistedModal.querySelectorAll('.budget-btn');
+                budgetBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        budgetBtns.forEach(b => b.classList.remove('bg-[var(--color-primary-light)]'));
+                        btn.classList.add('bg-[var(--color-primary-light)]');
+                        selectedBudget = btn.dataset.budget;
+                    });
+                });
+                
+                // Adicionar eventos aos botões de portabilidade
+                const portabilityBtns = assistedModal.querySelectorAll('.portability-btn');
+                portabilityBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        portabilityBtns.forEach(b => b.classList.remove('bg-[var(--color-primary-light)]'));
+                        btn.classList.add('bg-[var(--color-primary-light)]');
+                        selectedPortability = btn.dataset.portability;
+                    });
+                });
+                
+                // Adicionar evento ao botão de obter recomendação
+                const getRecommendationBtn = assistedModal.querySelector('#get-recommendation-btn');
+                getRecommendationBtn.addEventListener('click', () => {
+                    if (!selectedPurpose || !selectedBudget || !selectedPortability) {
+                        // Usar um alerta mais amigável
+                        const alertDiv = document.createElement('div');
+                        alertDiv.className = 'p-3 mb-4 bg-red-100 text-red-700 rounded-lg';
+                        alertDiv.innerHTML = '<i class="fas fa-exclamation-circle mr-2"></i>Por favor, selecione todas as opções para obter uma recomendação personalizada.';
+                        
+                        // Verificar se já existe um alerta e removê-lo
+                        const existingAlert = assistedModal.querySelector('.bg-red-100');
+                        if (existingAlert) {
+                            existingAlert.remove();
+                        }
+                        
+                        // Inserir o alerta no topo do conteúdo do modal
+                        const modalContent = assistedModal.querySelector('.modal-content');
+                        modalContent.insertBefore(alertDiv, modalContent.firstChild.nextSibling);
+                        return;
+                    }
+                    
+                    // Fechar o modal
+                    document.body.removeChild(assistedModal);
+                    
+                    // Aplicar preset com base nas escolhas do usuário
+                    let presetIndex = 1; // Padrão: Balanceado
+                    
+                    // Lógica para determinar o preset com base nas escolhas
+                    if (selectedPurpose === 'gaming' || selectedPurpose === 'design') {
+                        presetIndex = 2; // Performance
+                    } else if (selectedBudget === 'low' || (selectedPortability === 'high' && selectedPurpose !== 'programming')) {
+                        presetIndex = 0; // Econômico
+                    }
+                    
+                    // Aplicar o preset recomendado
+                    applyQualityPreset(presetIndex);
+                    document.getElementById('quality-slider').value = presetIndex.toString();
+                    document.querySelectorAll('#quality-slider-section .flex span').forEach(span => span.classList.remove('quality-label-active'));
+                    document.getElementById(`quality-label-${presetIndex}`).classList.add('quality-label-active');
+                    
+                    // Mostrar recomendação ao usuário
+                    const recommendationModal = document.createElement('div');
+                    recommendationModal.className = 'modal';
+                    recommendationModal.style.display = 'flex';
+                    
+                    let presetName = '';
+                    if (presetIndex === 0) presetName = 'Econômico';
+                    else if (presetIndex === 1) presetName = 'Balanceado';
+                    else presetName = 'Performance';
+                    
+                    let purposeText = '';
+                    let purposeIcon = '';
+                    if (selectedPurpose === 'work') { purposeText = 'trabalho e produtividade'; purposeIcon = 'fa-briefcase'; }
+                    else if (selectedPurpose === 'study') { purposeText = 'estudo'; purposeIcon = 'fa-graduation-cap'; }
+                    else if (selectedPurpose === 'gaming') { purposeText = 'jogos'; purposeIcon = 'fa-gamepad'; }
+                    else if (selectedPurpose === 'design') { purposeText = 'design e criação'; purposeIcon = 'fa-paint-brush'; }
+                    else if (selectedPurpose === 'programming') { purposeText = 'programação'; purposeIcon = 'fa-code'; }
+                    else { purposeText = 'uso geral'; purposeIcon = 'fa-laptop'; }
+                    
+                    let presetDescription = '';
+                    let presetIcon = '';
+                    if (presetIndex === 0) {
+                        presetDescription = 'Configuração econômica ideal para tarefas básicas com boa relação custo-benefício.';
+                        presetIcon = 'fa-seedling';
+                    } else if (presetIndex === 1) {
+                        presetDescription = 'Configuração equilibrada que atende à maioria das necessidades com bom desempenho.';
+                        presetIcon = 'fa-balance-scale';
+                    } else {
+                        presetDescription = 'Configuração de alto desempenho para tarefas exigentes e multitarefa intensiva.';
+                        presetIcon = 'fa-rocket';
+                    }
+                    
+                    recommendationModal.innerHTML = `
+                        <div class="modal-content" style="max-width: 600px;">
+                            <span class="close-button">×</span>
+                            <div class="text-center mb-4">
+                                <i class="fas fa-check-circle text-4xl text-green-500 mb-2"></i>
+                                <h2 class="text-2xl font-bold">Sua Recomendação Personalizada</h2>
+                            </div>
+                            <div class="bg-[var(--color-primary-light)] p-4 rounded-lg mb-4">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas ${purposeIcon} text-[var(--color-primary)] mr-2"></i>
+                                    <span>Finalidade: <strong>${purposeText}</strong></span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas ${presetIcon} text-[var(--color-primary)] mr-2"></i>
+                                    <span>Configuração recomendada: <strong>${presetName}</strong></span>
+                                </div>
+                            </div>
+                            <p class="mb-4">${presetDescription}</p>
+                            <p class="mb-4">Você pode ajustar os componentes individualmente conforme necessário ou explorar outras opções usando os controles abaixo.</p>
+                            <p class="mb-4">Se precisar de mais ajuda, você pode voltar ao Modo Assistido a qualquer momento.</p>
+                            <button class="w-full btn btn-primary mt-4 py-3 font-bold"><i class="fas fa-thumbs-up mr-2"></i>Entendi e Quero Continuar</button>
+                        </div>
+                    `;
+                    document.body.appendChild(recommendationModal);
+                    
+                    const closeRecommendationBtn = recommendationModal.querySelector('.close-button');
+                    const confirmRecommendationBtn = recommendationModal.querySelector('button');
+                    
+                    closeRecommendationBtn.addEventListener('click', () => {
+                        document.body.removeChild(recommendationModal);
+                    });
+                    
+                    confirmRecommendationBtn.addEventListener('click', () => {
+                        document.body.removeChild(recommendationModal);
+                    });
+                    
+                    // Voltar para o modo básico após aplicar a recomendação
+                    document.getElementById('basic-mode-btn').click();
+                    
+                    // Garantir que as opções sejam selecionáveis
+                    populateOptions();
+                    updateVisualSelections();
+                });
+                
+                toggleAdvancedModeTabs();
+                populateOptions(); populateDetailedSoftwareOptions(); updateVisualSelections();
+            });
+
             document.getElementById('basic-mode-btn').addEventListener('click', () => {
                 if (currentMode === 'basic') return; currentMode = 'basic';
-                document.getElementById('basic-mode-btn').classList.add('active'); document.getElementById('advanced-mode-btn').classList.remove('active');
+                document.getElementById('basic-mode-btn').classList.add('active'); 
+                document.getElementById('advanced-mode-btn').classList.remove('active');
+                document.getElementById('assisted-mode-btn').classList.remove('active');
                 toggleAdvancedModeTabs();
                 populateOptions(); populateDetailedSoftwareOptions(); updateVisualSelections();
             });
 
             document.getElementById('advanced-mode-btn').addEventListener('click', () => {
                 if (currentMode === 'advanced') return; currentMode = 'advanced';
-                document.getElementById('advanced-mode-btn').classList.add('active'); document.getElementById('basic-mode-btn').classList.remove('active');
+                document.getElementById('advanced-mode-btn').classList.add('active'); 
+                document.getElementById('basic-mode-btn').classList.remove('active');
+                document.getElementById('assisted-mode-btn').classList.remove('active');
                 toggleAdvancedModeTabs();
                 populateOptions(); populateDetailedSoftwareOptions(); updateVisualSelections();
             });
-
-            document.querySelectorAll('.software-tab-button').forEach(button => {
-                button.addEventListener('click', () => switchSoftwareTab(button.dataset.tab));
+            
+            // CORRECTION: Changed to use event.currentTarget for robustness.
+            document.getElementById('software-tabs-container').addEventListener('click', (event) => {
+                const button = event.target.closest('.software-tab-button');
+                if (button) {
+                    switchSoftwareTab(button.dataset.tab);
+                }
             });
 
             document.getElementById('dualboot-checkbox').addEventListener('change', (e) => {
@@ -2321,7 +3248,8 @@
 
             const openConfigOrderModal = () => {
                 let allRequiredSelected = true;
-                const requiredFields = ['platform', 'casing', 'motherboard', 'cpu', 'ram', 'storage1', 'gpu', 'display', 'keyboard', 'os', 'network_adapter', 'battery'];
+                // Removido 'network_adapter' dos campos obrigatórios pois está integrado na placa-mãe
+                const requiredFields = ['platform', 'casing', 'motherboard', 'cpu', 'ram', 'storage1', 'gpu', 'display', 'keyboard', 'os', 'battery'];
                 let missingFields = [];
                 let modalMessageText = "";
 
@@ -2334,7 +3262,7 @@
                     const fieldVal = (cat === 'ram') ? selectedComponents.ram.type : (cat === 'storage1' ? selectedComponents.storage1.type : selectedComponents[cat]);
                     if (!fieldVal) { 
                         allRequiredSelected = false; 
-                        const fieldTranslations = { platform: "Plataforma", casing: "Carcaça", motherboard: "Placa Mãe", cpu: "CPU", ram: "Tipo de RAM", storage1: "Armazenamento Principal", gpu: "Placa de Vídeo", display: "Tela", keyboard: "Teclado", os: "Sistema Operacional", network_adapter: "Adaptador de Rede", battery: "Bateria"};
+                        const fieldTranslations = { platform: "Plataforma", casing: "Carcaça", motherboard: "Placa Mãe", cpu: "CPU", ram: "Tipo de RAM", storage1: "Armazenamento Principal", gpu: "Placa de Vídeo", display: "Tela", keyboard: "Teclado", os: "Sistema Operacional", battery: "Bateria"};
                         missingFields.push(fieldTranslations[cat] || cat);
                     }
                 });
@@ -2426,7 +3354,37 @@
             window.addEventListener('click', (event) => { if (event.target === orderModal) orderModal.style.display = 'none'; });
 
             document.getElementById('login-placeholder-btn').addEventListener('click', () => {
-                alert("Login (Em Breve):\n\nFuturamente, esta área permitirá que você acesse seu histórico de orçamentos e configurações.\n\nPara trocas de notebooks, o login poderá agilizar o processo de autenticação e avaliação do seu equipamento antigo.\n\nFique de olho nas atualizações!");
+                const loginModal = document.createElement('div');
+                loginModal.className = 'modal';
+                loginModal.style.display = 'flex';
+                loginModal.innerHTML = `
+                    <div class="modal-content" style="max-width: 450px;">
+                        <span class="close-button">×</span>
+                        <h2 class="text-2xl font-bold mb-4">Em Breve</h2>
+                        <p class="mb-4">Futuramente, esta área permitirá que você acesse seu histórico de orçamentos e configurações.</p>
+                        <p class="mb-4">Para trocas de notebooks, o login poderá agilizar o processo de autenticação e avaliação do seu equipamento antigo.</p>
+                        <p class="mb-4">Fique de olho nas atualizações!</p>
+                        <button class="w-full btn btn-primary mt-4">Entendi</button>
+                    </div>
+                `;
+                document.body.appendChild(loginModal);
+                
+                const closeBtn = loginModal.querySelector('.close-button');
+                const confirmBtn = loginModal.querySelector('button');
+                
+                closeBtn.addEventListener('click', () => {
+                    document.body.removeChild(loginModal);
+                });
+                
+                confirmBtn.addEventListener('click', () => {
+                    document.body.removeChild(loginModal);
+                });
+                
+                loginModal.addEventListener('click', (e) => {
+                    if (e.target === loginModal) {
+                        document.body.removeChild(loginModal);
+                    }
+                });
             });
 
             document.getElementById('whatsapp-services-order-button').addEventListener('click', () => {
@@ -2494,7 +3452,7 @@
             body.style.setProperty('--color-secondaryRgbForAlpha', getRgbFromCssVar('--color-secondary'));
 
 
-            themeToggleButton.addEventListener('click', () => {
+            themeToggleButton.addEventListener('click', function() {
                 body.classList.toggle('dark-mode');
                 if (body.classList.contains('dark-mode')) {
                     localStorage.setItem('theme', 'dark');
@@ -2505,17 +3463,272 @@
                     themeIcon.classList.remove('fa-moon');
                     themeIcon.classList.add('fa-lightbulb');
                 }
-                 body.style.setProperty('--color-secondaryRgbForAlpha', getRgbFromCssVar('--color-secondary'));
-                 // Force repaint/reflow if necessary for some complex transitions
-                 // document.documentElement.style.display = 'none';
-                 // document.documentElement.offsetHeight; // Trigger reflow
-                 // document.documentElement.style.display = '';
+                body.style.setProperty('--color-secondaryRgbForAlpha', getRgbFromCssVar('--color-secondary'));
+                
+                // Force repaint para garantir que as mudanças de estilo sejam aplicadas
+                document.documentElement.style.display = 'none';
+                document.documentElement.offsetHeight; // Trigger reflow
+                document.documentElement.style.display = '';
             });
         }
 
+        // Função para atualizar o painel integrado de recursos
+        function updateIntegratedDisplay() {
+            const integratedBar = document.getElementById('integrated-performance-bar');
+            const integratedText = document.getElementById('integrated-performance-text');
+            const integratedPercentage = document.getElementById('integrated-performance-percentage');
+            const integratedComponentsList = document.getElementById('integrated-components-list');
+            const integratedTotalPrice = document.getElementById('integrated-total-price');
+            
+            // Obter a porcentagem de desempenho do elemento principal
+            const mainBar = document.getElementById('performance-bar');
+            const mainText = document.getElementById('performance-text-display');
+            
+            if (mainBar && integratedBar) {
+                const percentage = mainBar.style.width;
+                integratedBar.style.width = percentage;
+                integratedBar.style.backgroundColor = mainBar.style.backgroundColor;
+                if (integratedPercentage) {
+                    integratedPercentage.textContent = mainBar.textContent;
+                }
+            }
+            
+            if (mainText && integratedText) {
+                integratedText.textContent = mainText.textContent;
+            }
+            
+            // Atualizar a lista de componentes
+            if (integratedComponentsList) {
+                integratedComponentsList.innerHTML = '';
+                
+                // Adicionar componentes principais
+                const componentsToShow = [
+                    { category: 'cpu', label: 'CPU', icon: 'fas fa-microchip' },
+                    { category: 'gpu', label: 'GPU', icon: 'fas fa-gamepad' },
+                    { category: 'ram', label: 'RAM', isRam: true, icon: 'fas fa-microchip' },
+                    { category: 'storage1', label: 'SSD', isStorage: true, icon: 'fas fa-hdd' },
+                    { category: 'display', label: 'Tela', icon: 'fas fa-desktop' },
+                    { category: 'os', label: 'S.O.', icon: 'fas fa-window-maximize' }
+                ];
+                
+                componentsToShow.forEach(comp => {
+                    let componentName = 'Não selecionado';
+                    let componentIcon = comp.icon || '';
+                    let componentStatus = 'text-gray-400';
+                    
+                    if (comp.isRam && selectedComponents.ram.type) {
+                        const ramItem = getComponentById('ram', selectedComponents.ram.type);
+                        if (ramItem) {
+                            componentName = `${ramItem.name} (${selectedComponents.ram.quantity}x)`;
+                            componentIcon = ramItem.icon || componentIcon;
+                            componentStatus = 'text-[var(--color-text-card)]';
+                        }
+                    } else if (comp.isStorage && selectedComponents.storage1.type) {
+                        const storageItem = getComponentById('storage', selectedComponents.storage1.type);
+                        if (storageItem) {
+                            componentName = storageItem.name;
+                            componentIcon = storageItem.icon || componentIcon;
+                            componentStatus = 'text-[var(--color-text-card)]';
+                        }
+                    } else if (selectedComponents[comp.category]) {
+                        const item = getComponentById(comp.category, selectedComponents[comp.category]);
+                        if (item) {
+                            componentName = item.name;
+                            componentIcon = item.icon || componentIcon;
+                            componentStatus = 'text-[var(--color-text-card)]';
+                        }
+                    }
+                    
+                    const componentEl = document.createElement('div');
+                    componentEl.className = `flex items-center ${componentStatus} mb-1 pb-1 border-b border-gray-100 dark:border-gray-800`;
+                    componentEl.innerHTML = `
+                        <i class="${componentIcon} mr-2 text-[var(--color-primary)]"></i>
+                        <div class="flex flex-col">
+                            <span class="font-semibold text-xs">${comp.label}</span>
+                            <span class="text-xs truncate">${componentName}</span>
+                        </div>
+                    `;
+                    integratedComponentsList.appendChild(componentEl);
+                });
+            }
+            
+            // Atualizar o preço total
+            if (integratedTotalPrice) {
+                integratedTotalPrice.textContent = document.getElementById('total-price-display').textContent;
+            }
+        }
+        
+        // Função para inicializar os gráficos na aba de conceito
+        function initNotebookCharts() {
+            // Verifica se o Chart.js já foi carregado
+            if (typeof Chart === 'undefined') {
+                // Se não estiver carregado, carrega dinamicamente
+                const script = document.createElement('script');
+                script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+                script.onload = function() {
+                    // Verifica novamente se o Chart.js foi carregado corretamente
+                    if (typeof Chart !== 'undefined') {
+                        createCharts();
+                    } else {
+                        console.error('Erro ao carregar Chart.js');
+                    }
+                };
+                script.onerror = function() {
+                    console.error('Falha ao carregar Chart.js');
+                };
+                document.head.appendChild(script);
+            } else {
+                // Se já estiver carregado, cria os gráficos
+                createCharts();
+            }
+        }
+          function createCharts() {
+            try {
+                // Limpa gráficos existentes para evitar duplicação
+                if (Chart.instances && Chart.instances.length > 0) {
+                    Chart.helpers.each(Chart.instances, function(instance) {
+                        instance.destroy();
+                    });
+                }
+            
+            // Gráfico 1: CPU Mobile vs Desktop - Eficiência Energética
+            const cpuEfficiencyCtx = document.getElementById('cpuEfficiencyChart');
+            if (cpuEfficiencyCtx && cpuEfficiencyCtx.getContext) {
+                new Chart(cpuEfficiencyCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['i3 Mobile', 'i5 Mobile', 'i7 Mobile', 'i5 Desktop', 'i7 Desktop'],
+                        datasets: [{
+                            label: 'Performance Score',
+                            data: [40, 65, 85, 70, 100],
+                            backgroundColor: 'rgba(17, 138, 178, 0.7)',
+                            borderColor: 'rgb(17, 138, 178)',
+                            borderWidth: 1
+                        }, {
+                            label: 'Consumo (W)',
+                            data: [15, 28, 45, 65, 95],
+                            backgroundColor: 'rgba(255, 107, 107, 0.7)',
+                            borderColor: 'rgb(255, 107, 107)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Score / Watts'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Gráfico 2: Autonomia de Bateria por Tipo de Uso
+            const batteryLifeCtx = document.getElementById('batteryLifeChart');
+            if (batteryLifeCtx && batteryLifeCtx.getContext) {
+                new Chart(batteryLifeCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Navegação Web', 'Escritório', 'Vídeo Streaming', 'Gaming', 'Renderização'],
+                        datasets: [{
+                            data: [10, 8, 6, 3, 2],
+                            backgroundColor: [
+                                'rgba(6, 214, 160, 0.8)',
+                                'rgba(17, 138, 178, 0.8)',
+                                'rgba(255, 209, 102, 0.8)',
+                                'rgba(255, 107, 107, 0.8)',
+                                'rgba(153, 102, 255, 0.8)'
+                            ],
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Gráfico 3: Performance GPUs Mobile - Gaming 1080p
+            const gpuPerformanceCtx = document.getElementById('gpuPerformanceChart');
+            if (gpuPerformanceCtx && gpuPerformanceCtx.getContext) {
+                new Chart(gpuPerformanceCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Integrada', 'GTX 1650M', 'RTX 3050M', 'RTX 4060M', 'RTX 4070M'],
+                        datasets: [{
+                            label: 'FPS Médio (1080p)',
+                            data: [25, 45, 60, 80, 95],
+                            backgroundColor: 'rgba(76, 175, 80, 0.7)',
+                            borderColor: 'rgb(76, 175, 80)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'FPS'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Gráfico 4: Velocidade de Armazenamento
+            const storageSpeedCtx = document.getElementById('storageSpeedChart');
+            if (storageSpeedCtx && storageSpeedCtx.getContext) {
+                new Chart(storageSpeedCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['HDD 5400', 'HDD 7200', 'SSD SATA', 'NVMe Gen3', 'NVMe Gen4', 'NVMe Gen5'],
+                        datasets: [{
+                            label: 'Velocidade de Leitura (MB/s)',
+                            data: [80, 120, 550, 3500, 7000, 12000],
+                            borderColor: 'rgb(255, 193, 7)',
+                            backgroundColor: 'rgba(255, 193, 7, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'MB/s'
+                                }
+                            }
+                        }
+                    }
+                });            }
+            
+            } catch (error) {
+                console.error('Erro ao criar gráficos:', error);
+            }
+        }
+        
         // INITIALIZATION on DOMContentLoaded
         document.addEventListener('DOMContentLoaded', () => {
-            showTab('configure'); 
+            showTab('concept'); 
             applyQualityPreset(1); 
             document.getElementById('quality-slider').value = "1";
             document.querySelectorAll('#quality-slider-section .flex span').forEach(span => span.classList.remove('quality-label-active'));
@@ -2529,7 +3742,216 @@
             observeSections(); 
             toggleAdvancedModeTabs(); 
             switchSoftwareTab('multimedia'); // Set initial software sub-tab
+            
+            // Inicializar o painel integrado
+            updateIntegratedDisplay();
         });
+        
+        // --- GEMINI API INTEGRATION ---
+        async function callGemini(prompt, outputElement, buttonElement) {
+            outputElement.textContent = 'Analisando...';
+            buttonElement.disabled = true;
+            
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+            const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+                if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
+                    outputElement.textContent = result.candidates[0].content.parts[0].text;
+                } else {
+                     outputElement.textContent = "Erro ao obter resposta da IA. Verifique o console.";
+                     console.error("API Response Error:", result);
+                }
+            } catch(error) {
+                outputElement.textContent = "Falha na comunicação com a IA.";
+                console.error("Fetch Error:", error);
+            } finally {
+                buttonElement.disabled = false;
+            }
+        }
+        
+        function setupAIIntegration() {
+            const analyzeBtn = document.getElementById('analyzeBtn');
+            const upgradeBtn = document.getElementById('upgradeBtn');
+            const aiResultDiv = document.getElementById('ai-result');
+            const upgradeResultDiv = document.getElementById('upgrade-result');
+            
+            if (analyzeBtn && upgradeBtn) {                analyzeBtn.addEventListener('click', () => {
+                    // Construir informações do hardware baseado nos componentes selecionados
+                    const cpu = selectedComponents.cpu ? getComponentById('cpu', selectedComponents.cpu)?.name || 'CPU não selecionada' : 'CPU não selecionada';
+                    const ram = selectedComponents.ram ? `${selectedComponents.ram.quantity || '1'}x ${getComponentById('ram', selectedComponents.ram)?.name || 'RAM não selecionada'}` : 'RAM não selecionada';
+                    const gpu = selectedComponents.gpu ? getComponentById('gpu', selectedComponents.gpu)?.name || 'GPU não selecionada' : 'GPU não selecionada';
+                    const storage = selectedComponents.storage1 ? getComponentById('storage', selectedComponents.storage1)?.name || 'Armazenamento não selecionado' : 'Armazenamento não selecionado';
+                    
+                    const hardwareInfo = `CPU: ${cpu}, RAM: ${ram}, GPU: ${gpu}, Armazenamento: ${storage}`;
+                    const performanceScore = `Score de Performance Total: ${calculateTotalPerformance()}`;
+                    
+                    const prompt = `Aja como um analista de hardware de PC. Com base nos dados a seguir, identifique o principal gargalo de performance em jogos e explique o porquê de forma concisa (2-3 frases). Hardware: ${hardwareInfo}. ${performanceScore}. Responda em português.`;
+                    callGemini(prompt, aiResultDiv, analyzeBtn);
+                });                upgradeBtn.addEventListener('click', () => {
+                    // Construir informações do hardware baseado nos componentes selecionados
+                    const cpu = selectedComponents.cpu ? getComponentById('cpu', selectedComponents.cpu)?.name || 'CPU não selecionada' : 'CPU não selecionada';
+                    const ram = selectedComponents.ram ? `${selectedComponents.ram.quantity || '1'}x ${getComponentById('ram', selectedComponents.ram)?.name || 'RAM não selecionada'}` : 'RAM não selecionada';
+                    const gpu = selectedComponents.gpu ? getComponentById('gpu', selectedComponents.gpu)?.name || 'GPU não selecionada' : 'GPU não selecionada';
+                    const storage = selectedComponents.storage1 ? getComponentById('storage', selectedComponents.storage1)?.name || 'Armazenamento não selecionado' : 'Armazenamento não selecionado';
+                    
+                    const hardwareInfo = `CPU: ${cpu}, RAM: ${ram}, GPU: ${gpu}, Armazenamento: ${storage}`;
+                    const budget = 'Orçamento para upgrade: R$ 1500,00';
+                    
+                    const prompt = `Aja como um especialista em hardware de PC. Para o sistema ${hardwareInfo}, qual é a recomendação de upgrade com melhor custo-benefício para um salto significativo em performance? Considere ${budget}. Sugira componentes específicos e explique brevemente o motivo. Responda em português.`;
+                    callGemini(prompt, upgradeResultDiv, upgradeBtn);
+                });
+            }
+        }
+        
+        // Inicializar integração com IA quando a aba for exibida
+        document.getElementById('tab-ai-integration').addEventListener('click', () => {
+            // Pequeno atraso para garantir que os elementos estejam renderizados
+            setTimeout(() => {
+                setupAIIntegration();
+                initializeAICharts();
+            }, 100);
+        });
+        
+        // Inicializar os gráficos na aba de integração com IA
+        function initializeAICharts() {
+            // Gráfico de performance em jogos
+            const gamingChartCtx = document.getElementById('gaming-chart');
+            if (gamingChartCtx && gamingChartCtx.getContext) {
+                // Verificar se já existe um gráfico e destruí-lo
+                if (window.gamingChart instanceof Chart) {
+                    window.gamingChart.destroy();
+                }
+                
+                // Calcular valores baseados na performance atual
+                const performanceScore = calculateTotalPerformance();
+                const multiplier = performanceScore / 100;
+                
+                window.gamingChart = new Chart(gamingChartCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['CS:GO', 'Fortnite', 'Cyberpunk 2077', 'Minecraft', 'GTA V', 'Valorant'],
+                        datasets: [{
+                            label: 'FPS Estimado (1080p)',
+                            data: [
+                                Math.round(240 * multiplier),
+                                Math.round(180 * multiplier),
+                                Math.round(80 * multiplier),
+                                Math.round(200 * multiplier),
+                                Math.round(120 * multiplier),
+                                Math.round(220 * multiplier)
+                            ],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.7)',
+                                'rgba(54, 162, 235, 0.7)',
+                                'rgba(255, 206, 86, 0.7)',
+                                'rgba(75, 192, 192, 0.7)',
+                                'rgba(153, 102, 255, 0.7)',
+                                'rgba(255, 159, 64, 0.7)'
+                            ],
+                            borderColor: [
+                                'rgb(255, 99, 132)',
+                                'rgb(54, 162, 235)',
+                                'rgb(255, 206, 86)',
+                                'rgb(75, 192, 192)',
+                                'rgb(153, 102, 255)',
+                                'rgb(255, 159, 64)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'FPS'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Gráfico de comparativo de sistemas operacionais
+            const osChartCtx = document.getElementById('os-chart');
+            if (osChartCtx && osChartCtx.getContext) {
+                // Verificar se já existe um gráfico e destruí-lo
+                if (window.osChart instanceof Chart) {
+                    window.osChart.destroy();
+                }
+                
+                window.osChart = new Chart(osChartCtx, {
+                    type: 'radar',
+                    data: {
+                        labels: ['Jogos', 'Produtividade', 'Compatibilidade', 'Desempenho', 'Personalização', 'Segurança'],
+                        datasets: [
+                            {
+                                label: 'Windows',
+                                data: [90, 85, 95, 80, 70, 75],
+                                fill: true,
+                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                borderColor: 'rgb(54, 162, 235)',
+                                pointBackgroundColor: 'rgb(54, 162, 235)',
+                                pointBorderColor: '#fff',
+                                pointHoverBackgroundColor: '#fff',
+                                pointHoverBorderColor: 'rgb(54, 162, 235)'
+                            },
+                            {
+                                label: 'Linux',
+                                data: [70, 80, 65, 90, 95, 85],
+                                fill: true,
+                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                borderColor: 'rgb(255, 99, 132)',
+                                pointBackgroundColor: 'rgb(255, 99, 132)',
+                                pointBorderColor: '#fff',
+                                pointHoverBackgroundColor: '#fff',
+                                pointHoverBorderColor: 'rgb(255, 99, 132)'
+                            },
+                            {
+                                label: 'macOS',
+                                data: [50, 90, 75, 85, 80, 90],
+                                fill: true,
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgb(75, 192, 192)',
+                                pointBackgroundColor: 'rgb(75, 192, 192)',
+                                pointBorderColor: '#fff',
+                                pointHoverBackgroundColor: '#fff',
+                                pointHoverBorderColor: 'rgb(75, 192, 192)'
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        elements: {
+                            line: {
+                                borderWidth: 3
+                            }
+                        },
+                        scales: {
+                            r: {
+                                angleLines: {
+                                    display: true
+                                },
+                                suggestedMin: 0,
+                                suggestedMax: 100
+                            }
+                        }
+                    }
+                });
+            }
+        }
     </script>
 </body>
 </html>
