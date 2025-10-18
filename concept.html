@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeiviTech - Configurador Inteligente de Notebooks</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="p-6 bg-[var(--color-card-bg)] rounded-lg shadow-lg">                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-[var(--color-primary)] mb-4">Configurador Inteligente de Notebooks</h2>
+                    <p class="text-lg text-[var(--color-text-secondary)]">Encontre o notebook perfeito para suas necessidades com nossa plataforma de configuração assistida</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-10">
+                    <div class="card p-6 border-t-4 border-[var(--color-primary)] hover:shadow-lg transition-all">
+                        <div class="text-center mb-4">
+                            <i class="fas fa-magic text-4xl text-[var(--color-primary)]"></i>
+                            <h3 class="text-xl font-semibold mt-3">Configuração Assistida</h3>
+                        </div>
+                        <p>Nosso sistema inteligente analisa suas necessidades e recomenda a configuração ideal, otimizando desempenho e orçamento.</p>
+                        <div class="mt-4 text-center">
+                            <button onclick="showTab('configure')" class="btn-primary px-4 py-2 rounded-lg"><i class="fas fa-wand-magic-sparkles mr-2"></i>Experimentar</button>
+                        </div>
+                    </div>
+                    
+                    <div class="card p-6 border-t-4 border-[var(--color-secondary)] hover:shadow-lg transition-all">
+                        <div class="text-center mb-4">
+                            <i class="fas fa-sliders text-4xl text-[var(--color-secondary)]"></i>
+                            <h3 class="text-xl font-semibold mt-3">Configuração Personalizada</h3>
+                        </div>
+                        <p>Controle total sobre cada componente. Escolha processador, memória, armazenamento e todos os detalhes do seu notebook ideal.</p>
+                        <div class="mt-4 text-center">
+                            <button onclick="showTab('configure')" class="btn-secondary px-4 py-2 rounded-lg"><i class="fas fa-cogs mr-2"></i>Configurar</button>
+                        </div>
+                    </div>
+                    
+                    <div class="card p-6 border-t-4 border-[var(--color-accent-yellow)] hover:shadow-lg transition-all">
+                        <div class="text-center mb-4">
+                            <i class="fas fa-laptop-medical text-4xl text-[var(--color-accent-yellow)]"></i>
+                            <h3 class="text-xl font-semibold mt-3">Notebooks Prontos</h3>
+                        </div>
+                        <p>Seleção cuidadosa de notebooks pré-configurados para diferentes perfis: estudante, profissional, gamer e criativo.</p>
+                        <div class="mt-4 text-center">
+                            <button onclick="showTab('ready')" class="btn-accent-yellow px-4 py-2 rounded-lg"><i class="fas fa-laptop mr-2"></i>Ver Opções</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-[var(--color-card-bg-alt)] p-6 rounded-lg mb-8">
+                    <h3 class="text-2xl font-bold mb-4 text-center">Como Funciona</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-center">
+                        <div class="p-4">
+                            <div class="w-12 h-12 bg-[var(--color-primary)] rounded-full flex items-center justify-center text-white text-xl font-bold mx-auto mb-3">1</div>
+                            <h4 class="font-semibold mb-2">Escolha o Modo</h4>
+                            <p class="text-sm">Selecione entre modo assistido ou configuração manual</p>
+                        </div>
+                        <div class="p-4">
+                            <div class="w-12 h-12 bg-[var(--color-primary)] rounded-full flex items-center justify-center text-white text-xl font-bold mx-auto mb-3">2</div>
+                            <h4 class="font-semibold mb-2">Personalize</h4>
+                            <p class="text-sm">Selecione os componentes ou responda às perguntas</p>
+                        </div>
+                        <div class="p-4">
+                            <div class="w-12 h-12 bg-[var(--color-primary)] rounded-full flex items-center justify-center text-white text-xl font-bold mx-auto mb-3">3</div>
+                            <h4 class="font-semibold mb-2">Revise</h4>
+                            <p class="text-sm">Verifique o resumo e o desempenho estimado</p>
+                        </div>
+                        <div class="p-4">
+                            <div class="w-12 h-12 bg-[var(--color-primary)] rounded-full flex items-center justify-center text-white text-xl font-bold mx-auto mb-3">4</div>
+                            <h4 class="font-semibold mb-2">Finalize</h4>
+                            <p class="text-sm">Adicione serviços extras e finalize seu pedido</p>
+                        </div>
+                    </div>
+                </div>
+                  <!-- Seção de Gráficos e Informações -->
+                <div class="bg-[var(--color-card-bg-alt)] p-6 rounded-lg mb-8">
+                    <h3 class="text-2xl font-bold mb-4 text-center">Entenda a Performance dos Notebooks Modernos</h3>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-6">
+                        <!-- Gráfico de Comparação CPU Mobile vs Desktop -->
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold mb-3 text-center">CPUs Mobile vs Desktop - Eficiência Energética</h4>
+                            <div class="chart-container" style="position: relative; height:250px;">
+                                <canvas id="cpuEfficiencyChart"></canvas>
+                            </div>
+                            <p class="text-sm mt-3 text-center text-gray-600">Processadores mobile modernos oferecem excelente performance com menor consumo de energia</p>
+                        </div>
+                        
+                        <!-- Gráfico de Autonomia de Bateria -->
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold mb-3 text-center">Autonomia de Bateria por Tipo de Uso</h4>
+                            <div class="chart-container" style="position: relative; height:250px;">
+                                <canvas id="batteryLifeChart"></canvas>
+                            </div>
+                            <p class="text-sm mt-3 text-center text-gray-600">A autonomia varia significativamente dependendo do perfil de uso do notebook</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-6">
+                        <!-- Gráfico de Performance GPU Mobile -->
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold mb-3 text-center">Performance GPUs Mobile - Gaming 1080p</h4>
+                            <div class="chart-container" style="position: relative; height:250px;">
+                                <canvas id="gpuPerformanceChart"></canvas>
+                            </div>
+                            <p class="text-sm mt-3 text-center text-gray-600">GPUs modernas para notebook oferecem performance competitiva para gaming</p>
+                        </div>
+                        
+                        <!-- Gráfico de Velocidade de Armazenamento -->
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <h4 class="font-semibold mb-3 text-center">Velocidade de Armazenamento - Impacto no Sistema</h4>
+                            <div class="chart-container" style="position: relative; height:250px;">
+                                <canvas id="storageSpeedChart"></canvas>
+                            </div>
+                            <p class="text-sm mt-3 text-center text-gray-600">SSDs NVMe oferecem velocidades até 10x maiores que HDDs tradicionais</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Informações de Escolha de Notebooks -->
+                    <div class="bg-white p-6 rounded-lg shadow mb-6">
+                        <h4 class="font-semibold mb-4 text-center">Guia de Escolha - Notebook Ideal por Perfil</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                            <div class="text-center p-4 border border-gray-200 rounded-lg">
+                                <i class="fas fa-graduation-cap text-3xl text-blue-500 mb-2"></i>
+                                <h5 class="font-semibold mb-2">Estudante</h5>
+                                <ul class="text-sm text-left space-y-1">
+                                    <li>• i3/Ryzen 3 + 8GB RAM</li>
+                                    <li>• SSD 256GB</li>
+                                    <li>• Tela 14-15.6" FHD</li>
+                                    <li>• Bateria 50Wh+</li>
+                                </ul>
+                            </div>
+                            <div class="text-center p-4 border border-gray-200 rounded-lg">
+                                <i class="fas fa-briefcase text-3xl text-green-500 mb-2"></i>
+                                <h5 class="font-semibold mb-2">Profissional</h5>
+                                <ul class="text-sm text-left space-y-1">
+                                    <li>• i5/Ryzen 5 + 16GB RAM</li>
+                                    <li>• SSD 512GB NVMe</li>
+                                    <li>• Tela 14-16" FHD/QHD</li>
+                                    <li>• Bateria 65Wh+</li>
+                                </ul>
+                            </div>
+                            <div class="text-center p-4 border border-gray-200 rounded-lg">
+                                <i class="fas fa-gamepad text-3xl text-red-500 mb-2"></i>
+                                <h5 class="font-semibold mb-2">Gamer</h5>
+                                <ul class="text-sm text-left space-y-1">
+                                    <li>• i7/Ryzen 7 + 16-32GB RAM</li>
+                                    <li>• SSD 1TB NVMe Gen4</li>
+                                    <li>• GPU RTX 4060+</li>
+                                    <li>• Tela 144Hz+</li>
+                                </ul>
+                            </div>
+                            <div class="text-center p-4 border border-gray-200 rounded-lg">
+                                <i class="fas fa-palette text-3xl text-purple-500 mb-2"></i>
+                                <h5 class="font-semibold mb-2">Criativo</h5>
+                                <ul class="text-sm text-left space-y-1">
+                                    <li>• i7/Ryzen 7 + 32GB RAM</li>
+                                    <li>• SSD 1TB+ NVMe</li>
+                                    <li>• GPU RTX 4070+</li>
+                                    <li>• Tela 4K/OLED</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Dicas de Otimização -->
+                    <div class="bg-white p-4 rounded-lg shadow mb-6">
+                        <h4 class="font-semibold mb-3">Dicas para Maximizar Performance e Autonomia</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <h5 class="font-medium mb-2 text-green-600">✓ Para Maior Autonomia</h5>
+                                <ul class="list-disc pl-5 space-y-1 text-sm">
+                                    <li>Escolha CPUs da série H ou U (baixo consumo)</li>
+                                    <li>Prefira RAM em dual-channel (2x8GB ao invés de 1x16GB)</li>
+                                    <li>SSD consome menos que HDD</li>
+                                    <li>Telas IPS consomem menos que OLED</li>
+                                    <li>Baterias 60Wh+ são ideais para uso prolongado</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h5 class="font-medium mb-2 text-blue-600">⚡ Para Maior Performance</h5>
+                                <ul class="list-disc pl-5 space-y-1 text-sm">
+                                    <li>CPUs i7/Ryzen 7 para multitarefas intensas</li>
+                                    <li>32GB RAM para edição de vídeo/3D</li>
+                                    <li>SSDs NVMe Gen4 para transferências rápidas</li>
+                                    <li>GPUs RTX 4060+ para jogos modernos</li>
+                                    <li>Telas 144Hz+ para gaming competitivo</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <button onclick="showTab('configure')" class="btn-primary px-6 py-3 text-lg rounded-lg"><i class="fas fa-arrow-right mr-2"></i>Começar Agora</button>
+                </div>
+            </div>
+        </div>
+        
+        <footer class="text-center mt-16 pt-8 border-t border-[var(--color-primary-light)] opacity-90">
+            <div class="mb-6">
+                <h3 class="text-xl font-semibold text-[var(--color-secondary)] mb-4">Pagamento Facilitado</h3>
+                <div class="flex justify-center items-center space-x-1 payment-logos">
+                    <a href="https://www.visa.com.br" target="_blank" title="Visa"><i class="fab fa-cc-visa"></i></a>
+                    <a href="https://www.mastercard.com.br" target="_blank" title="Mastercard"><i class="fab fa-cc-mastercard"></i></a>
+                    <a href="https://www.elo.com.br" target="_blank" title="Elo"><i class="fab fa-cc-elo"></i></a>
+                    <a href="https://www.americanexpress.com/pt-br/" target="_blank" title="American Express"><i class="fab fa-cc-amex"></i></a>
+                    <a href="https://www.hipercard.com.br" target="_blank" title="Hipercard"><i class="fas fa-credit-card"></i></a> <!-- Generic card for Hipercard -->
+                    <a href="https://www.paypal.com/br" target="_blank" title="PayPal"><i class="fab fa-cc-paypal"></i></a>
+                    <a href="https://www.mercadopago.com.br/" target="_blank" title="Mercado Pago"><i class="fas fa-handshake"></i></a> <!-- Handshake for MercadoPago -->
+                </div>
+                 <p class="text-xs text-[var(--color-text-main)] opacity-70 mt-3">Este site é um configurador para orçamento. Nenhuma transação financeira é realizada aqui.</p>
+            </div>
+
+            <div class="contact-links space-x-4 mb-4 text-lg">
+                <a href="https://www.linkedin.com/in/deivilsantana/" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                <a href="https://github.com/Deivisan" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                <a href="mailto:deivilsantana@outlook.com"><i class="fas fa-envelope"></i> E-mail</a>
+                <a href="https://wa.me/5575981231019" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                <a href="https://t.me/+5575981231019" target="_blank"><i class="fab fa-telegram"></i> Telegram</a>
+            </div>
+            <p class="text-[var(--color-text-main)] text-sm">© <span id="current-year"></span> DeiviTech por Deivison Santana. Todos os direitos reservados.</p>
+            <p class="text-xs text-[var(--color-text-main)] opacity-70 mt-1">Preços e disponibilidade são estimativas e sujeitos a confirmação.</p>
+        </footer>
+    </main>
+
+    <script>
+        // GENERAL INITIALIZATION
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('in-view'); observer.unobserve(entry.target); }});
+        }, { threshold: 0.05 });
+        function observeSections() { document.querySelectorAll('section.card, .ready-notebook-card, .service-item, .tab-content').forEach(section => { observer.observe(section); }); }
+
+        // TAB MANAGEMENT
+        function showTab(tabName) {
+            ['concept', 'configure', 'ready', 'tradein', 'services', 'specific-budget', 'ai-integration'].forEach(id => {
+                const contentEl = document.getElementById(`${id}-tab-content`);
+                const tabBtnEl = document.getElementById(`tab-${id}`);
+                if (contentEl) contentEl.style.display = tabName === id ? 'block' : 'none';
+                if (tabBtnEl) {
+                    if (tabBtnEl.classList.contains('advanced-mode-tab') && !tabBtnEl.classList.contains('functional')) {
+                        // Do not toggle active for non-functional advanced tabs
+                    } else {
+                        tabBtnEl.classList.toggle('active', tabName === id);
+                    }
+                }
+            });
+            
+            // Scroll para o topo quando trocar de aba
+            setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 100);
+            
+            if (tabName === 'concept') {
+                // Inicializa os gráficos na aba de conceito
+                setTimeout(() => {
+                    const conceptTabContent = document.getElementById('concept-tab-content');
+                    if (conceptTabContent && conceptTabContent.style.display !== 'none') {
+                        initNotebookCharts();
+                    }
+                }, 300);
+            }
+            if(['concept', 'configure', 'ready', 'tradein', 'services', 'specific-budget', 'ai-integration'].includes(tabName)) {
+                 setTimeout(observeSections, 100); 
+            }
+        }
+
+        // MODE MANAGEMENT
+        function setMode(mode) {
+            currentMode = mode;
+            document.getElementById('basic-mode-btn').classList.toggle('active', mode === 'basic');
+            document.getElementById('advanced-mode-btn').classList.toggle('active', mode === 'advanced');
+            toggleAdvancedModeTabs();
+        }
+
+        function toggleAdvancedModeTabs() {
+            const advancedTabs = document.querySelectorAll('.advanced-mode-tab');
+            advancedTabs.forEach(tab => {
+                if (currentMode === 'advanced') {
+                    tab.style.display = 'inline-flex';
+                } else {
+                    tab.style.display = 'none';
+                    if (tab.classList.contains('active')) {
+                        tab.classList.remove('active');
+                        showTab('concept'); // Default to concept if advanced tab was active
+                    }
+                }
+            });
+        }
+
+        // DARK MODE TOGGLE
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const toggleBtn = document.getElementById('dark-mode-toggle');
+            const isDark = document.body.classList.contains('dark-mode');
+            toggleBtn.innerHTML = `<i class="fas fa-${isDark ? 'sun' : 'moon'} mr-1"></i>${isDark ? 'Modo Claro' : 'Modo Escuro'}`;
+            localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+        }
+
+        // Initialize dark mode on load
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+            document.getElementById('dark-mode-toggle').innerHTML = '<i class="fas fa-sun mr-1"></i>Modo Claro';
+        }
+
+        // CHART INITIALIZATION
+        function initNotebookCharts() {
+            // CPU Efficiency Chart
+            const cpuEfficiencyCtx = document.getElementById('cpuEfficiencyChart');
+            if (cpuEfficiencyCtx) {
+                new Chart(cpuEfficiencyCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Desktop i7-13700K', 'Mobile i7-13700H', 'Desktop Ryzen 9 7950X', 'Mobile Ryzen 9 7940H'],
+                        datasets: [{
+                            label: 'Performance (Pontos Cinebench R23)',
+                            data: [32000, 28000, 35000, 31000],
+                            backgroundColor: ['rgba(54, 162, 235, 0.6)', 'rgba(75, 192, 192, 0.6)', 'rgba(255, 206, 86, 0.6)', 'rgba(153, 102, 255, 0.6)'],
+                            borderColor: ['rgba(54, 162, 235, 1)', 'rgba(75, 192, 192, 1)', 'rgba(255, 206, 86, 1)', 'rgba(153, 102, 255, 1)'],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Pontos de Performance'
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Battery Life Chart
+            const batteryLifeCtx = document.getElementById('batteryLifeChart');
+            if (batteryLifeCtx) {
+                new Chart(batteryLifeCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Navegação Web', 'Vídeo Streaming', 'Trabalho Escritório', 'Gaming Leve', 'Edição de Vídeo'],
+                        datasets: [{
+                            data: [8, 6, 7, 4, 3],
+                            backgroundColor: ['rgba(255, 99, 132, 0.6)', 'rgba(54, 162, 235, 0.6)', 'rgba(255, 206, 86, 0.6)', 'rgba(75, 192, 192, 0.6)', 'rgba(153, 102, 255, 0.6)'],
+                            borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)'],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.label + ': ' + context.parsed + ' horas';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // GPU Performance Chart
+            const gpuPerformanceCtx = document.getElementById('gpuPerformanceChart');
+            if (gpuPerformanceCtx) {
+                new Chart(gpuPerformanceCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['RTX 3050 Mobile', 'RTX 4060 Mobile', 'RTX 4070 Mobile', 'RTX 4080 Mobile', 'RTX 4090 Mobile'],
+                        datasets: [{
+                            label: 'FPS Médio 1080p Ultra',
+                            data: [65, 85, 105, 125, 145],
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            tension: 0.4,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'FPS Médio'
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Storage Speed Chart
+            const storageSpeedCtx = document.getElementById('storageSpeedChart');
+            if (storageSpeedCtx) {
+                new Chart(storageSpeedCtx, {
+                    type: 'radar',
+                    data: {
+                        labels: ['HDD 5400RPM', 'SSD SATA', 'NVMe Gen3', 'NVMe Gen4', 'NVMe Gen5'],
+                        datasets: [{
+                            label: 'Velocidade de Leitura (MB/s)',
+                            data: [100, 550, 3500, 7000, 12000],
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            pointBackgroundColor: 'rgba(54, 162, 235, 1)',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: 'rgba(54, 162, 235, 1)'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            r: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Velocidade (MB/s)'
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            observeSections();
+            initNotebookCharts();
+        });
+    </script>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <script src="shared.js"></script>
+    <script>
+        // Inicialização específica da página
+        document.addEventListener('DOMContentLoaded', function() {
+            // Carregar header e footer
+            fetch('header.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('header-placeholder').innerHTML = data;
+                });
+
+            fetch('footer.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('footer-placeholder').innerHTML = data;
+                });
+        });
+    </script>
+</body>
+</html>

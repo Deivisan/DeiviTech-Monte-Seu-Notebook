@@ -1,4 +1,25 @@
 <!DOCTYPE html>
+<!-- 
+DeiviTech Monte Seu Notebook - Configurador Inteligente de Notebooks Personalizados
+Este é um projeto de Deivison Santana (Deivisan) para criar um configurador web interativo
+onde usuários podem montar notebooks personalizados com componentes ILUSTRATIVOS (mostruário),
+preços dinâmicos e integração com WhatsApp para pedidos personalizados.
+
+⚠️ IMPORTANTE: Este é um MOSTRUÁRIO de possibilidades. Os componentes listados são ILUSTRATIVOS
+para demonstrar configurações possíveis. Entre em contato para orçamento real com disponibilidade atual.
+
+Para futuros agentes de IA:
+- Este arquivo é um single-page application (SPA) com múltiplas abas (tabs) para diferentes seções
+- Usa TailwindCSS para styling, Chart.js para gráficos, Font Awesome para ícones
+- Dados de componentes estão em arrays JavaScript (components, softwareCategories, services, etc.)
+- Funcionalidades incluem: seleção de componentes, cálculo de preços, modo assistido/avançado, trade-in, serviços
+- Integração com GitHub Pages para hospedagem estática
+- Arquivo dividido em seções: head (CDNs, estilos), body (header, tabs, conteúdo, footer), scripts
+- Estilos customizados em <style> incluem variáveis CSS para temas dark/light
+- Scripts incluem funções para mostrar tabs, calcular preços, atualizar UI, etc.
+- Para manutenção: manter dados atualizados, otimizar performance, adicionar novos componentes
+- Estrutura modular: header/footer compartilhados, seções divididas em tabs
+-->
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -11,7 +32,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- 
+    CDNs carregadas:
+    - TailwindCSS: Framework CSS utilitário para styling responsivo
+    - Google Fonts: Inter (corpo) e Orbitron (títulos técnicos)
+    - Font Awesome: Ícones vetoriais para UI
+    - Chart.js: Biblioteca para gráficos de performance
+    -->
     <style>
+        <!-- 
+        Variáveis CSS para temas (light/dark mode):
+        --color-bg-main-start/end: Gradiente de fundo principal
+        --color-text-main: Texto principal
+        --color-primary/secondary: Cores principais (azul/verde)
+        --color-card-bg: Fundo de cards
+        --color-text-card: Texto em cards
+        --shadow-card: Sombras para cards
+        E outras para botões, bordas, etc.
+        -->
         :root {
             --color-bg-main-start: #073B4C; 
             --color-bg-main-end: #0B4F6C;
@@ -662,11 +700,21 @@
     </style>
 </head>
 <body>
+    <!-- 
+    Estrutura do Body:
+    - Header: Logo, tema toggle, login placeholder
+    - Main: Container com título, modos (assistido/básico/avançado), tabs de navegação
+    - Tabs content: concept, configure, ready, tradein, services, specific-budget, ai-integration
+    - Footer: Logos de pagamento, links de contato, copyright
+    - Modal: Para confirmação de pedidos
+    - Scripts: JavaScript para interatividade
+    -->
     <div class="beta-watermark">
         <i class="fas fa-flask mr-1"></i> Site em Versão Beta. Novas funcionalidades e componentes em breve!
     </div>
 
     <main class="container mx-auto px-4 py-8 md:py-12">
+        <!-- Header com logo, toggle de tema e login -->
         <header class="text-center mb-12">
             <div class="flex justify-between items-center mb-4">
                 <h1 class="text-xl md:text-2xl font-medium text-left tracking-wide" style="color: var(--color-text-main); opacity: 0.85; letter-spacing: 0.05em;"><i class="fas fa-laptop-code mr-2 text-sm opacity-70"></i>DeiviTech</h1>
@@ -784,6 +832,7 @@
             </div>
         </header>
         
+        <!-- Navegação por tabs: Conceito, Configurar, Notebooks Prontos, Troca, Serviços, Orçamento Específico, IA -->
         <div class="mb-8">
             <div id="main-tabs-container" class="flex border-b border-[var(--color-border-subtle)] flex-wrap">
                 <button id="tab-concept" class="tab-button active" onclick="showTab('concept')"><i class="fas fa-lightbulb mr-2"></i>Conceito</button>
@@ -1328,7 +1377,7 @@
                     <a href="https://www.paypal.com/br" target="_blank" title="PayPal"><i class="fab fa-cc-paypal"></i></a>
                     <a href="https://www.mercadopago.com.br/" target="_blank" title="Mercado Pago"><i class="fas fa-handshake"></i></a> <!-- Handshake for MercadoPago -->
                 </div>
-                 <p class="text-xs text-[var(--color-text-main)] opacity-70 mt-3">Este site é um configurador para orçamento. Nenhuma transação financeira é realizada aqui.</p>
+                 <p class="text-xs text-[var(--color-text-main)] opacity-70 mt-3">⚠️ <strong>MOSTRUÁRIO ILUSTRATIVO:</strong> Componentes e preços são exemplificativos para demonstrar possibilidades. Solicite orçamento personalizado via WhatsApp com disponibilidade real.</p>
             </div>
 
             <div class="contact-links space-x-4 mb-4 text-lg">
@@ -1355,7 +1404,69 @@
         </div>
     </div>
 
+    <!--
+    ========================================================================================
+    JAVASCRIPT SECTION - INTERACTIVITY AND LOGIC FOR THE NOTEBOOK CONFIGURATOR
+    ========================================================================================
+
+    AI-FRIENDLY DOCUMENTATION: This section contains all JavaScript powering the dynamic notebook configurator.
+
+    ARCHITECTURE OVERVIEW:
+    - Single-page application with tabbed interface
+    - Client-side state management with selectedComponents object
+    - Real-time price calculations and performance scoring
+    - WhatsApp integration for order submission
+    - Chart.js integration for performance visualizations
+
+    DESIGN DECISIONS:
+    - Vanilla JS chosen over frameworks for lightweight deployment
+    - Client-side calculations for instant feedback (no server dependency)
+    - Modular functions with clear separation of concerns
+    - Event-driven architecture for responsive UI updates
+
+    AI DEVELOPMENT NOTES:
+    - Functions follow consistent naming: showTab(), populateOptions(), updateTotal()
+    - State mutations trigger UI updates automatically
+    - Error handling focuses on graceful degradation
+    - Performance optimizations: lazy loading, efficient DOM queries
+
+    KEY COMPONENTS BREAKDOWN:
+    - Data Arrays: Static configuration data (components, software, services)
+    - State Management: selectedComponents tracks user choices
+    - Core Functions: UI manipulation and business logic
+    - Event Listeners: User interaction handlers
+    - Helper Functions: Utility methods for common operations
+
+    MAINTENANCE GUIDELINES:
+    - When adding new components: Update components array + validation logic
+    - When modifying pricing: Update both display and calculation functions
+    - When adding features: Follow existing event-driven patterns
+    ========================================================================================
+    -->
     <script>
+        // ========================================================================================
+        // JAVASCRIPT INITIALIZATION SECTION - AI FRIENDLY DOCUMENTATION
+        // ========================================================================================
+        // PURPOSE: Sets up the initial state of the application, including global variables,
+        // event observers for animations, and basic DOM manipulations.
+        //
+        // DESIGN DECISIONS:
+        // - IntersectionObserver used instead of scroll events for better performance (passive, efficient)
+        // - Global state variables centralized for easy debugging and state management
+        // - Observer threshold 0.05 for early animation triggers, improving UX
+        // - Year update for copyright footer - automated to avoid manual maintenance
+        //
+        // AI NOTES:
+        // - TODO: Consider lazy-loading observer setup if page has many sections
+        // - FIXME: Add error handling for DOM elements that might not exist
+        // - NOTE: Global variables are necessary for cross-function state sharing but consider React/Vue for larger apps
+        // - PERFORMANCE: Observer unobserves after first trigger to prevent redundant checks
+        //
+        // MAINTENANCE GUIDELINES:
+        // - When adding new global state, document its purpose and update reset logic
+        // - Test observer on different devices for threshold optimization
+        // - Keep initialization lightweight to improve page load performance
+        // ========================================================================================
         // GENERAL INITIALIZATION
         document.getElementById('current-year').textContent = new Date().getFullYear();
         const observer = new IntersectionObserver((entries) => {
@@ -1363,7 +1474,20 @@
         }, { threshold: 0.05 });
         function observeSections() { document.querySelectorAll('section.card, .ready-notebook-card, .service-item, .tab-content').forEach(section => { observer.observe(section); }); }
 
-        // GLOBAL STATE VARIABLES
+        // ========================================================================================
+        // GLOBAL STATE VARIABLES SECTION
+        // ========================================================================================
+        // AI-FRIENDLY DOCUMENTATION: This section manages the application's global state.
+        // Design Decisions:
+        // - Centralized state object for easy debugging and state persistence
+        // - Separate objects for components, services, and UI state to avoid coupling
+        // - Null values indicate unselected components, arrays for multi-select items
+        // - Trade-in credit stored separately for clear financial calculations
+        // - Mode switching affects visibility and available options
+        // Special Markers: TODO - Consider state validation; FIXME - Add state persistence to localStorage
+        // Maintenance Guidelines: Update state structure when adding new component categories;
+        // ensure all state changes trigger UI updates via updateTotal() or updateVisualSelections()
+        // ========================================================================================
         let selectedPlatform = null;
         let selectedComponents = {
             platform: null, casing: null, motherboard: null, cpu: null,
@@ -1383,6 +1507,34 @@
         let currentSoftwareTab = 'multimedia'; // Default software sub-tab
 
 
+        // ========================================================================================
+        // DATA STRUCTURES SECTION
+        // ========================================================================================
+        // AI-FRIENDLY DOCUMENTATION: This section defines all static data arrays for components,
+        // software categories, services, quality presets, and ready notebooks. These are the
+        // foundational data structures that power the configurator's options and calculations.
+        //
+        // DESIGN DECISIONS:
+        // - Used object literals with nested arrays for hierarchical data organization
+        // - Each component has consistent properties: id, name, price, stock, performance_score, icon, description_basic/advanced
+        // - Platform filtering ensures Intel/AMD compatibility across components
+        // - Stock management prevents overselling (stock <= 0 disables selection)
+        // - Performance scores enable algorithmic recommendations and comparisons
+        // - Basic/advanced descriptions provide user-appropriate detail levels
+        //
+        // AI NOTES:
+        // - TODO: Consider migrating to JSON files for easier maintenance and external editing
+        // - FIXME: Add validation functions to ensure data integrity on load
+        // - NOTE: Component IDs must be unique across all categories for reliable lookups
+        // - PERFORMANCE: Large arrays (100+ items) may benefit from indexing or lazy loading
+        //
+        // MAINTENANCE GUIDELINES:
+        // - When adding new components: ensure all required properties are present
+        // - Update stock levels regularly to reflect inventory changes
+        // - Test new components in both basic and advanced modes
+        // - Validate price calculations after data changes
+        // - Backup data before bulk updates
+        // ========================================================================================
         // DATA (Components, Presets, Ready Notebooks, Software Categories, Services)
         const components = {
             platform: [
@@ -1633,7 +1785,25 @@
         ];
 
 
-        // HELPER FUNCTIONS
+        // ========================================================================================
+        // HELPER FUNCTIONS SECTION
+        // ========================================================================================
+        // **AI-FRIENDLY DOCUMENTATION**
+        // **Purpose:** Utility functions for formatting, data retrieval, and common operations.
+        // **Design Decisions:**
+        // - Centralized formatting logic to ensure consistency across UI (e.g., price display).
+        // - Component lookup functions to abstract data access and handle edge cases (null/undefined).
+        // - Visibility logic separated for maintainability and mode-specific filtering.
+        // - Error handling: Functions return safe defaults (0, null, 'N/A') instead of throwing errors.
+        // **AI Notes:**
+        // - TODO: Consider memoization for frequently called lookup functions to improve performance.
+        // - FIXME: getComponentDescription has redundant checks; could be simplified with early returns.
+        // - NOTE: isComponentVisible logic is complex; consider extracting to a dedicated module if reused elsewhere.
+        // **Maintenance Guidelines:**
+        // - When adding new component categories, update getComponentById and related functions.
+        // - Keep formatting functions pure and testable.
+        // - Test visibility logic with different mode/platform combinations.
+        // ========================================================================================
         const formatPrice = (price) => `R$ ${Number(price).toFixed(2).replace('.', ',')}`;
         
         const getComponentById = (category, id) => {
@@ -1682,7 +1852,25 @@
             }
             // Fallback for an unknown mode (should not happen)
             return !showInBasic && !showInAdvanced; 
-        };        // CORE LOGIC FUNCTIONS        
+        // ========================================================================================
+        // CORE LOGIC FUNCTIONS SECTION
+        // ========================================================================================
+        // **AI-FRIENDLY DOCUMENTATION**
+        // **Purpose:** Core business logic for UI management, data processing, and user interactions.
+        // **Design Decisions:**
+        // - Modular functions for specific responsibilities (tab switching, option population, calculations).
+        // - Event-driven architecture with centralized state management via selectedComponents.
+        // - Progressive enhancement: basic mode shows simplified options, advanced mode reveals more.
+        // - Performance optimization: lazy loading of charts, DOM updates batched where possible.
+        // **AI Notes:**
+        // - TODO: Consider debouncing rapid user interactions (e.g., RAM quantity changes) to reduce calculations.
+        // - FIXME: populateReadyNotebooks has nested event listeners; could be refactored for better separation.
+        // - NOTE: calculateTotalPerformance uses hardcoded weights; consider making configurable for future adjustments.
+        // **Maintenance Guidelines:**
+        // - When adding new component categories, update populateOptions and related population functions.
+        // - Test UI updates across all modes (basic/advanced) when modifying visual logic.
+        // - Keep calculation functions pure and testable by extracting them from DOM manipulation.
+        // ========================================================================================
         function showTab(tabName) {
             activeTab = tabName;
             ['concept', 'configure', 'ready', 'tradein', 'services', 'specific-budget'].forEach(id => {
@@ -1903,8 +2091,6 @@
                 window.open(whatsappUrl, '_blank');
                 orderModal.style.display = 'none';
             };
-        }
-        
         function calculateTotalPerformance() {
             let totalScore = 0;
             // Removido network_adapter dos pesos e redistribuído para motherboard
@@ -2891,10 +3077,25 @@
                     }
                 });
             }
-        }
-
-
-        // EVENT LISTENERS
+        // ========================================================================================
+        // EVENT LISTENERS SECTION
+        // ========================================================================================
+        // **AI-FRIENDLY DOCUMENTATION**
+        // **Purpose:** Centralized event handling for all user interactions and DOM events.
+        // **Design Decisions:**
+        // - Single setupEventListeners function called once on initialization for performance.
+        // - Event delegation used where possible (e.g., software tabs) to reduce memory usage.
+        // - Input validation and state updates integrated directly in event handlers.
+        // - Modal management centralized with consistent show/hide patterns.
+        // **AI Notes:**
+        // - TODO: Consider extracting complex event handlers (like assisted mode) into separate functions for better testability.
+        // - FIXME: Some event listeners have inline functions; could be extracted for reusability.
+        // - NOTE: WhatsApp integration handlers are tightly coupled to UI; consider abstracting message generation.
+        // **Maintenance Guidelines:**
+        // - When adding new interactive elements, add corresponding event listeners here.
+        // - Test event handlers across different modes (basic/advanced/assisted) and tabs.
+        // - Keep event handler functions concise; delegate complex logic to separate functions.
+        // ========================================================================================
         function setupEventListeners() {
             document.getElementById('quality-slider').addEventListener('input', (event) => {
                 const value = parseInt(event.target.value);
@@ -3724,8 +3925,25 @@
             } catch (error) {
                 console.error('Erro ao criar gráficos:', error);
             }
-        }
-        
+        // ========================================================================================
+        // APPLICATION INITIALIZATION AND AI INTEGRATION
+        // ========================================================================================
+        // **AI-FRIENDLY DOCUMENTATION**
+        // **Purpose:** Main application bootstrap and AI integration setup on DOM ready.
+        // **Design Decisions:**
+        // - DOMContentLoaded event ensures all DOM elements are available before initialization.
+        // - Sequential initialization order: UI setup → data population → event binding → display updates.
+        // - AI integration lazy-loaded on tab click to avoid unnecessary API calls.
+        // - Timeout delay for AI tab initialization to ensure DOM rendering completion.
+        // **AI Notes:**
+        // - TODO: Consider using requestIdleCallback for non-critical initialization steps.
+        // - FIXME: Multiple initialization functions called sequentially; could be batched.
+        // - NOTE: AI integration separated from main initialization for performance.
+        // **Maintenance Guidelines:**
+        // - Keep initialization order logical to avoid dependency issues.
+        // - Test initialization on different devices and connection speeds.
+        // - Monitor for race conditions between DOM ready and initialization functions.
+        // ========================================================================================
         // INITIALIZATION on DOMContentLoaded
         document.addEventListener('DOMContentLoaded', () => {
             showTab('concept'); 
@@ -3747,6 +3965,25 @@
             updateIntegratedDisplay();
         });
         
+        // ========================================================================================
+        // GEMINI AI INTEGRATION SECTION
+        // ========================================================================================
+        // **AI-FRIENDLY DOCUMENTATION**
+        // **Purpose:** AI-powered hardware analysis and upgrade recommendations using Google's Gemini API.
+        // **Design Decisions:**
+        // - Asynchronous API calls with proper error handling and loading states.
+        // - Dynamic prompt construction based on current component selection.
+        // - Lazy initialization on tab click to avoid unnecessary API calls.
+        // - Portuguese language responses for Brazilian user base.
+        // **AI Notes:**
+        // - TODO: Extract API key from environment variables for security.
+        // - FIXME: Hard-coded API key placeholder needs proper configuration.
+        // - NOTE: Prompt engineering optimized for concise, actionable responses.
+        // **Maintenance Guidelines:**
+        // - Update prompts based on user feedback and API response quality.
+        // - Monitor API usage and implement rate limiting if needed.
+        // - Test with various component combinations to ensure prompt reliability.
+        // ========================================================================================
         // --- GEMINI API INTEGRATION ---
         async function callGemini(prompt, outputElement, buttonElement) {
             outputElement.textContent = 'Analisando...';
@@ -3820,6 +4057,25 @@
             }, 100);
         });
         
+        // ========================================================================================
+        // AI CHARTS INITIALIZATION
+        // ========================================================================================
+        // **AI-FRIENDLY DOCUMENTATION**
+        // **Purpose:** Initialize performance charts and OS comparison visualizations in the AI integration tab.
+        // **Design Decisions:**
+        // - Chart.js library for consistent, responsive visualizations.
+        // - Dynamic FPS calculations based on performance score multiplier.
+        // - Chart destruction and recreation to handle re-initialization.
+        // - Static OS comparison data for educational purposes.
+        // **AI Notes:**
+        // - TODO: Consider making OS comparison data dynamic based on selected components.
+        // - FIXME: Hard-coded game FPS baselines; could be made configurable.
+        // - NOTE: Charts use global window properties for cleanup; consider proper state management.
+        // **Maintenance Guidelines:**
+        // - Update game list and FPS baselines periodically for relevance.
+        // - Test chart responsiveness across different screen sizes.
+        // - Ensure Chart.js library is loaded before calling initializeAICharts.
+        // ========================================================================================
         // Inicializar os gráficos na aba de integração com IA
         function initializeAICharts() {
             // Gráfico de performance em jogos
