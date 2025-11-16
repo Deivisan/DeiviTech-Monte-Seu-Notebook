@@ -68,15 +68,15 @@ const components = {
                 { id: 'nvme-gen5-1tb', name: 'SSD NVMe 1TB (PCIe 5.0) Extreme', price: 380, interface: 'NVMe', pcie_gen: 'Gen5', performance_score: 95, stock: 7, advanced_only: true, icon: 'fas fa-rocket', description_advanced: 'SSD NVMe de 1TB, interface PCIe 5.0 x4 (até 12000MB/s+). Tecnologia de ponta para máxima performance, requer placa-mãe compatível.' },
                 { id: 'nvme-gen5-2tb', name: 'SSD NVMe 2TB (PCIe 5.0) Monstro', price: 680, interface: 'NVMe', pcie_gen: 'Gen5', performance_score: 110, stock: 5, advanced_only: true, icon: 'fas fa-rocket', description_advanced: 'SSD NVMe de 2TB, interface PCIe 5.0 x4. Capacidade e velocidade extremas para os usuários mais exigentes.' },
             ],            gpu: [ 
-                { id: 'integrated', name: 'GPU Integrada (Processador)', price: 0, pcie_gen: 'N/A', performance_score: 15, stock: 999, icon: 'fas fa-image', description_advanced: 'Utiliza os gráficos integrados ao processador (Intel Iris Xe, AMD Radeon Graphics). Adequada para tarefas básicas, multimídia e jogos muito leves. O desempenho varia conforme a CPU.' }, 
-                { id: 'nvidia-gtx-1650-mobile', name: 'NVIDIA GTX 1650 Mobile (4GB GDDR6)', price: 380, pcie_gen: 'Gen3', performance_score: 40, stock: 12, icon: 'fas fa-gamepad', description_advanced: 'NVIDIA GeForce GTX 1650 para notebooks com 4GB de memória GDDR6. Boa para jogos em 1080p com configurações médias. Eficiência energética otimizada.' }, 
-                { id: 'nvidia-rtx-3050-mobile', name: 'NVIDIA RTX 3050 Mobile (6GB GDDR6)', price: 520, pcie_gen: 'Gen4', performance_score: 58, stock: 15, icon: 'fas fa-gamepad', description_advanced: 'NVIDIA GeForce RTX 3050 Mobile com 6GB GDDR6. Suporte a Ray Tracing e DLSS. Boa para jogos em 1080p (médio-alto) em notebooks.' }, 
-                { id: 'nvidia-rtx-4060-mobile', name: 'NVIDIA RTX 4060 Mobile (8GB GDDR6)', price: 850, pcie_gen: 'Gen4', performance_score: 80, stock: 10, icon: 'fas fa-gamepad', description_advanced: 'NVIDIA GeForce RTX 4060 Mobile com 8GB GDDR6. Arquitetura Ada Lovelace, eficiente e com DLSS 3. Excelente para 1080p/1440p gaming em notebooks.' },
-                { id: 'nvidia-rtx-4070-mobile', name: 'NVIDIA RTX 4070 Mobile (8GB GDDR6X)', price: 1280, pcie_gen: 'Gen4', performance_score: 100, stock: 7, advanced_only: true, icon: 'fas fa-fighter-jet', description_advanced: 'NVIDIA GeForce RTX 4070 Mobile com 8GB GDDR6X. Alto desempenho para notebooks gaming com Ray Tracing e DLSS 3 em 1440p.' },
-                { id: 'nvidia-rtx-4080-mobile', name: 'NVIDIA RTX 4080 Mobile (12GB GDDR6X)', price: 1850, pcie_gen: 'Gen4', performance_score: 130, stock: 3, advanced_only: true, icon: 'fas fa-space-shuttle', description_advanced: 'NVIDIA GeForce RTX 4080 Mobile com 12GB GDDR6X. Performance máxima para notebooks gaming premium, ideal para 1440p/4K gaming com Ray Tracing.' },
-                { id: 'amd-rx-6600m', name: 'AMD RX 6600M Mobile (8GB GDDR6)', price: 450, pcie_gen: 'Gen4', performance_score: 55, stock: 13, icon: 'fas fa-gamepad', description_advanced: 'AMD Radeon RX 6600M com 8GB GDDR6. Placa móvel RDNA2 para jogos em 1080p (médio-alto) com boa eficiência energética.' }, 
-                { id: 'amd-rx-7600m', name: 'AMD RX 7600M Mobile (8GB GDDR6)', price: 720, pcie_gen: 'Gen4', performance_score: 75, stock: 9, icon: 'fas fa-gamepad', description_advanced: 'AMD Radeon RX 7600M com 8GB GDDR6. Arquitetura RDNA3 móvel. Ótima para jogos em 1080p (alto) e bom desempenho em 1440p em notebooks.' },
-                { id: 'amd-rx-7700m', name: 'AMD RX 7700M Mobile (12GB GDDR6)', price: 1100, pcie_gen: 'Gen4', performance_score: 95, stock: 6, advanced_only: true, icon: 'fas fa-fighter-jet', description_advanced: 'AMD Radeon RX 7700M com 12GB GDDR6. Excelente performance em notebooks gaming para 1440p e competente em 4K.' },
+                { id: 'integrated', name: 'GPU Integrada (Processador)', price: 0, pcie_gen: 'N/A', performance_score: 15, stock: 999, icon: 'fas fa-image', description_advanced: 'Utiliza os gráficos integrados ao processador (Intel Iris Xe, AMD Radeon Graphics). Adequada para tarefas básicas, multimídia e jogos muito leves. O desempenho varia conforme a CPU.', tdp: 0 }, 
+                { id: 'nvidia-gtx-1650-mobile', name: 'NVIDIA GTX 1650 Mobile (4GB GDDR6)', price: 380, pcie_gen: 'Gen3', performance_score: 40, stock: 12, icon: 'fas fa-gamepad', description_advanced: 'NVIDIA GeForce GTX 1650 para notebooks com 4GB de memória GDDR6. Boa para jogos em 1080p com configurações médias. Eficiência energética otimizada.', tdp: 50 }, 
+                { id: 'nvidia-rtx-3050-mobile', name: 'NVIDIA RTX 3050 Mobile (6GB GDDR6)', price: 520, pcie_gen: 'Gen4', performance_score: 58, stock: 15, icon: 'fas fa-gamepad', description_advanced: 'NVIDIA GeForce RTX 3050 Mobile com 6GB GDDR6. Suporte a Ray Tracing e DLSS. Boa para jogos em 1080p (médio-alto) em notebooks.', tdp: 80 }, 
+                { id: 'nvidia-rtx-4060-mobile', name: 'NVIDIA RTX 4060 Mobile (8GB GDDR6)', price: 850, pcie_gen: 'Gen4', performance_score: 80, stock: 10, icon: 'fas fa-gamepad', description_advanced: 'NVIDIA GeForce RTX 4060 Mobile com 8GB GDDR6. Arquitetura Ada Lovelace, eficiente e com DLSS 3. Excelente para 1080p/1440p gaming em notebooks.', tdp: 115 },
+                { id: 'nvidia-rtx-4070-mobile', name: 'NVIDIA RTX 4070 Mobile (8GB GDDR6X)', price: 1280, pcie_gen: 'Gen4', performance_score: 100, stock: 7, advanced_only: true, icon: 'fas fa-fighter-jet', description_advanced: 'NVIDIA GeForce RTX 4070 Mobile com 8GB GDDR6X. Alto desempenho para notebooks gaming com Ray Tracing e DLSS 3 em 1440p.', tdp: 140 },
+                { id: 'nvidia-rtx-4080-mobile', name: 'NVIDIA RTX 4080 Mobile (12GB GDDR6X)', price: 1850, pcie_gen: 'Gen4', performance_score: 130, stock: 3, advanced_only: true, icon: 'fas fa-space-shuttle', description_advanced: 'NVIDIA GeForce RTX 4080 Mobile com 12GB GDDR6X. Performance máxima para notebooks gaming premium, ideal para 1440p/4K gaming com Ray Tracing.', tdp: 175 },
+                { id: 'amd-rx-6600m', name: 'AMD RX 6600M Mobile (8GB GDDR6)', price: 450, pcie_gen: 'Gen4', performance_score: 55, stock: 13, icon: 'fas fa-gamepad', description_advanced: 'AMD Radeon RX 6600M com 8GB GDDR6. Placa móvel RDNA2 para jogos em 1080p (médio-alto) com boa eficiência energética.', tdp: 100 }, 
+                { id: 'amd-rx-7600m', name: 'AMD RX 7600M Mobile (8GB GDDR6)', price: 720, pcie_gen: 'Gen4', performance_score: 75, stock: 9, icon: 'fas fa-gamepad', description_advanced: 'AMD Radeon RX 7600M com 8GB GDDR6. Arquitetura RDNA3 móvel. Ótima para jogos em 1080p (alto) e bom desempenho em 1440p em notebooks.', tdp: 120 },
+                { id: 'amd-rx-7700m', name: 'AMD RX 7700M Mobile (12GB GDDR6)', price: 1100, pcie_gen: 'Gen4', performance_score: 95, stock: 6, advanced_only: true, icon: 'fas fa-fighter-jet', description_advanced: 'AMD Radeon RX 7700M com 12GB GDDR6. Excelente performance em notebooks gaming para 1440p e competente em 4K.', tdp: 150 },
             ],
             display: [ 
                 { id: 'disp-15fhd60', name: '15.6" FHD IPS (1920x1080, 60Hz)', price: 200, performance_score: 20, stock: 18, icon: 'fas fa-desktop', description_advanced: 'Tela de 15.6 polegadas, resolução Full HD (1920x1080), painel IPS para boas cores e ângulos de visão, taxa de atualização de 60Hz. Padrão para uso geral.' }, 
@@ -280,5 +280,633 @@ const getComponentById = (category, id) => {
     if (!id || id === 'none' || id === 'peri-none') return null;
     return components[category]?.find(c => c.id === id) || null;
 };
+
+// VALIDAÇÃO DE DADOS - NOVAS FUNÇÕES
+function validateComponentCompatibility() {
+    const errors = [];
+    const warnings = [];
+    
+    // 1. Validação de compatibilidade CPU/Motherboard
+    if (selectedComponents.cpu && selectedComponents.motherboard) {
+        const cpu = getComponentById('cpu', selectedComponents.cpu);
+        const mobo = getComponentById('motherboard', selectedComponents.motherboard);
+        
+        if (cpu && mobo) {
+            if (cpu.socket !== mobo.cpu_socket) {
+                errors.push(`❌ CPU ${cpu.name} não é compatível com a placa-mãe ${mobo.name} (socket ${cpu.socket} vs ${mobo.cpu_socket})`);
+            }
+        }
+    }
+    
+    // 2. Validação de compatibilidade RAM/Motherboard
+    if (selectedComponents.ram.type && selectedComponents.motherboard) {
+        const ram = getComponentById('ram', selectedComponents.ram.type);
+        const mobo = getComponentById('motherboard', selectedComponents.motherboard);
+        
+        if (ram && mobo) {
+            if (ram.type !== mobo.ram_type) {
+                errors.push(`❌ Memória ${ram.name} não é compatível com a placa-mãe ${mobo.name} (${ram.type} vs ${mobo.ram_type})`);
+            }
+            
+            if (selectedComponents.ram.quantity > mobo.ram_slots) {
+                errors.push(`❌ Quantidade de módulos RAM (${selectedComponents.ram.quantity}) excede os slots disponíveis na placa-mãe (${mobo.ram_slots})`);
+            }
+        }
+    }
+    
+    // 3. Validação de requisitos de energia (PSU)
+    const totalPowerDraw = calculatePowerConsumption();
+    if (totalPowerDraw > 0) {
+        // Nota: Como não temos seleção de PSU ainda, apenas warning
+        if (totalPowerDraw > 300) { // Threshold básico
+            warnings.push(`⚠️ Consumo estimado de ${totalPowerDraw}W - considere fonte de alimentação adequada`);
+        }
+    }
+    
+    // 4. Validação de compatibilidade GPU/PCIe
+    if (selectedComponents.gpu && selectedComponents.motherboard) {
+        const gpu = getComponentById('gpu', selectedComponents.gpu);
+        const mobo = getComponentById('motherboard', selectedComponents.motherboard);
+        
+        if (gpu && mobo && gpu.pcie_gen && mobo.pcie_gen) {
+            const gpuGen = parseInt(gpu.pcie_gen.replace('Gen', ''));
+            const moboGen = parseInt(mobo.pcie_gen.replace('Gen', ''));
+            
+            if (gpuGen > moboGen) {
+                warnings.push(`⚠️ GPU ${gpu.name} requer PCIe ${gpu.pcie_gen}, mas placa-mãe suporta apenas ${mobo.pcie_gen}`);
+            }
+        }
+    }
+    
+    // 5. Validação de slots de armazenamento
+    if (selectedComponents.storage1.type && selectedComponents.motherboard) {
+        const storage = getComponentById('storage', selectedComponents.storage1.type);
+        const mobo = getComponentById('motherboard', selectedComponents.motherboard);
+        
+        if (storage && mobo) {
+            if (storage.interface === 'NVMe' && mobo.nvme_slots < 1) {
+                errors.push(`❌ Armazenamento ${storage.name} requer slot NVMe, mas placa-mãe não possui`);
+            }
+        }
+    }
+    
+    return { errors, warnings };
+}
+
+function calculatePowerConsumption() {
+    let totalWatts = 0;
+    
+    // CPU TDP
+    if (selectedComponents.cpu) {
+        const cpu = getComponentById('cpu', selectedComponents.cpu);
+        if (cpu && cpu.tdp) totalWatts += cpu.tdp;
+        else totalWatts += 65; // TDP médio estimado
+    }
+    
+    // GPU TDP
+    if (selectedComponents.gpu) {
+        const gpu = getComponentById('gpu', selectedComponents.gpu);
+        if (gpu && gpu.tdp) totalWatts += gpu.tdp;
+        else if (selectedComponents.gpu !== 'integrated') totalWatts += 150; // TDP médio para GPUs dedicadas
+    }
+    
+    // Outros componentes (estimativa)
+    totalWatts += 50; // Mobo, RAM, storage, etc.
+    
+    return totalWatts;
+}
+
+// SISTEMA DE PREÇOS DINÂMICOS
+function calculateComponentPrices() {
+    let totalHardware = 0;
+    let totalSoftware = 0;
+    let totalServices = 0;
+    
+    // Calcular hardware
+    Object.entries(selectedComponents).forEach(([category, value]) => {
+        if (value && typeof value === 'string' && value !== 'none') {
+            const component = getComponentById(category, value);
+            if (component && component.price) {
+                totalHardware += component.price;
+            }
+        } else if (category === 'ram' && value && value.type) {
+            const ram = getComponentById('ram', value.type);
+            if (ram && ram.price) {
+                totalHardware += ram.price * (value.quantity || 1);
+            }
+        }
+    });
+    
+    // Calcular software
+    if (selectedComponents.software && Array.isArray(selectedComponents.software)) {
+        selectedComponents.software.forEach(softwareId => {
+            // Procurar em todas as categorias de software
+            Object.values(softwareCategories).forEach(category => {
+                const software = category.find(s => s.id === softwareId);
+                if (software && software.price) {
+                    totalSoftware += software.price;
+                }
+            });
+        });
+    }
+    
+    // Calcular serviços
+    if (selectedServices && Array.isArray(selectedServices)) {
+        selectedServices.forEach(serviceId => {
+            const service = services.find(s => s.id === serviceId);
+            if (service && service.basePrice) {
+                totalServices += service.basePrice;
+            }
+        });
+    }
+    
+    return { totalHardware, totalSoftware, totalServices };
+}
+
+function calculateDynamicMarkup() {
+    let markupPercentage = 0;
+    let performanceScore = 0;
+    let complexityMultiplier = 1;
+    
+    // Calcular score de performance total
+    Object.entries(selectedComponents).forEach(([category, value]) => {
+        if (value && typeof value === 'string' && value !== 'none') {
+            const component = getComponentById(category, value);
+            if (component && component.performance_score) {
+                performanceScore += component.performance_score;
+            }
+        } else if (category === 'ram' && value && value.type) {
+            const ram = getComponentById('ram', value.type);
+            if (ram && ram.performance_score) {
+                performanceScore += ram.performance_score * (value.quantity || 1);
+            }
+        }
+    });
+    
+    // Markup baseado na performance
+    if (performanceScore < 50) {
+        markupPercentage = 15; // Básico - markup menor
+    } else if (performanceScore < 100) {
+        markupPercentage = 25; // Intermediário
+    } else if (performanceScore < 150) {
+        markupPercentage = 35; // Avançado
+    } else {
+        markupPercentage = 45; // Premium
+    }
+    
+    // Multiplicador de complexidade
+    const componentCount = Object.values(selectedComponents).filter(v => v && v !== 'none').length;
+    if (componentCount > 8) complexityMultiplier = 1.1; // Configuração complexa
+    if (componentCount > 10) complexityMultiplier = 1.2; // Muito complexa
+    
+    // Bonus para configurações balanceadas
+    const hasCpu = selectedComponents.cpu;
+    const hasGpu = selectedComponents.gpu && selectedComponents.gpu !== 'integrated';
+    const hasGoodRam = selectedComponents.ram && selectedComponents.ram.type && 
+                      getComponentById('ram', selectedComponents.ram.type)?.performance_score > 30;
+    
+    if (hasCpu && hasGpu && hasGoodRam && performanceScore > 80) {
+        complexityMultiplier *= 0.95; // Desconto para configurações bem balanceadas
+    }
+    
+    return { markupPercentage, complexityMultiplier, performanceScore };
+}
+
+function calculateFinalPrice() {
+    const { totalHardware, totalSoftware, totalServices } = calculateComponentPrices();
+    const { markupPercentage, complexityMultiplier } = calculateDynamicMarkup();
+    
+    // Calcular markup sobre hardware
+    const hardwareMarkup = totalHardware * (markupPercentage / 100);
+    const finalHardware = (totalHardware + hardwareMarkup) * complexityMultiplier;
+    
+    // Software e serviços sem markup adicional
+    const finalSoftware = totalSoftware;
+    const finalServices = totalServices;
+    
+    // Aplicar desconto trade-in
+    const tradeInDiscount = tradeInCredit || 0;
+    
+    const subtotal = finalHardware + finalSoftware + finalServices;
+    const total = Math.max(0, subtotal - tradeInDiscount);
+    
+    return {
+        hardware: finalHardware,
+        software: finalSoftware,
+        services: finalServices,
+        subtotal: subtotal,
+        tradeInDiscount: tradeInDiscount,
+        total: total,
+        markupAmount: hardwareMarkup,
+        markupPercentage: markupPercentage,
+        complexityMultiplier: complexityMultiplier
+    };
+}
+
+function updatePriceDisplay() {
+    const priceBreakdown = calculateFinalPrice();
+    
+    // Atualizar elementos na interface
+    const hardwarePriceEl = document.getElementById('hardware-price');
+    const softwarePriceEl = document.getElementById('software-price');
+    const servicesPriceEl = document.getElementById('services-price');
+    const subtotalPriceEl = document.getElementById('subtotal-price');
+    const tradeInDiscountEl = document.getElementById('tradein-discount');
+    const totalPriceEl = document.getElementById('total-price');
+    
+    if (hardwarePriceEl) hardwarePriceEl.textContent = formatPrice(priceBreakdown.hardware);
+    if (softwarePriceEl) softwarePriceEl.textContent = formatPrice(priceBreakdown.software);
+    if (servicesPriceEl) servicesPriceEl.textContent = formatPrice(priceBreakdown.services);
+    if (subtotalPriceEl) subtotalPriceEl.textContent = formatPrice(priceBreakdown.subtotal);
+    if (tradeInDiscountEl) tradeInDiscountEl.textContent = formatPrice(priceBreakdown.tradeInDiscount);
+    if (totalPriceEl) totalPriceEl.textContent = formatPrice(priceBreakdown.total);
+    
+    // Atualizar informações de markup (se houver elementos na UI)
+    const markupInfoEl = document.getElementById('markup-info');
+    if (markupInfoEl) {
+        markupInfoEl.innerHTML = `
+            <small class="text-muted">
+                Markup: ${priceBreakdown.markupPercentage}% | 
+                Complexidade: ${priceBreakdown.complexityMultiplier.toFixed(2)}x
+            </small>
+        `;
+    }
+    
+    console.log('💰 Preços atualizados:', priceBreakdown);
+}
+
+function validateDataIntegrity() {
+    const issues = [];
+    
+    // Verificar se componentes obrigatórios estão selecionados
+    const requiredComponents = ['platform', 'motherboard', 'cpu'];
+    requiredComponents.forEach(comp => {
+        if (!selectedComponents[comp]) {
+            issues.push(`Componente obrigatório não selecionado: ${comp}`);
+        }
+    });
+    
+    // Verificar estoque
+    Object.entries(selectedComponents).forEach(([category, value]) => {
+        if (value && typeof value === 'string' && value !== 'none') {
+            const component = getComponentById(category, value);
+            if (component && component.stock !== undefined && component.stock <= 0) {
+                issues.push(`Componente fora de estoque: ${component.name}`);
+            }
+        }
+    });
+    
+    return issues;
+}
+
+function showValidationMessages() {
+    const { errors, warnings } = validateComponentCompatibility();
+    const dataIssues = validateDataIntegrity();
+    
+    // Limpar mensagens anteriores
+    const existingMessages = document.querySelectorAll('.validation-message');
+    existingMessages.forEach(msg => msg.remove());
+    
+    const container = document.getElementById('configure-tab-content') || document.body;
+    
+    // Mostrar erros críticos
+    if (errors.length > 0) {
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'validation-message error-message';
+        errorDiv.innerHTML = `
+            <div class="alert alert-danger">
+                <h4><i class="fas fa-exclamation-triangle"></i> Problemas de Compatibilidade Detectados:</h4>
+                <ul>${errors.map(err => `<li>${err}</li>`).join('')}</ul>
+            </div>
+        `;
+        container.insertBefore(errorDiv, container.firstChild);
+    }
+    
+    // Mostrar warnings
+    if (warnings.length > 0) {
+        const warningDiv = document.createElement('div');
+        warningDiv.className = 'validation-message warning-message';
+        warningDiv.innerHTML = `
+            <div class="alert alert-warning">
+                <h4><i class="fas fa-exclamation-circle"></i> Avisos de Compatibilidade:</h4>
+                <ul>${warnings.map(warn => `<li>${warn}</li>`).join('')}</ul>
+            </div>
+        `;
+        container.insertBefore(warningDiv, container.firstChild);
+    }
+    
+    // Mostrar problemas de dados
+    if (dataIssues.length > 0) {
+        const dataDiv = document.createElement('div');
+        dataDiv.className = 'validation-message data-message';
+        dataDiv.innerHTML = `
+            <div class="alert alert-info">
+                <h4><i class="fas fa-info-circle"></i> Verificações de Dados:</h4>
+                <ul>${dataIssues.map(issue => `<li>${issue}</li>`).join('')}</ul>
+            </div>
+        `;
+        container.insertBefore(dataDiv, container.firstChild);
+    }
+}
+
+// SISTEMA DE PREÇOS DINÂMICOS - ATUALIZAÇÃO DA INTERFACE
+function updatePriceDisplay() {
+    try {
+        const priceBreakdown = calculateFinalPrice();
+        
+        // Atualizar elementos na interface
+        const hardwarePriceEl = document.getElementById('hardware-price');
+        const softwarePriceEl = document.getElementById('software-price');
+        const servicesPriceEl = document.getElementById('services-price');
+        const subtotalPriceEl = document.getElementById('subtotal-price');
+        const tradeInDiscountEl = document.getElementById('tradein-discount');
+        const totalPriceEl = document.getElementById('total-price');
+        
+        if (hardwarePriceEl) hardwarePriceEl.textContent = formatPrice(priceBreakdown.hardware);
+        if (softwarePriceEl) softwarePriceEl.textContent = formatPrice(priceBreakdown.software);
+        if (servicesPriceEl) servicesPriceEl.textContent = formatPrice(priceBreakdown.services);
+        if (subtotalPriceEl) subtotalPriceEl.textContent = formatPrice(priceBreakdown.subtotal);
+        if (tradeInDiscountEl) tradeInDiscountEl.textContent = formatPrice(priceBreakdown.tradeInDiscount);
+        if (totalPriceEl) totalPriceEl.textContent = formatPrice(priceBreakdown.total);
+        
+        // Atualizar informações de markup (se houver elementos na UI)
+        const markupInfoEl = document.getElementById('markup-info');
+        if (markupInfoEl) {
+            markupInfoEl.innerHTML = `
+                <small class="text-muted">
+                    Markup: ${priceBreakdown.markupPercentage}% | 
+                    Complexidade: ${priceBreakdown.complexityMultiplier.toFixed(2)}x
+                </small>
+            `;
+        }
+        
+        console.log('💰 Preços atualizados:', priceBreakdown);
+    } catch (error) {
+        console.error('❌ Erro ao atualizar preços:', error);
+        showErrorMessage('Erro ao calcular preços. Verifique a configuração.');
+    }
+}
+
+// SISTEMA DE PERSISTÊNCIA COM LOCALSTORAGE
+function saveConfiguration() {
+    try {
+        const config = {
+            selectedComponents: selectedComponents,
+            selectedServices: selectedServices,
+            tradeInCredit: tradeInCredit,
+            currentMode: currentMode,
+            currentPresetName: currentPresetName,
+            activeTab: activeTab,
+            currentSoftwareTab: currentSoftwareTab,
+            timestamp: new Date().toISOString()
+        };
+        
+        localStorage.setItem('notebookConfig', JSON.stringify(config));
+        console.log('💾 Configuração salva no localStorage');
+        
+        showSuccessMessage('Configuração salva com sucesso!');
+        
+    } catch (error) {
+        console.error('❌ Erro ao salvar configuração:', error);
+        showErrorMessage('Erro ao salvar configuração. Verifique o espaço disponível no navegador.');
+    }
+}
+
+function loadConfiguration() {
+    try {
+        const savedConfig = localStorage.getItem('notebookConfig');
+        if (savedConfig) {
+            const config = JSON.parse(savedConfig);
+            
+            // Restaurar estado
+            selectedComponents = { ...selectedComponents, ...config.selectedComponents };
+            selectedServices = config.selectedServices || [];
+            tradeInCredit = config.tradeInCredit || 0;
+            currentMode = config.currentMode || 'basic';
+            currentPresetName = config.currentPresetName || "Balanceado";
+            activeTab = config.activeTab || 'configure';
+            currentSoftwareTab = config.currentSoftwareTab || 'multimedia';
+            
+            console.log('📂 Configuração carregada do localStorage:', config.timestamp);
+            
+            showSuccessMessage('Configuração carregada com sucesso!');
+            
+            // Atualizar interface
+            setTimeout(() => {
+                updateUIFromConfiguration();
+                showValidationMessages();
+                updatePriceDisplay();
+            }, 500);
+            
+            return true;
+        }
+    } catch (error) {
+        console.error('❌ Erro ao carregar configuração:', error);
+        showErrorMessage('Erro ao carregar configuração salva.');
+    }
+    return false;
+}
+
+function clearConfiguration() {
+    try {
+        localStorage.removeItem('notebookConfig');
+        
+        // Resetar para valores padrão
+        selectedComponents = {
+            platform: null, casing: null, motherboard: null, cpu: null,
+            ram: { type: null, quantity: 1 },
+            storage1: { type: null }, storage2: { type: 'none' },
+            gpu: null, display: null, keyboard: null, os: null,
+            os2: null, dualboot_disk: 'same',
+            network_adapter: null, battery: null,
+            peripherals: [],
+            software: []
+        };
+        selectedServices = [];
+        tradeInCredit = 0;
+        currentMode = 'basic';
+        currentPresetName = "Balanceado";
+        activeTab = 'configure';
+        currentSoftwareTab = 'multimedia';
+        
+        console.log('🗑️ Configuração limpa');
+        
+        showSuccessMessage('Configuração limpa com sucesso!');
+        
+        // Atualizar interface
+        updateUIFromConfiguration();
+        showValidationMessages();
+        updatePriceDisplay();
+        
+    } catch (error) {
+        console.error('❌ Erro ao limpar configuração:', error);
+        showErrorMessage('Erro ao limpar configuração.');
+    }
+}
+
+function updateUIFromConfiguration() {
+    try {
+        // Atualizar modo (basic/advanced)
+        const modeToggle = document.getElementById('mode-toggle');
+        if (modeToggle) {
+            modeToggle.checked = currentMode === 'advanced';
+        }
+        
+        // Atualizar aba ativa (simulação)
+        const tabs = document.querySelectorAll('[data-tab]');
+        tabs.forEach(tab => {
+            if (tab.getAttribute('data-tab') === activeTab) {
+                tab.click();
+            }
+        });
+        
+        console.log('🔄 Interface atualizada baseada na configuração');
+    } catch (error) {
+        console.error('❌ Erro ao atualizar interface:', error);
+    }
+}
+
+function showErrorMessage(message) {
+    try {
+        let errorContainer = document.getElementById('global-error-container');
+        if (!errorContainer) {
+            errorContainer = document.createElement('div');
+            errorContainer.id = 'global-error-container';
+            errorContainer.className = 'alert alert-danger position-fixed';
+            errorContainer.style.cssText = 'top: 20px; right: 20px; z-index: 9999; max-width: 400px;';
+            document.body.appendChild(errorContainer);
+        }
+        
+        errorContainer.innerHTML = `
+            <i class="fas fa-exclamation-triangle"></i> ${message}
+            <button type="button" class="btn-close" onclick="this.parentElement.style.display='none'"></button>
+        `;
+        errorContainer.style.display = 'block';
+        
+        // Auto-hide após 5 segundos
+        setTimeout(() => {
+            if (errorContainer) errorContainer.style.display = 'none';
+        }, 5000);
+        
+    } catch (error) {
+        console.error('❌ Erro ao mostrar mensagem de erro:', error);
+        alert(message); // Fallback
+    }
+}
+
+function showSuccessMessage(message) {
+    try {
+        let successContainer = document.getElementById('global-success-container');
+        if (!successContainer) {
+            successContainer = document.createElement('div');
+            successContainer.id = 'global-success-container';
+            successContainer.className = 'alert alert-success position-fixed';
+            successContainer.style.cssText = 'top: 20px; right: 20px; z-index: 9999; max-width: 400px;';
+            document.body.appendChild(successContainer);
+        }
+        
+        successContainer.innerHTML = `
+            <i class="fas fa-check-circle"></i> ${message}
+            <button type="button" class="btn-close" onclick="this.parentElement.style.display='none'"></button>
+        `;
+        successContainer.style.display = 'block';
+        
+        setTimeout(() => {
+            if (successContainer) successContainer.style.display = 'none';
+        }, 3000);
+        
+    } catch (error) {
+        console.log('✅', message);
+    }
+}
+
+// INICIALIZAÇÃO E EVENTOS GLOBAIS
+document.addEventListener('DOMContentLoaded', function() {
+    // Carregar configuração salva
+    loadConfiguration();
+    
+    // Validação inicial e preços
+    setTimeout(() => {
+        showValidationMessages();
+        updatePriceDisplay();
+    }, 1000);
+    
+    // Adicionar validação e atualização de preços em tempo real (debounced)
+    let updateTimeout;
+    function debouncedUpdate() {
+        clearTimeout(updateTimeout);
+        updateTimeout = setTimeout(() => {
+            showValidationMessages();
+            updatePriceDisplay();
+        }, 500);
+    }
+    
+    // Observar mudanças nos componentes selecionados
+    const observer = new MutationObserver(debouncedUpdate);
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ['class', 'checked']
+    });
+    
+    // Event listeners para botões de persistência
+    const saveButton = document.getElementById('save-config-button');
+    if (saveButton) {
+        saveButton.addEventListener('click', saveConfiguration);
+    }
+    
+    const loadButton = document.getElementById('load-config-button');
+    if (loadButton) {
+        loadButton.addEventListener('click', loadConfiguration);
+    }
+    
+    const clearButton = document.getElementById('clear-config-button');
+    if (clearButton) {
+        clearButton.addEventListener('click', clearConfiguration);
+    }
+    
+    // Auto-save a cada 30 segundos se houver mudanças
+    let lastConfigHash = '';
+    setInterval(() => {
+        try {
+            const currentConfig = JSON.stringify({
+                selectedComponents,
+                selectedServices,
+                tradeInCredit
+            });
+            if (currentConfig !== lastConfigHash && lastConfigHash !== '') {
+                saveConfiguration();
+                lastConfigHash = currentConfig;
+            } else if (lastConfigHash === '') {
+                lastConfigHash = currentConfig;
+            }
+        } catch (error) {
+            console.error('❌ Erro no auto-save:', error);
+        }
+    }, 30000);
+    
+    // Validação manual e atualização de preços ao clicar no botão de finalizar
+    const finalizeButton = document.getElementById('finalize-config-button');
+    if (finalizeButton) {
+        finalizeButton.addEventListener('click', function(e) {
+            const { errors } = validateComponentCompatibility();
+            if (errors.length > 0) {
+                e.preventDefault();
+                alert('Por favor, corrija os problemas de compatibilidade antes de finalizar o pedido.');
+                showValidationMessages();
+                return false;
+            }
+            
+            // Salvar configuração antes de finalizar
+            saveConfiguration();
+            
+            // Atualizar preços finais
+            updatePriceDisplay();
+        });
+    }
+    
+    console.log('✅ Sistema completo inicializado: validação, preços dinâmicos e persistência');
+});
 
 // ...existing code...
