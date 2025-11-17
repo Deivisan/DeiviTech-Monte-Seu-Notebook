@@ -1,79 +1,69 @@
-# DeiviTech: Monte Seu Notebook Personalizado 🚀
+# DeiviTech • Configurador Inteligente ⚙️🚀
 
-**Experimente o Configurador Online!**  
-Acesse o projeto diretamente no GitHub Pages e comece a montar seu notebook agora:  
-[https://deivisan.github.io/DeiviTech-Monte-Seu-Notebook/info-projeto.html](https://deivisan.github.io/DeiviTech-Monte-Seu-Notebook/info-projeto.html)
+Next.js + TypeScript + Tailwind para reconstruir todo o ecossistema da DeiviTech com foco em IA, WhatsApp e GitHub Pages.
 
-[https://deivisan.github.io/DeiviTech-Monte-Seu-Notebook/](https://deivisan.github.io/DeiviTech-Monte-Seu-Notebook/)
+## 🌌 Visão Geral
 
+- **Objetivo** → entregar um site único, estático e exportável, que sirva como hub para configurador, serviços, trade-in e Kelly (assistente IA).
+- **Legado preservado** → toda a documentação antiga vive agora em [`docs/legacy`](docs/legacy) — inclusive o README original.
+- **Stack nova** → App Router, componentes React reutilizáveis, dados tipados em `data/`, utilitários em `lib/` e mensagens centralizadas para WhatsApp.
 
----
+## ✨ Destaques do MVP atual
 
-## 💡 Sobre o Projeto DeiviTech
+- Seções hero, highlights, jornada do configurador e snapshots de serviços com texto real baseado nos documentos legados.
+- Componente de chat “Kelly” já pronto para receber integrações externas via `NEXT_PUBLIC_KELLY_ENDPOINT`.
+- Funções reutilizáveis em `lib/whatsapp.ts` para gerar links com templates específicos (`configurator`, `services`, `tradein`, `kelly`).
+- CSS global renovado com grid cósmico, painéis glassmorphism e tokens de cor centralizados em CSS custom properties.
 
-Este projeto é uma plataforma interativa e didática que permite a você montar o notebook dos seus sonhos, selecionando cada componente de forma personalizada. Mais do que um simples simulador de preços, a DeiviTech oferece uma experiência educacional, mostrando como cada escolha impacta o desempenho e o custo final do seu equipamento.
+## 🧱 Stack Técnica
 
-A DeiviTech nasceu da paixão por tecnologia e da necessidade de simplificar o processo de escolha de um notebook. Muitas vezes, a complexidade dos componentes e as inúmeras opções podem ser esmagadoras. Nosso objetivo é desmistificar essa jornada, oferecendo uma ferramenta intuitiva onde você pode:
+- **Framework:** Next.js 16 (App Router) com `output: "export"` → pronto para GitHub Pages.
+- **Linguagem:** TypeScript estrito.
+- **Estilos:** Tailwind CSS v4 + utilitários customizados em `globals.css`.
+- **Lint:** ESLint `core-web-vitals` + `typescript` (Scrape/temp ignorados).
+- **Gerador de mensagens:** `lib/whatsapp.ts` com número configurável.
 
-- **Explorar Componentes:** Conheça as peças que compõem um notebook e entenda suas funções.
-- **Personalizar sua Máquina:** Selecione desde a carcaça até os periféricos, adaptando o notebook às suas necessidades específicas.
-- **Visualizar Impacto:** Acompanhe em tempo real como suas escolhas afetam o preço e o desempenho total do sistema.
-- **Garantir Compatibilidade:** Nosso sistema inteligente valida as compatibilidades entre os componentes, evitando configurações inviáveis.
-- **Estimar Valor de Troca:** Descubra quanto seu notebook atual pode valer para abater no valor do novo.
+## 📁 Estrutura Rápida
 
-Seja você um gamer, um profissional criativo, um estudante ou alguém que busca um notebook para uso diário, a DeiviTech é o seu laboratório virtual para construir a máquina perfeita.
+```text
+├── app/
+│   ├── layout.tsx          # Metadados + fontes + tema global
+│   ├── page.tsx            # Landing page com todas as seções atuais
+│   └── globals.css         # Estilos base + tokens de cor
+├── data/content.ts         # Arrays tipados para highlights, pipeline, personas e serviços
+├── lib/whatsapp.ts         # Builder reutilizável para CTAs do WhatsApp
+├── docs/legacy/            # Documentação completa do sistema anterior (contexto, tech debt etc.)
+├── .env                    # Variáveis públicas (WhatsApp e endpoint Kelly)
+└── ...
+```
 
----
+## ⚙️ Setup & Scripts
 
-## ✨ Funcionalidades Essenciais
+```bash
+npm install         # instala dependências
+npm run dev         # ambiente de desenvolvimento (http://localhost:3000)
+npm run lint        # ESLint (Scrape/ e temp/ ignorados por padrão)
+npm run build       # gera saída estática (next export)
+```
 
-- **Configuração Modular Intuitiva:** Navegue por seções dedicadas a cada tipo de componente, escolhendo as opções que melhor se encaixam no seu perfil.
-- **Atualização de Preço e Desempenho em Tempo Real:** A cada seleção, o preço total e uma barra de desempenho do sistema são atualizados instantaneamente.
-- **Modos de Configuração (Básico e Avançado):** Alterne entre uma visão simplificada e uma visão detalhada com especificações técnicas aprofundadas.
-- **Validação de Compatibilidade Inteligente:** O sistema filtra e sinaliza componentes incompatíveis com suas escolhas atuais.
-- **Controle de Estoque Dinâmico:** Visualize o estoque disponível para cada componente. Opções esgotadas são desabilitadas.
-- **Estimativa de Valor de Troca para Usados:** Calcule um valor estimado para o seu notebook usado.
-- **Upload de Relatório para Avaliação Detalhada:** Envie um relatório de informações do sistema para precificação precisa.
-- **Resumo Detalhado do Pedido:** Veja todas as suas escolhas organizadas antes de finalizar o pedido.
-- **Animações de Scroll Visuais:** Efeitos de fade-in ao rolar a página.
-- **Sugestões de Configuração por Perfil:** Receba uma configuração otimizada automaticamente conforme seu perfil de uso.
+> ⚠️ Para deploy estático, rode `npm run build` e publique o conteúdo de `out/` no GitHub Pages (já suportado pelo repo).
 
----
+## 🔐 Variáveis de Ambiente
 
-## 🖥️ Conheça os Componentes do Seu Notebook
+Arquivo `.env` (já versionado com placeholders conforme instruções):
 
-1. **Carcaça:** Protege os componentes internos, influencia a dissipação de calor e define a estética e portabilidade.
-2. **Placa Mãe:** "Espinha dorsal" do notebook, conecta e permite a comunicação entre todos os outros componentes.
-3. **Processador (CPU):** O "cérebro" do notebook, responsável por executar operações e cálculos.
-4. **Memória RAM:** "Espaço de trabalho" temporário, armazena dados e programas em uso para acesso rápido.
-5. **Armazenamento:** Guarda arquivos, programas e o sistema operacional (SSD NVMe, SSD SATA, HDD).
-6. **Placa de Vídeo (GPU):** Processa e renderiza imagens, vídeos e gráficos 3D (integrada ou dedicada).
-7. **Tela:** Impacta diretamente a qualidade visual e a experiência de uso (tamanhos, resoluções, tecnologias).
-8. **Teclado:** Principal interface de entrada, afeta conforto e produtividade (layouts, tipos, retroiluminação).
-9. **Bateria:** Determina a autonomia do notebook (capacidade em Wh).
-10. **Periféricos:** Acessórios externos que complementam a funcionalidade (mouse, headset, monitor, webcam, hubs).
+```env
+NEXT_PUBLIC_WHATSAPP_NUMBER=5575981231019
+NEXT_PUBLIC_KELLY_ENDPOINT=
+```
 
----
+## 🗺️ Próximos Passos Sugeridos
 
-## 🛠️ Tecnologias Utilizadas no Desenvolvimento
-
-- **HTML5:** Estruturação do conteúdo da página.
-- **CSS3 (Tailwind CSS):** Estilização e responsividade.
-- **JavaScript (Vanilla JS):** Lógica central do configurador.
-- **Google Fonts (Inter):** Fonte moderna e legível.
-
----
-
-## 📊 Potencial para Gráficos e Visualizações
-
-A estrutura do projeto permite fácil integração de funcionalidades adicionais, como:
-
-- **Gráficos de Comparação de Preços**
-- **Gráficos de Desempenho**
-- **Estatísticas de Escolha dos Usuários**
-
-Isso pode ser feito utilizando bibliotecas como [Chart.js](https://www.chartjs.org/) ou [Google Charts](https://developers.google.com/chart).
+- [ ] Implementar o configurador em React com dados vindos de `data/` e camada de domínio em `lib/`.
+- [ ] Criar componente real da Kelly com estado cliente (ex.: Zustand) e fallback local.
+- [ ] Adicionar testes unitários para funções críticas (`whatsapp`, futuras regras de compatibilidade).
+- [ ] Conectar ações do site com fluxo de deploy automático (GitHub Actions → Pages).
 
 ---
 
-Desenvolvido com dedicação por **DeiviTech**.
+Feito com 💻 por DeiviTech. Qualquer dúvida, abra uma issue ou fale direto pelo botão de WhatsApp no site! 💬
