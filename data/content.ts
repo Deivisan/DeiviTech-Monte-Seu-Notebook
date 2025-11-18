@@ -16,7 +16,7 @@ export type PersonaCard = {
   title: string;
   tagline: string;
   highlights: string[];
-  budget: string;
+  budget?: string;
 };
 
 export type ServiceSnapshot = {
@@ -27,84 +27,73 @@ export type ServiceSnapshot = {
 
 export const highlightCards: HighlightCard[] = [
   {
-    title: "Configuração Modular Inteligente",
-    description:
-      "Monte notebooks peça a peça com validações automáticas de compatibilidade, presets guiados e estimativas em tempo real.",
-    accent: "Assistido, básico ou avançado",
-    metric: "+120 combinações mapeadas",
+    title: "Sistemas Revisados",
+    description: "Windows 11 com IA ou Linux otimizado, sempre testado para performance.",
+    accent: "Qualidade garantida",
+    metric: "Revisados por técnico",
   },
   {
-    title: "Sistemas Otimizados",
-    description:
-      "Integrações futuras para recomendações inteligentes, compatibilidade com ferramentas avançadas e perfis otimizados como Ghost Spectre ou Arch Linux.",
-    accent: "Engenharia avançada",
-    metric: "Inspirado em DeiviTech Formatação",
+    title: "Tela e IA Integrada",
+    description: "Telas amplas para multitarefas e IA de navegador, ideal para produtividade.",
+    accent: "Tecnologia atual",
+    metric: "144Hz+ suporte",
   },
   {
-    title: "Fluxos WhatsApp unificados",
-    description:
-      "Mensagens formatadas com emojis e bullets para pedidos, serviços, trade-in e orçamentos específicos.",
-    accent: "Templates centralizados em lib/whatsapp",
-    metric: "5 estratégias de contato",
+    title: "Estoque Futuro",
+    description: "Lógica pronta para notebooks prontos e peças customizáveis.",
+    accent: "Escalável",
+    metric: "Próximas adições",
   },
   {
-    title: "Pronto para estoque futuro",
-    description:
-      "Dados tipados em TypeScript, camada de domínio separada e espaço reservado para integrações de inventário.",
-    accent: "Next.js + Tailwind + TS",
-    metric: "Deploy estático no GitHub Pages",
+    title: "Engenharia de Precisão",
+    description: "Montagem especializada com foco em durabilidade e performance máxima.",
+    accent: "Construído para durar",
+    metric: "Garantia estendida",
   },
 ];
 
 export const pipelineSteps: PipelineStep[] = [
   {
     badge: "01",
-    title: "Explorar necessidades",
-    description:
-      "Mapeamos perfis como gamer, criativo, dev, IA ou manutenção a partir de perguntas rápidas ou presets.",
-    detail: "Documentado em docs/legacy/dados-componentes",
+    title: "Defina seu perfil",
+    description: "Trabalho, escola ou jogos — notebooks revisados para seu uso.",
+    detail: "Personalização completa",
   },
   {
     badge: "02",
-    title: "Configurar com contexto",
-    description:
-      "Componentes, serviços e notebooks prontos compartilham mesma base de dados e regras de compatibilidade.",
-    detail: "Resumos dinâmicos + estimativa de performance",
+    title: "Configure peças",
+    description: "Selecione componentes compatíveis para montagem personalizada.",
+    detail: "Compatibilidade garantida",
   },
   {
     badge: "03",
-    title: "Otimizar com engenharia",
-    description:
-      "Sugestões inteligentes baseadas em perfis, como Ghost Spectre para gaming ou Arch Linux para devs.",
-    detail: "Inspirado em DeiviTech Formatação",
+    title: "Revise e finalize",
+    description: "Verifique upgrades e feche negócio com suporte técnico.",
+    detail: "Negócio seguro",
   },
   {
     badge: "04",
-    title: "Fechar pelo WhatsApp",
-    description:
-      "Templates aplicam tags, emojis e bullets para facilitar leitura e acelerar conversão direto com DeiviTech.",
-    detail: "Número configurável via NEXT_PUBLIC_WHATSAPP_NUMBER",
+    title: "Receba suporte",
+    description: "Entrega com garantia e assistência técnica contínua.",
+    detail: "Apoio pós-venda",
   },
 ];
 
 export const personaCards: PersonaCard[] = [
   {
-    title: "Gamers & Streamers",
-    tagline: "Sistema Ghost Spectre otimizado para gaming máximo, baixa latência e performance.",
-    highlights: ["RTX série 40", "Refrigeração premium", "Perfis de energia customizados"],
-    budget: "R$ 8k — 18k",
+    title: "Trabalho Remoto",
+    tagline: "Notebooks para produtividade com IA integrada e tela ampla.",
+    highlights: ["Windows 11 com IA", "Bateria longa", "SSD rápido"],
   },
   {
-    title: "Criadores & Devs",
-    tagline: "Arch Linux ou dual boot para desenvolvimento, com Ryzen + NVMe Gen4.",
-    highlights: ["32 GB DDR5", "Linux + Windows", "Containers e compilações rápidas"],
-    budget: "R$ 6k — 12k",
+    title: "Escola Online",
+    tagline: "Equipamentos para aulas virtuais e ferramentas educacionais.",
+    highlights: ["Webcam HD", "Leve e portátil", "Suporte a IA"],
   },
   {
-    title: "IA & Dados",
-    tagline: "Workstations móveis com VRAM dedicada para processamento avançado e treinamentos.",
-    highlights: ["NPU/GPU otimizada", "Modelos pré-carregados", "Backup e consultoria"],
-    budget: "Sob consulta",
+    title: "Jogos e Entretenimento",
+    tagline: "Sistemas com RTX para jogos imersivos e performance.",
+    highlights: ["GPU dedicada", "Refrigeração eficiente", "Tela 144Hz"],
   },
 ];
 
